@@ -31,7 +31,10 @@ namespace SeniorDesign
 
             // TODO: use this.Content to load your game content here
         }
-
+        /// <summary>
+        /// Updates sprites
+        /// </summary>
+        /// <param name="gameTime"></param>
         protected override void Update(GameTime gameTime)
         {
             if (Keyboard.GetState().IsKeyDown(Keys.Q) || Keyboard.GetState().IsKeyDown(Keys.Escape))
@@ -41,7 +44,10 @@ namespace SeniorDesign
 
             base.Update(gameTime);
         }
-
+        /// <summary>
+        /// Draws sprites
+        /// </summary>
+        /// <param name="gameTime"></param>
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);

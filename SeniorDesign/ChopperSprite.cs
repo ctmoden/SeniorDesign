@@ -61,6 +61,11 @@ namespace SeniorDesign
         /// Position of chopper
         /// </summary>
         public Vector2 Position => position;
+        /// <summary>
+        /// Determines if it is firing.
+        /// TODO put chopper states into dedicated enum
+        /// </summary>
+        public bool Firing = false;
         private bool hit => Hit;
         /// <summary>
         /// Property to detect if missile has hit the chopper
@@ -102,25 +107,24 @@ namespace SeniorDesign
                 //update timer based on elapsed time in game
                 //elapsed time = elapsed time since last update
                 animationTimer += gameTime.ElapsedGameTime.TotalSeconds;
-                if (animationTimer > 0.03)
+                if (animationTimer > 1.5)
                 {
                     animationFrame++;
                     //reached end of current row, reset to first pos in next row
                     if (animationFrame > 1)
                     {
                         animationFrame = 0;
-                        animationRow++;
-                        if (animationRow > 2) animationRow = 0;
+                        /*animationRow++;
+                        if (animationRow > 1) animationRow = 0;*/
                     }
-                    animationTimer -= 0.03;
+                    animationTimer -= 1.5;
                 }
             }
             //TODO add source rectangle for firing missile
-            var sourceRectangle = new Rectangle(animationFrame * 817, (int)(animationRow * 374.5), 817, (int)374.5);
+            var sourceRectangle = new Rectangle(animationFrame * 817, animationRow * 375, 817, 375);
             //draw with upadted position and source rectangle
             //spriteBatch.Draw(texture, Position, sourceRectangle, Color.White);
-            spriteBatch.Draw(flyingTexture, position, sourceRectangle, Color.White, 0f, new Vector2(128, 128), .5f, SpriteEffects.None, 0);
-
+            spriteBatch.Draw(flyingTexture, position, sourceRectangle, Color.White, 0f, new Vector2(408, 187), .25f, SpriteEffects.None, 0);
         }
     }
 }
