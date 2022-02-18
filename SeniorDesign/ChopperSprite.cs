@@ -125,7 +125,7 @@ namespace SeniorDesign
             var sourceRectangle = new Rectangle(animationFrame * 850, animationRow * 381, 850, 381);
             //draw with upadted position and source rectangle
             //spriteBatch.Draw(texture, Position, sourceRectangle, Color.White);
-            spriteBatch.Draw(flyingTexture, position, sourceRectangle, Color.White, 0f, new Vector2(0, 0), .5f, SpriteEffects.None, 0);
+            spriteBatch.Draw(flyingTexture, position, sourceRectangle, Color.White, 0f, new Vector2(0, 0), .25f, SpriteEffects.None, 0);
         }
     }
 }
