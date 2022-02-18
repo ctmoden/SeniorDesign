@@ -79,8 +79,9 @@ namespace SeniorDesign
 
         public void LoadContent(ContentManager content)
         {
-            flyingTexture = content.Load<Texture2D>("Fly");//TODO how to switch to missile firing mid animation frame
+            //flyingTexture = content.Load<Texture2D>("Fly");//TODO how to switch to missile firing mid animation frame
             fireTexture = content.Load<Texture2D>("Fire Missile");
+            flyingTexture = content.Load<Texture2D>("Choppa_Sprite2");
         }
         /// <summary>
         /// Updates chopper, most notably direction it is traveling
@@ -107,24 +108,24 @@ namespace SeniorDesign
                 //update timer based on elapsed time in game
                 //elapsed time = elapsed time since last update
                 animationTimer += gameTime.ElapsedGameTime.TotalSeconds;
-                if (animationTimer > 1.5)
+                if (animationTimer > .05)
                 {
                     animationFrame++;
                     //reached end of current row, reset to first pos in next row
-                    if (animationFrame > 1)
+                    if (animationFrame > 3)
                     {
                         animationFrame = 0;
-                        /*animationRow++;
-                        if (animationRow > 1) animationRow = 0;*/
+                        animationRow++;
+                        if (animationRow > 1) animationRow = 0;
                     }
-                    animationTimer -= 1.5;
+                    animationTimer -= .05;
                 }
             }
             //TODO add source rectangle for firing missile
-            var sourceRectangle = new Rectangle(animationFrame * 817, animationRow * 375, 817, 375);
+            var sourceRectangle = new Rectangle(animationFrame * 850, animationRow * 381, 850, 381);
             //draw with upadted position and source rectangle
             //spriteBatch.Draw(texture, Position, sourceRectangle, Color.White);
-            spriteBatch.Draw(flyingTexture, position, sourceRectangle, Color.White, 0f, new Vector2(408, 187), .25f, SpriteEffects.None, 0);
+            spriteBatch.Draw(flyingTexture, position, sourceRectangle, Color.White, 0f, new Vector2(0, 0), .5f, SpriteEffects.None, 0);
         }
     }
 }
