@@ -10,7 +10,7 @@ namespace SeniorDesign
         private SpriteBatch _spriteBatch;
         private ChopperSprite chopper;
         //FIXME just using one missile for testing
-        private MissileSprite missile;
+        private MissileSprite[] missiles;
         public GameController()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -21,8 +21,12 @@ namespace SeniorDesign
         protected override void Initialize()
         {
             chopper = new ChopperSprite();
-            missile = new MissileSprite();
-
+            missiles = new MissileSprite[3]
+            {
+                new MissileSprite(chopper.Position),
+                new MissileSprite(chopper.Position),
+                new MissileSprite(chopper.Position)
+            };
             base.Initialize();
         }
 
@@ -30,7 +34,7 @@ namespace SeniorDesign
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             chopper.LoadContent(Content);
-            missile.LoadContent(Content);
+            foreach (var missile in missiles) missile.LoadContent(Content);
 
             // TODO: use this.Content to load your game content here
         }
@@ -43,7 +47,7 @@ namespace SeniorDesign
             if (Keyboard.GetState().IsKeyDown(Keys.Q) || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
             chopper.Update(gameTime);
-            missile.Update(gameTime);
+            foreach(var missile in missiles) missile.Update(gameTime, chopper.Position);
             // TODO: Add your update logic here
 
             base.Update(gameTime);
@@ -57,7 +61,7 @@ namespace SeniorDesign
             GraphicsDevice.Clear(Color.CornflowerBlue);
             _spriteBatch.Begin();
             chopper.Draw(gameTime, _spriteBatch);
-            missile.Draw(gameTime, _spriteBatch);
+            foreach (var missile in missiles) missile.Draw(gameTime, _spriteBatch);
             _spriteBatch.End();
             // TODO: Add your drawing code here
 

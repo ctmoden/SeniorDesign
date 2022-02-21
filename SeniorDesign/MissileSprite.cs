@@ -42,15 +42,33 @@ namespace SeniorDesign
         /// private backing variable for Position field
         /// FIXME change position generation later 
         /// </summary>
-        private Vector2 position = new Vector2(400, 400);
+        private Vector2 position;
+        /// <summary>
+        /// Starting position of the missile
+        /// </summary>
+        private Vector2 startPosition;
         /// <summary>
         /// Position of chopper
         /// </summary>
-        public Vector2 Position => position;
+        //public Vector2 Position => position;
         /// <summary>
         /// determines if missile has fired 
+        /// TODO is there a better way to do this with states?
         /// </summary>
         private bool fired = false;
+        /// <summary>
+        /// sets missile position to most update chopper position before firing
+        /// </summary>
+        private bool spinUp = false;
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="chopperPos">starting position of chopper</param>
+        public MissileSprite(Vector2 chopperPos)
+        {
+            startPosition = chopperPos;
+        }
+        //TODO what to do about constructor and chopper position? =>update method!
         /// <summary>
         /// Loads missile content
         /// </summary>
@@ -60,17 +78,34 @@ namespace SeniorDesign
             texture = content.Load<Texture2D>("Missile");
         }
         /// <summary>
-        /// Updates game mistly based on missile state
+        /// TODO add deconstructor for spent missile?
+        /// nned an updated chopper position each update
+        /// when space bar is hit, draw missile starting from chopper
+        /// each subsequent update doesn not reset missile position to chopper
         /// </summary>
         /// <param name="gameTime"></param>
-        public void Update(GameTime gameTime)
+        /// <param name="chopperPos"></param>
+        public void Update(GameTime gameTime, Vector2 chopperPos)
         {
+            startPosition = chopperPos;//overriding
             keyboardState = Keyboard.GetState();
-            //set fire variable to true
             if (keyboardState.IsKeyDown(Keys.Space))
             {
                 fired = true;
+                spinUp = true;
+            }
+            if (spinUp)
+            {
+                position = startPosition;
+                spinUp = false;
+            }
+            if (position.X < Constants.GAME_WIDTH && fired)
+            {
                 position += new Vector2(5, 0);
+            }
+            if (position.X > Constants.GAME_WIDTH)
+            {
+                fired = false;
             }
         }
         /// <summary>
@@ -89,15 +124,13 @@ namespace SeniorDesign
                 {
                     animationFrame++;
                     //reached end of current row, reset to first pos in next row
-                    
-                  if (animationFrame > 2) animationRow = 0;
-                    
+                  if (animationFrame > 2) animationFrame = 0;
                   animationTimer -= .5;
                 }
                 var sourceRectangle = new Rectangle(animationFrame * 178, 0, 178, 83);
                 //draw with upadted position and source rectangle
                 //spriteBatch.Draw(texture, Position, sourceRectangle, Color.White);
-                spriteBatch.Draw(texture, position, sourceRectangle, Color.White, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0);
+                spriteBatch.Draw(texture, position, sourceRectangle, Color.White, 0f, new Vector2(0, 0), .25f, SpriteEffects.None, 0);
             }
         }
     }
