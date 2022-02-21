@@ -98,6 +98,10 @@ namespace SeniorDesign
                 if (keyboardState.IsKeyDown(Keys.Up) || keyboardState.IsKeyDown(Keys.W)) position += new Vector2(0,(float) -3.5);
                 if (keyboardState.IsKeyDown(Keys.Down) || keyboardState.IsKeyDown(Keys.S)) position += new Vector2(0, (float)3.5);
             }
+            if (position.Y < 0) position.Y = Constants.GAME_HEIGHT;
+            if (position.Y > Constants.GAME_HEIGHT) position.Y = 0;
+            if (position.X < 0) position.X = Constants.GAME_WIDTH;
+            if (position.X > Constants.GAME_WIDTH) position.X = 0;
         }
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)

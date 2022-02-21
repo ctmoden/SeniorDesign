@@ -103,7 +103,7 @@ namespace SeniorDesign
             {
                 position += new Vector2(5, 0);
             }
-            if (position.X > Constants.GAME_WIDTH)
+            if (position.X >= Constants.GAME_WIDTH)
             {
                 fired = false;
             }
