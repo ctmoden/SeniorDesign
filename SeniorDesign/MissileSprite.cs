@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Input;
 namespace SeniorDesign
 {
     public class MissileSprite
-    {
+    {//add list of vectors for missile positions
         private KeyboardState keyboardState;
 
         /// <summary>
@@ -89,15 +89,17 @@ namespace SeniorDesign
         {
             startPosition = chopperPos;//overriding
             keyboardState = Keyboard.GetState();
-            if (keyboardState.IsKeyDown(Keys.Space))
+            if (keyboardState.IsKeyDown(Keys.Space))//ways of detecting a single click and waiting until a certain condition?
             {
                 fired = true;
-                spinUp = true;
+                spinUp = true;//it's like I need to lock a thread (well same concept)
             }
             if (spinUp)
             {
-                position = startPosition;
-                spinUp = false;
+                if (position.X < startPosition.X)
+                    position = startPosition;
+
+                    spinUp = false;
             }
             if (position.X < Constants.GAME_WIDTH && fired)
             {
@@ -132,6 +134,10 @@ namespace SeniorDesign
                 //spriteBatch.Draw(texture, Position, sourceRectangle, Color.White);
                 spriteBatch.Draw(texture, position, sourceRectangle, Color.White, 0f, new Vector2(0, 0), .25f, SpriteEffects.None, 0);
             }
+            /*
+             AI needs to be aware of the world.  Besides 
+            heat source? 
+             */
         }
     }
 }

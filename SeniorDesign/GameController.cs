@@ -21,8 +21,8 @@ namespace SeniorDesign
         protected override void Initialize()
         {
             chopper = new ChopperSprite();
-            missiles = new MissileSprite[3]
-            {
+            missiles = new MissileSprite[3]//fly away pattern, use a list instead, bool for alive
+            {//object pool
                 new MissileSprite(chopper.Position),
                 new MissileSprite(chopper.Position),
                 new MissileSprite(chopper.Position)
