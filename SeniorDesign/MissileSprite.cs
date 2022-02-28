@@ -57,6 +57,10 @@ namespace SeniorDesign
         /// </summary>
         private bool fired = false;
         /// <summary>
+        /// Public property for fired variable
+        /// </summary>
+        public bool Fired => fired;
+        /// <summary>
         /// sets missile position to most update chopper position before firing
         /// </summary>
         private bool spinUp = false;
@@ -106,7 +110,7 @@ namespace SeniorDesign
             }*/
             if (position.X < Constants.GAME_WIDTH && fired)
             {
-                position += new Vector2(5, 0);
+                position += new Vector2(10, 0);
             }
             if (position.X >= Constants.GAME_WIDTH)
             {
