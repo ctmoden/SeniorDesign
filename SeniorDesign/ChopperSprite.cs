@@ -20,7 +20,7 @@ namespace SeniorDesign
     {
         private KeyboardState keyboardState;
 
-        private MissileSprite[] missiles;
+        private List<MissileSprite> missiles;
         /// <summary>
         /// pixel speed of animation
         /// </summary>
@@ -79,7 +79,8 @@ namespace SeniorDesign
         //TODO add bounding params
         public ChopperSprite()
         {
-            missiles = new MissileSprite[3];
+            missiles = new List<MissileSprite>();
+            
         }
         public void LoadContent(ContentManager content)
         {
@@ -96,7 +97,7 @@ namespace SeniorDesign
             keyboardState = Keyboard.GetState();
             if (!hit)
             {
-                //TODO add acceleration to chopper sa keys are held down
+                //TODO add acceleration to chopper as keys are held down
                 if (keyboardState.IsKeyDown(Keys.Left) || keyboardState.IsKeyDown(Keys.A)) position += new Vector2((float)-3.5, 0);
                 if (keyboardState.IsKeyDown(Keys.Right) || keyboardState.IsKeyDown(Keys.D)) position += new Vector2((float)3.5, 0);
                 if (keyboardState.IsKeyDown(Keys.Up) || keyboardState.IsKeyDown(Keys.W)) position += new Vector2(0,(float) -3.5);

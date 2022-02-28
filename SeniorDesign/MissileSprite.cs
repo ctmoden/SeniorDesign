@@ -93,12 +93,13 @@ namespace SeniorDesign
         /// nned an updated chopper position each update
         /// when space bar is hit, draw missile starting from chopper
         /// each subsequent update doesn not reset missile position to chopper
+        /// FIXME might want to add offset params
         /// </summary>
         /// <param name="gameTime"></param>
-        /// <param name="chopperPos"></param>
-        public void Update(GameTime gameTime, Vector2 chopperPos)
+        /// <param name="origin"></param>
+        public void Update(GameTime gameTime, Vector2 origin)
         {
-            startPosition = chopperPos;
+            startPosition = origin;
             startPosition.X += 110;
             startPosition.Y += 80;
             keyboardState = Keyboard.GetState();
@@ -108,13 +109,7 @@ namespace SeniorDesign
                 spinUp = true;//it's like I need to lock a thread (well same concept)
                 position = startPosition;
             }
-            /*if (spinUp)
-            {
-                if (position.X < startPosition.X)
-                    position = startPosition;
-
-                    spinUp = false;
-            }*/
+            
             if (position.X < Constants.GAME_WIDTH && fired)
             {
                 position += new Vector2(10, 0);
@@ -153,6 +148,13 @@ namespace SeniorDesign
              AI needs to be aware of the world.  Besides 
             heat source? 
              */
+        }
+        /// <summary>
+        /// sets fired property to true when spacebar is hit
+        /// </summary>
+        public void Fire()
+        {
+
         }
     }
 }
