@@ -77,7 +77,10 @@ namespace SeniorDesign
         /// in drawing method, chopper is scaled down by 1/2, so scaled rad = 64
         /// </summary>
         //TODO add bounding params
-
+        public ChopperSprite()
+        {
+            missiles = new MissileSprite[3];
+        }
         public void LoadContent(ContentManager content)
         {
             //flyingTexture = content.Load<Texture2D>("Fly");//TODO how to switch to missile firing mid animation frame
