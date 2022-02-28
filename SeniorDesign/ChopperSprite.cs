@@ -20,6 +20,7 @@ namespace SeniorDesign
     {
         private KeyboardState keyboardState;
 
+        private MissileSprite[] missiles;
         /// <summary>
         /// pixel speed of animation
         /// </summary>

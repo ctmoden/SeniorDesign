@@ -88,19 +88,22 @@ namespace SeniorDesign
         public void Update(GameTime gameTime, Vector2 chopperPos)
         {
             startPosition = chopperPos;
+            startPosition.X += 110;
+            startPosition.Y += 80;
             keyboardState = Keyboard.GetState();
             if (keyboardState.IsKeyDown(Keys.Space)&& !fired)//ways of detecting a single click and waiting until a certain condition?
             {
                 fired = true;
                 spinUp = true;//it's like I need to lock a thread (well same concept)
+                position = startPosition;
             }
-            if (spinUp)
+            /*if (spinUp)
             {
                 if (position.X < startPosition.X)
                     position = startPosition;
 
                     spinUp = false;
-            }
+            }*/
             if (position.X < Constants.GAME_WIDTH && fired)
             {
                 position += new Vector2(5, 0);
