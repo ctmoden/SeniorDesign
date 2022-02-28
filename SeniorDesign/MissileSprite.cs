@@ -12,7 +12,10 @@ namespace SeniorDesign
     public class MissileSprite
     {//add list of vectors for missile positions
         private KeyboardState keyboardState;
-
+        /// <summary>
+        /// Counts number of missiles supplied to chopper 
+        /// </summary>
+        private static int missileLoad = 3;
         /// <summary>
         /// pixel speed of animation
         /// </summary>
@@ -64,6 +67,10 @@ namespace SeniorDesign
         /// sets missile position to most update chopper position before firing
         /// </summary>
         private bool spinUp = false;
+        /// <summary>
+        /// list of positions for all missiles in flight 
+        /// </summary>
+        private List<Vector2> positionList;
         /// <summary>
         /// 
         /// </summary>
