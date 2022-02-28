@@ -87,9 +87,9 @@ namespace SeniorDesign
         /// <param name="chopperPos"></param>
         public void Update(GameTime gameTime, Vector2 chopperPos)
         {
-            startPosition = chopperPos;//overriding
+            startPosition = chopperPos;
             keyboardState = Keyboard.GetState();
-            if (keyboardState.IsKeyDown(Keys.Space))//ways of detecting a single click and waiting until a certain condition?
+            if (keyboardState.IsKeyDown(Keys.Space)&& !fired)//ways of detecting a single click and waiting until a certain condition?
             {
                 fired = true;
                 spinUp = true;//it's like I need to lock a thread (well same concept)
@@ -108,6 +108,7 @@ namespace SeniorDesign
             if (position.X >= Constants.GAME_WIDTH)
             {
                 fired = false;
+                position = startPosition;
             }
         }
         /// <summary>
