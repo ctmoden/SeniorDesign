@@ -56,7 +56,7 @@ namespace SeniorDesign
             chopper.Update(gameTime);
             foreach (var missile in missiles)
             {              
-                if (currentKeyboardState.IsKeyDown(Keys.Space))
+                if (previousKeyboardState.IsKeyDown(Keys.Space) && currentKeyboardState.IsKeyUp(Keys.Space))
                 {
                     missile.Update(true, chopper.Position);
                     currentKeyboardState = previousKeyboardState;
@@ -75,7 +75,10 @@ namespace SeniorDesign
             GraphicsDevice.Clear(Color.CornflowerBlue);
             _spriteBatch.Begin();
             chopper.Draw(gameTime, _spriteBatch);
-            foreach (var missile in missiles) missile.Draw(gameTime, _spriteBatch);
+            foreach (var missile in missiles)
+            {
+                if(missile.Fired) missile.Draw(gameTime, _spriteBatch);
+            }
             _spriteBatch.End();
             // TODO: Add your drawing code here
 

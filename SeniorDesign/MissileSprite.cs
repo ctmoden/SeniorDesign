@@ -129,7 +129,7 @@ namespace SeniorDesign
             {
                 position += new Vector2(FIRE_VELOCITY, 0);
             }
-            if (position.X >= Constants.GAME_WIDTH)
+            if (position.X >= Constants.GAME_WIDTH && fired)
             {
                 fired = false;
                 position = startPosition;
@@ -159,10 +159,7 @@ namespace SeniorDesign
                 //spriteBatch.Draw(texture, Position, sourceRectangle, Color.White);
                 spriteBatch.Draw(texture, position, sourceRectangle, Color.White, 0f, new Vector2(0, 0), .25f, SpriteEffects.None, 0);
             }
-            /*
-             AI needs to be aware of the world.  Besides 
-            heat source? 
-             */
+            
         }
         
     }
