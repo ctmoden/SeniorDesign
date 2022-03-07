@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Threading;
+using SeniorDesign.ButtonStates;
 
 namespace SeniorDesign
 {
@@ -49,14 +50,37 @@ namespace SeniorDesign
         /// <param name="gameTime"></param>
         protected override void Update(GameTime gameTime)
         {
-            previousKeyboardState = currentKeyboardState;
-            currentKeyboardState = Keyboard.GetState();
-            bool release = false;
-            if (currentKeyboardState.IsKeyDown(Keys.Q) || currentKeyboardState.IsKeyDown(Keys.Escape))
+            KeyboardManager.GetState();
+            bool release = false;//determines if current missile is released yet.
+            if (KeyboardManager.IsPressed(Keys.Q) || KeyboardManager.IsPressed(Keys.Escape))
                 Exit();
             chopper.Update(gameTime);
+            //update all missiles each update to make sure their start position is set to most recent chopper position
+            foreach (var missile in missiles)
+            {
+                
+                missile.Update(chopper.Position);
+                if (missile.Fired) missile.FireControl();
+            }
+            #region Monogame Example
+            if (KeyboardManager.HasBeenPressed(Keys.Space))
+            {
+                int i = 0;
+                while (!release && i < missiles.Length)
+                {
+                    //finds next available missile for firing
+                    if (!missiles[i].Fired)
+                    {
+                        missiles[i].Update(true, chopper.Position);
+                        release = true;
+                    }
+                    else i++;
+                }
+            }            
+            #endregion Monogame Example
+
             //fire next available missile(if any), then break
-            if (currentKeyboardState.IsKeyDown(Keys.Space))
+            /*if (currentKeyboardState.IsKeyDown(Keys.Space))
             {
                 currentKeyboardState = previousKeyboardState;
 
@@ -75,7 +99,7 @@ namespace SeniorDesign
             foreach (var missile in missiles)
             {
                 if (missile.Fired) missile.FireControl();
-            }
+            }*/
             /*foreach (var missile in missiles)
             {              
                 if (currentKeyboardState.IsKeyDown(Keys.Space))

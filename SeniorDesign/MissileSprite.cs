@@ -23,13 +23,13 @@ namespace SeniorDesign
     /// Each missile needs to have it's own position after launch( and bounding region for collisions)
     /// </summary>
     public class MissileSprite
-    {//add list of vectors for missile positions
-        private KeyboardState keyboardState;
+    {
         /// <summary>
         /// Counts number of missiles supplied to chopper 
         /// </summary>
-        private static int missileLoad = 3;
+        private static int missileLoad = 3;//FIXME make this public and reset as soon as 
 
+        public static int MissileLoad => missileLoad;
         private const int FIRE_VELOCITY = 3;
         /// <summary>
         /// pixel speed of animation
@@ -94,9 +94,8 @@ namespace SeniorDesign
         /// <summary>
         /// list of positions for all missiles in flight 
         /// </summary>
-        private List<Vector2> positionList;
         /// <summary>
-        /// 
+        /// Constructor, sets starting position to that of chopper's
         /// </summary>
         /// <param name="chopperPos">starting position of chopper</param>
         public MissileSprite(Vector2 chopperPos)
@@ -129,6 +128,14 @@ namespace SeniorDesign
             this.fired = fired;
             if(!this.fired) position = startPosition;                            
         }
+
+        public void Update(Vector2 origin)
+        {
+            startPosition = origin;
+            startPosition.X += 110;
+            startPosition.Y += 80;
+            if (!fired) position = startPosition;
+        }
         /// <summary>
         /// Fires missile and moves missile across screen
         /// </summary>
@@ -140,7 +147,9 @@ namespace SeniorDesign
             }
             if (position.X >= Constants.GAME_WIDTH && fired)
             {
-                expended = true;
+                position += new Vector2(0, 0);
+                missileLoad--;
+                //reset missile in case of replenishing
                 fired = false;
                 position = startPosition;
             }
@@ -152,7 +161,7 @@ namespace SeniorDesign
         /// <param name="spriteBatch"></param>
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            if (fired)
+            if (fired && missileLoad > 0)
             {
                 //update timer based on elapsed time in game
                 //elapsed time = elapsed time since last update
