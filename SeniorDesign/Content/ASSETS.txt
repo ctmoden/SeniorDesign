@@ -2,6 +2,7 @@
 Content/Fly.png - Created by 2dGameCreation on OpenGameArt.org, released as "War Pack" (https://opengameart.org/content/war-pack) and released under public domain.
 Content/Missile.png - Created by 2dGameCreation on OpenGameArt.org, released as "War Pack" (https://opengameart.org/content/war-pack) and released under public domain.
 
+ButtonStates/SpaceButtonState.cs - Code follows main framework from solution on stack overflow solution post: https://stackoverflow.com/questions/32448449/better-way-to-determine-if-a-button-is-clicked
 
 
 

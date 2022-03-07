@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Threading;
 
 namespace SeniorDesign
 {
@@ -11,6 +12,10 @@ namespace SeniorDesign
         private ChopperSprite chopper;
         //FIXME just using one missile for testing
         private MissileSprite[] missiles;
+
+        private KeyboardState currentKeyboardState;
+        private KeyboardState previousKeyboardState;
+
         public GameController()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -44,12 +49,23 @@ namespace SeniorDesign
         /// <param name="gameTime"></param>
         protected override void Update(GameTime gameTime)
         {
-            if (Keyboard.GetState().IsKeyDown(Keys.Q) || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            previousKeyboardState = currentKeyboardState;
+            currentKeyboardState = Keyboard.GetState();
+            if (currentKeyboardState.IsKeyDown(Keys.Q) || currentKeyboardState.IsKeyDown(Keys.Escape))
                 Exit();
             chopper.Update(gameTime);
-            foreach(var missile in missiles) missile.Update(gameTime, chopper.Position);
-            // TODO: Add your update logic here
+            foreach (var missile in missiles)
+            {              
+                if (currentKeyboardState.IsKeyDown(Keys.Space))
+                {
+                    missile.Update(true, chopper.Position);
+                    currentKeyboardState = previousKeyboardState;
+                }
+                if (!missile.Fired) missile.Update(false, chopper.Position);
+                else if (missile.Fired) missile.FireControl();
+                
 
+            }
             base.Update(gameTime);
         }
         /// <summary>

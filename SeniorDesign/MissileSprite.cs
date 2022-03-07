@@ -6,9 +6,22 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Input;
-
+using System.Threading;
 namespace SeniorDesign
 {
+    /// <summary>
+    /// 28 Feb
+    /// have a parent class for missiles?  Can share content, animation
+    /// with vector list idea, how can I draw the same sprite at different positions at the same time?
+    /// Should fire control belong to the chopper class?  But then I have to somehow deal with game controller
+    /// objects for already created missiles (unless I put all that in the chopper sprite class... thats an idea)
+    /// For machine gun rounds, would putting a thread to sleep work to make it look like multiple rounds are being fired?)
+    /// instead of what looks like a massive "laser" being engaged?
+    /// make a separate sprite batch draw
+    /// collissions => draw at collision
+    /// have a list of things to remove
+    /// Each missile needs to have it's own position after launch( and bounding region for collisions)
+    /// </summary>
     public class MissileSprite
     {//add list of vectors for missile positions
         private KeyboardState keyboardState;
@@ -16,6 +29,8 @@ namespace SeniorDesign
         /// Counts number of missiles supplied to chopper 
         /// </summary>
         private static int missileLoad = 3;
+
+        private const int FIRE_VELOCITY = 10;
         /// <summary>
         /// pixel speed of animation
         /// </summary>
@@ -96,23 +111,23 @@ namespace SeniorDesign
         /// FIXME might want to add offset params
         /// </summary>
         /// <param name="gameTime"></param>
-        /// <param name="origin"></param>
-        public void Update(GameTime gameTime, Vector2 origin)
-        {
+        /// <param name="origin">chopper position on screen to fire from</param>
+        public void Update(bool fired, Vector2 origin)
+        {            
             startPosition = origin;
             startPosition.X += 110;
             startPosition.Y += 80;
-            keyboardState = Keyboard.GetState();
-            if (keyboardState.IsKeyDown(Keys.Space)&& !fired)//ways of detecting a single click and waiting until a certain condition?
-            {
-                fired = true;
-                spinUp = true;//it's like I need to lock a thread (well same concept)
-                position = startPosition;
-            }
-            
+            this.fired = fired;
+            position = startPosition;                            
+        }
+        /// <summary>
+        /// Fires missile and moves missile across screen
+        /// </summary>
+        public void FireControl()
+        {
             if (position.X < Constants.GAME_WIDTH && fired)
             {
-                position += new Vector2(10, 0);
+                position += new Vector2(FIRE_VELOCITY, 0);
             }
             if (position.X >= Constants.GAME_WIDTH)
             {
@@ -149,12 +164,6 @@ namespace SeniorDesign
             heat source? 
              */
         }
-        /// <summary>
-        /// sets fired property to true when spacebar is hit
-        /// </summary>
-        public void Fire()
-        {
-
-        }
+        
     }
 }
