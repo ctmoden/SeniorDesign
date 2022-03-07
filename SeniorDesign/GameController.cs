@@ -12,7 +12,7 @@ namespace SeniorDesign
         private SpriteBatch _spriteBatch;
         private ChopperSprite chopper;
         //FIXME just using one missile for testing
-        private MissileSprite[] missiles;
+        private MissileSprite[] missiles;//FIXME swap as missiles hit or miss, keep live missiles at the front 
 
         private KeyboardState currentKeyboardState;
         private KeyboardState previousKeyboardState;
@@ -79,49 +79,7 @@ namespace SeniorDesign
             }            
             #endregion Monogame Example
 
-            //fire next available missile(if any), then break
-            /*if (currentKeyboardState.IsKeyDown(Keys.Space))
-            {
-                currentKeyboardState = previousKeyboardState;
-
-                int i = 0;
-                while (!release && i < missiles.Length)
-                {
-                    //finds next available missile for firing
-                    if (!missiles[i].Fired)
-                    {
-                        missiles[i].Update(true, chopper.Position);
-                        release = true;
-                    }
-                    else i++;
-                }
-            }
-            foreach (var missile in missiles)
-            {
-                if (missile.Fired) missile.FireControl();
-            }*/
-            /*foreach (var missile in missiles)
-            {              
-                if (currentKeyboardState.IsKeyDown(Keys.Space))
-                {
-                    missile.Update(true, chopper.Position);
-                    currentKeyboardState = previousKeyboardState;
-                }
-                if (!missile.Fired) missile.Update(false, chopper.Position);
-                else if (missile.Fired) missile.FireControl();               
-            } */
-            /*if (currentKeyboardState.IsKeyDown(Keys.Space))
-            {
-                foreach (var missile in missiles)
-                {
-
-                    missile.Update(true, chopper.Position);
-                    currentKeyboardState = previousKeyboardState;
-
-                    if (!missile.Fired) missile.Update(false, chopper.Position);
-                    else if (missile.Fired) missile.FireControl();
-                }
-            }*/
+            
             base.Update(gameTime);
         }
         /// <summary>
