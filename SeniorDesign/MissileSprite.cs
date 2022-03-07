@@ -30,7 +30,7 @@ namespace SeniorDesign
         /// </summary>
         private static int missileLoad = 3;
 
-        private const int FIRE_VELOCITY = 10;
+        private const int FIRE_VELOCITY = 3;
         /// <summary>
         /// pixel speed of animation
         /// </summary>
@@ -66,6 +66,14 @@ namespace SeniorDesign
         /// </summary>
         private Vector2 startPosition;
         /// <summary>
+        /// private backing variable for missile expended state
+        /// </summary>
+        private bool expended = false;
+        /// <summary>
+        /// Determines of missile is expended 
+        /// </summary>
+        public bool Expended => expended;
+        /// <summary>
         /// Position of chopper
         /// </summary>
         //public Vector2 Position => position;
@@ -74,6 +82,7 @@ namespace SeniorDesign
         /// TODO is there a better way to do this with states?
         /// </summary>
         private bool fired = false;
+        
         /// <summary>
         /// Public property for fired variable
         /// </summary>
@@ -110,7 +119,7 @@ namespace SeniorDesign
         /// each subsequent update doesn not reset missile position to chopper
         /// FIXME might want to add offset params
         /// </summary>
-        /// <param name="gameTime"></param>
+        /// <param name="fired">determines if missile has been fired</param>
         /// <param name="origin">chopper position on screen to fire from</param>
         public void Update(bool fired, Vector2 origin)
         {            
@@ -131,6 +140,7 @@ namespace SeniorDesign
             }
             if (position.X >= Constants.GAME_WIDTH && fired)
             {
+                expended = true;
                 fired = false;
                 position = startPosition;
             }
