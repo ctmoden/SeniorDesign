@@ -118,7 +118,7 @@ namespace SeniorDesign
             startPosition.X += 110;
             startPosition.Y += 80;
             this.fired = fired;
-            position = startPosition;                            
+            if(!this.fired) position = startPosition;                            
         }
         /// <summary>
         /// Fires missile and moves missile across screen

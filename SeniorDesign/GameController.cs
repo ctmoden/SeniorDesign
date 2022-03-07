@@ -62,9 +62,7 @@ namespace SeniorDesign
                     currentKeyboardState = previousKeyboardState;
                 }
                 if (!missile.Fired) missile.Update(false, chopper.Position);
-                else if (missile.Fired) missile.FireControl();
-                
-
+                else if (missile.Fired) missile.FireControl();               
             }
             base.Update(gameTime);
         }
