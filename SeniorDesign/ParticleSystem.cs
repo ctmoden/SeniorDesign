@@ -28,6 +28,8 @@ namespace SeniorDesign
         private Queue<int> freeParticles;
         //s
         private Texture2D texture;
+
+        private Vector2 bullet_velocity;
         #endregion
         #region cpu caching notes!
         /// <summary>
@@ -59,12 +61,24 @@ namespace SeniorDesign
 
         public ParticleSystem(int maxParticles)
         {
+            bullet_velocity = new Vector2(3f, 0f);
             particles = new Particle[maxParticles];
             for(int i = 0; i < particles.Length; i++)
             {
+                //how to get the chopper position over here??
                 particles[i].Initialize();
                 freeParticles.Enqueue(i);//enqueues all particles at first
             }
+        }
+
+        protected virtual void UpdateParticle(ref Particle particle)
+        {
+            particle.Position += bullet_velocity;
+        }
+
+        protected virtual void InitializeParticle(ref Particle par, Vector2 position)
+        {
+            par.Initialize()
         }
 
     }

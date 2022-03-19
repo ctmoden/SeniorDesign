@@ -17,10 +17,9 @@ namespace SeniorDesign
         min/max particles
 
          */
-        private Vector2 position;
-        public Vector2 Position=>position;
+        public Vector2 Position;
 
-        private Vector2 startPosition;
+        public Vector2 StartPosition;
 
         public Vector2 Velocity;
 
@@ -32,10 +31,14 @@ namespace SeniorDesign
 
         /// <summary>
         /// FIXME change params later
+        /// need start pos and ve
+        /// each particle will have it's own start position, velocity, and color
         /// </summary>
-        public void Initialize()
+        public void Initialize(Vector2 startPos, Vector2 velocity, Color color)
         {
-
+            this.Color = color;
+            this.Velocity = velocity;
+            this.StartPosition = startPos;
         }
     }
 }

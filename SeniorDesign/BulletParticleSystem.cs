@@ -8,6 +8,12 @@ namespace SeniorDesign
 {
     public class BulletParticleSystem : ParticleSystem
     {
+        private Vector2 chopperPos;
+        public BulletParticleSystem(Vector2 chopperPos) : base(100)
+        {
+            this.chopperPos = chopperPos;
+        }
 
+        protected 
     }
 }
