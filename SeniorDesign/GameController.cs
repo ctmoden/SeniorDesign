@@ -13,6 +13,7 @@ namespace SeniorDesign
         private ChopperSprite chopper;
         //FIXME just using one missile for testing
         private MissileSprite[] missiles;//FIXME swap as missiles hit or miss, keep live missiles at the front 
+        private BulletParticleSystem bulletSystem;
 
         private KeyboardState currentKeyboardState;
         private KeyboardState previousKeyboardState;
@@ -33,6 +34,7 @@ namespace SeniorDesign
                 new MissileSprite(chopper.Position),
                 new MissileSprite(chopper.Position)
             };
+            bulletSystem = new BulletParticleSystem(chopper.Position);
             base.Initialize();
         }
 
@@ -40,6 +42,7 @@ namespace SeniorDesign
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             chopper.LoadContent(Content);
+            bulletSystem.LoadContent(Content);
             foreach (var missile in missiles) missile.LoadContent(Content);
 
             // TODO: use this.Content to load your game content here

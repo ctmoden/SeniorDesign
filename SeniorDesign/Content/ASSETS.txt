@@ -4,7 +4,7 @@ Content/Missile.png - Created by 2dGameCreation on OpenGameArt.org, released as 
 
 ButtonStates/SpaceButtonState.cs - Code follows main framework from solution on stack overflow solution post: https://stackoverflow.com/questions/32448449/better-way-to-determine-if-a-button-is-clicked
 
-
+Content/red_laser.png - Created by StarNinjas on OpenGameArt.org, released as "3 lasers" (https://opengameart.org/content/3-lasers) and released under public domain. 
 
 
 
