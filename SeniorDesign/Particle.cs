@@ -6,7 +6,7 @@ using SeniorDesign.ButtonStates;
 
 namespace SeniorDesign
 {
-    public struct Particle
+    public struct Particle 
     {
         //what all particles can share:
         /*
@@ -26,8 +26,6 @@ namespace SeniorDesign
         public Color Color;
 
         public float Scale;
-
-        private Texture2D texture;
 
         /// <summary>
         /// FIXME change params later

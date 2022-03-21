@@ -12,9 +12,11 @@ namespace SeniorDesign
         private Vector2 chopperPos;
         private Texture2D texture;
         private double animationTimer;
+        Particle[] bullets;
         public BulletParticleSystem(Vector2 chopperPos)
         {
             this.chopperPos = chopperPos;
+            bullets = new Particle[100]; 
         }
         /// <summary>
         /// FIXME protected or private?
@@ -23,6 +25,16 @@ namespace SeniorDesign
         public void LoadContent(ContentManager content)
         {
             texture = content.Load<Texture2D>("red_laser");
+        }
+
+        public void Update(GameTime gameTime, Vector2 originPos)
+        {
+
+        }
+
+        public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        {
+
         }
     }
 }
