@@ -27,6 +27,9 @@ namespace SeniorDesign
 
         public float Scale;
 
+        
+        public bool Fired;
+
         /// <summary>
         /// FIXME change params later
         /// need start pos and ve
@@ -38,5 +41,12 @@ namespace SeniorDesign
             this.Velocity = velocity;
             this.StartPosition = startPos;
         }
+
+        public void Update()
+        {
+
+        }
+
+        
     }
 }

@@ -66,7 +66,7 @@ namespace SeniorDesign
             for(int i = 0; i < particles.Length; i++)
             {
                 //how to get the chopper position over here??
-                particles[i].Initialize();
+                //particles[i].Initialize();
                 freeParticles.Enqueue(i);//enqueues all particles at first
             }
         }
@@ -78,7 +78,7 @@ namespace SeniorDesign
 
         protected virtual void InitializeParticle(ref Particle par, Vector2 position)
         {
-            par.Initialize()
+            //par.Initialize()
         }
 
     }
