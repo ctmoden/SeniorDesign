@@ -40,7 +40,7 @@ namespace SeniorDesign
         /// <summary>
         /// update position of bullets ready to fire to chopper
         /// fire bullets
-        /// 
+        /// TAKE INSPIRATION FROM COIN SPRITE IN OTHER GAME
         /// </summary>
         /// <param name="gameTime"></param>
         /// <param name="originPos"></param>

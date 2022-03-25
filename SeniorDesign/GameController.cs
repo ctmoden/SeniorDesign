@@ -87,6 +87,10 @@ namespace SeniorDesign
              while the m key is pressed down
             update the bullet particle system
              */
+            while (KeyboardManager.HasBeenPressed(Keys.M))
+            {
+                //
+            }
             #endregion chopper machine gun
 
             base.Update(gameTime);
