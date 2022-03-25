@@ -13,6 +13,7 @@ namespace SeniorDesign
         private Texture2D texture;
         private int freeIndex;//index of first bullet ready to fire
         private double animationTimer;
+        private Color color;
         private Color[] colors = new Color[]
         {
             Color.Red,
@@ -23,7 +24,8 @@ namespace SeniorDesign
         public BulletParticleSystem(Vector2 chopperPos)
         {
             this.chopperPos = chopperPos;
-            bullets = new Particle[100]; 
+            bullets = new Particle[100];
+            freeIndex = 0;
         }
         /// <summary>
         /// FIXME protected or private?
@@ -37,7 +39,7 @@ namespace SeniorDesign
         public void Update(GameTime gameTime, Vector2 originPos)
         {
             //FIXME might want to modify to start at first available bullet...
-            for(int i = 0; i < bullets.Length;i++)
+            for(int i = freeIndex; i < bullets.Length;i++)
             {
                 if (bullets[i].Fired)
                 {
@@ -46,17 +48,24 @@ namespace SeniorDesign
                 else
                 {
                     //set start position to origin position
+                    //actually only want to reset position just before launch
+                    //already did some of this in missile sprite code base 
                     bullets[i].StartPosition = originPos;
 
                 }
             }
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="gameTime"></param>
+        /// <param name="spriteBatch"></param>
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             foreach(Particle p in bullets)
             {
-                spriteBatch.Draw(texture, p.Position, Color.White);
+                color = colors[HelperMethods.Next(colors.Length)];
+                spriteBatch.Draw(texture, p.Position, color);
             }
             
         }
