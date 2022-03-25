@@ -137,6 +137,13 @@ namespace SeniorDesign
             if (!fired) position = startPosition;
         }
         /// <summary>
+        /// FIXME put logic of 
+        /// </summary>
+        private void setPositions()
+        {
+
+        }
+        /// <summary>
         /// Fires missile and moves missile across screen
         /// </summary>
         public void FireControl()

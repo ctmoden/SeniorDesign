@@ -14,6 +14,8 @@ namespace SeniorDesign
         private int freeIndex;//index of first bullet ready to fire
         private double animationTimer;
         private Color color;
+        private bool fired;
+        private const int FIRE_VELOCITY = 3;
         private Color[] colors = new Color[]
         {
             Color.Red,
@@ -35,7 +37,13 @@ namespace SeniorDesign
         {
             texture = content.Load<Texture2D>("red_laser");
         }
-
+        /// <summary>
+        /// update position of bullets ready to fire to chopper
+        /// fire bullets
+        /// 
+        /// </summary>
+        /// <param name="gameTime"></param>
+        /// <param name="originPos"></param>
         public void Update(GameTime gameTime, Vector2 originPos)
         {
             //FIXME might want to modify to start at first available bullet...
@@ -44,6 +52,7 @@ namespace SeniorDesign
                 if (bullets[i].Fired)
                 {
                     //update in air position, check bounding
+                    FireControl(i);
                 }
                 else
                 {
@@ -56,12 +65,32 @@ namespace SeniorDesign
             }
         }
         /// <summary>
+        /// fire control for 
+        /// </summary>
+        /// <param name="index"></param>
+        private void FireControl(int index)
+        {
+            if(bullets[index].Position.X < Constants.GAME_WIDTH && bullets[index].Fired)
+            {
+                bullets[index].Position += new Vector2(FIRE_VELOCITY, 0);
+            }
+            if (bullets[index].Position.X >= Constants.GAME_WIDTH && bullets[index].Fired)
+            {
+                bullets[index].Position += new Vector2(0, 0);
+                bullets[index]
+            }
+
+        }
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="gameTime"></param>
         /// <param name="spriteBatch"></param>
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
+            
+            
+
             foreach(Particle p in bullets)
             {
                 color = colors[HelperMethods.Next(colors.Length)];

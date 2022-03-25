@@ -54,6 +54,7 @@ namespace SeniorDesign
         protected override void Update(GameTime gameTime)
         {
             KeyboardManager.GetState();
+            //FIXME move release var to control of missile sprite?
             bool release = false;//determines if current missile is released yet.
             if (KeyboardManager.IsPressed(Keys.Q) || KeyboardManager.IsPressed(Keys.Escape))
                 Exit();
@@ -74,15 +75,20 @@ namespace SeniorDesign
                     //finds next available missile for firing
                     if (!missiles[i].Fired)
                     {
-                        missiles[i].Update(true, chopper.Position);
                         release = true;
+                        missiles[i].Update(release, chopper.Position);
                     }
                     else i++;
                 }
-            }            
+            }
             #endregion Monogame Example
+            #region chopper machine gun
+            /*
+             while the m key is pressed down
+            update the bullet particle system
+             */
+            #endregion chopper machine gun
 
-            
             base.Update(gameTime);
         }
         /// <summary>
@@ -98,6 +104,7 @@ namespace SeniorDesign
             {
                 missile.Draw(gameTime, _spriteBatch);
             }
+
             _spriteBatch.End();
             // TODO: Add your drawing code here
 
