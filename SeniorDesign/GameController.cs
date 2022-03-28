@@ -35,6 +35,7 @@ namespace SeniorDesign
                 new MissileSprite(chopper.Position)
             };
             bulletSystem = new BulletParticleSystem(chopper.Position);
+            currentKeyboardState = Keyboard.GetState();
             base.Initialize();
         }
 
@@ -53,7 +54,7 @@ namespace SeniorDesign
         /// <param name="gameTime"></param>
         protected override void Update(GameTime gameTime)
         {
-            KeyboardManager.GetState();
+            currentKeyboardState = KeyboardManager.GetState();
             //FIXME move release var to control of missile sprite?
             bool release = false;//determines if current missile is released yet.
             if (KeyboardManager.IsPressed(Keys.Q) || KeyboardManager.IsPressed(Keys.Escape))
@@ -87,9 +88,9 @@ namespace SeniorDesign
              while the m key is pressed down
             update the bullet particle system
              */
-            while (KeyboardManager.HasBeenPressed(Keys.M))
+            while (KeyboardManager.IsPressed(Keys.M))
             {
-                //
+                bulletSystem.Update(gameTime, chopper.Position);
             }
             #endregion chopper machine gun
 
@@ -108,7 +109,7 @@ namespace SeniorDesign
             {
                 missile.Draw(gameTime, _spriteBatch);
             }
-
+            bulletSystem.Draw(gameTime, _spriteBatch);
             _spriteBatch.End();
             // TODO: Add your drawing code here
 

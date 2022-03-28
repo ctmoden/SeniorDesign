@@ -12,7 +12,7 @@ namespace SeniorDesign
         private Vector2 chopperPos;
         private Texture2D texture;
         private int freeIndex;//index of first bullet ready to fire
-        private double animationTimer;
+        private double fireTimer;
         private Color color;
         private bool fired;
         private const int FIRE_VELOCITY = 3;
@@ -46,22 +46,19 @@ namespace SeniorDesign
         /// <param name="originPos"></param>
         public void Update(GameTime gameTime, Vector2 originPos)
         {
+            int tempIndex = freeIndex;
             //FIXME might want to modify to start at first available bullet...
-            for(int i = freeIndex; i < bullets.Length;i++)
+            //updating unfired bullets...
+            for(int i = tempIndex; i < bullets.Length;i++)
+            {                
+                bullets[i].StartPosition = originPos;
+                bullets[i].Fired = true;
+                freeIndex++;    
+            }
+            //update in-flight bullets
+            for(int i = 0; i < freeIndex; i++)
             {
-                if (bullets[i].Fired)
-                {
-                    //update in air position, check bounding
-                    FireControl(i);
-                }
-                else
-                {
-                    //set start position to origin position
-                    //actually only want to reset position just before launch
-                    //already did some of this in missile sprite code base 
-                    bullets[i].StartPosition = originPos;
-
-                }
+                FireControl(i);
             }
         }
         /// <summary>
@@ -77,7 +74,7 @@ namespace SeniorDesign
             if (bullets[index].Position.X >= Constants.GAME_WIDTH && bullets[index].Fired)
             {
                 bullets[index].Position += new Vector2(0, 0);
-                bullets[index]
+                //FIXME finish
             }
 
         }
@@ -88,15 +85,39 @@ namespace SeniorDesign
         /// <param name="spriteBatch"></param>
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            
-            
-
-            foreach(Particle p in bullets)
+            for(int i = 0; i < freeIndex; i++)
+            {
+                fireTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                if(fireTimer > .25)
+                {
+                    color = colors[HelperMethods.Next(colors.Length)];
+                    spriteBatch.Draw(texture, bullets[i].Position, color);
+                    fireTimer -= .25;
+                }                
+            }
+            /*
+            fireTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            if (fireTimer > .25)
             {
                 color = colors[HelperMethods.Next(colors.Length)];
-                spriteBatch.Draw(texture, p.Position, color);
+                spriteBatch.Draw(texture, bullets[i].Position, color);
+                fireTimer -= .25;
             }
-            
+            */
         }
+        /*
+         While space bar is being pressed,
+        every .25 seconds in that press: 
+            iteratively update bullet state (not fired => fired)
+            draw active bullets flying down range 
+                update start pos to current choppa pos when first fired
+        
+        Questions:
+            where to put "holding m button" logic: controller or particle system?
+            where to put the timers?  In/out of for loops or in controller?
+            do i need two separate timers for update and draw with my current implmentation?
+            better way to do the timing for the update?  I know I have to use a timer for the drawing of the bullets...
+            
+         */
     }
 }

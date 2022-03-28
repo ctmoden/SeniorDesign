@@ -65,14 +65,7 @@ namespace SeniorDesign
         /// Starting position of the missile
         /// </summary>
         private Vector2 startPosition;
-        /// <summary>
-        /// private backing variable for missile expended state
-        /// </summary>
-        private bool expended = false;
-        /// <summary>
-        /// Determines of missile is expended 
-        /// </summary>
-        public bool Expended => expended;
+        
         /// <summary>
         /// Position of chopper
         /// </summary>
