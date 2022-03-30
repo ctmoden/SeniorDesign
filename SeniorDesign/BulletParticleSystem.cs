@@ -15,7 +15,7 @@ namespace SeniorDesign
         private double fireTimer;
         private Color color;
         private bool fired;
-        private const int FIRE_VELOCITY = 3;
+        private const int FIRE_VELOCITY = 3000;
         private Color[] colors = new Color[]
         {
             Color.Red,
@@ -23,6 +23,9 @@ namespace SeniorDesign
             Color.Yellow
         };
         Particle[] bullets;
+
+        public bool IsFiring { get; set; }
+
         public BulletParticleSystem(Vector2 chopperPos)
         {
             this.chopperPos = chopperPos;
@@ -46,6 +49,26 @@ namespace SeniorDesign
         /// <param name="originPos"></param>
         public void Update(GameTime gameTime, Vector2 originPos)
         {
+            if(IsFiring)
+            {
+                fireTimer += gameTime.ElapsedGameTime.TotalSeconds;
+                if(fireTimer >= 0.25)
+                {
+                    SpawnBullet(originPos);
+                    fireTimer = 0.0;
+                }
+            }
+            else
+            {
+                fireTimer = 0.25;
+            }
+
+            for(int i = 0; i < bullets.Length; i++)
+            {
+                if (!bullets[i].Fired) continue;
+                bullets[i].Position += (float)gameTime.ElapsedGameTime.TotalSeconds * bullets[i].Velocity;
+            }
+            /*
             int tempIndex = freeIndex;
             //FIXME might want to modify to start at first available bullet...
             //updating unfired bullets...
@@ -59,7 +82,7 @@ namespace SeniorDesign
             for(int i = 0; i < freeIndex; i++)
             {
                 FireControl(i);
-            }
+            }*/
         }
         /// <summary>
         /// fire control for 
@@ -74,7 +97,7 @@ namespace SeniorDesign
             if (bullets[index].Position.X >= Constants.GAME_WIDTH && bullets[index].Fired)
             {
                 bullets[index].Position += new Vector2(0, 0);
-                //FIXME finish
+                
             }
 
         }
@@ -85,15 +108,11 @@ namespace SeniorDesign
         /// <param name="spriteBatch"></param>
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            for(int i = 0; i < freeIndex; i++)
+            for(int i = 0; i < bullets.Length; i++)
             {
-                fireTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
-                if(fireTimer > .25)
-                {
-                    color = colors[HelperMethods.Next(colors.Length)];
-                    spriteBatch.Draw(texture, bullets[i].Position, color);
-                    fireTimer -= .25;
-                }                
+                if (!bullets[i].Fired) continue;
+                color = colors[HelperMethods.Next(colors.Length)];
+                spriteBatch.Draw(texture, bullets[i].Position, null, color, 0.0f,Vector2.Zero, .1f, SpriteEffects.None,0.0f);
             }
             /*
             fireTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -119,5 +138,18 @@ namespace SeniorDesign
             better way to do the timing for the update?  I know I have to use a timer for the drawing of the bullets...
             
          */
+        private void SpawnBullet(Vector2 position)
+        {
+            for(int i = 0; i < bullets.Length; i++)
+            {
+                if(!bullets[i].Fired)
+                {
+                    bullets[i].Position = position;
+                    bullets[i].Velocity = new Vector2(FIRE_VELOCITY, 0);
+                    bullets[i].Fired = true;
+                    return;
+                }
+            }
+        }
     }
 }

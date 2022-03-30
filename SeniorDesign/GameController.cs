@@ -16,8 +16,6 @@ namespace SeniorDesign
         private BulletParticleSystem bulletSystem;
 
         private KeyboardState currentKeyboardState;
-        private KeyboardState previousKeyboardState;
-
         public GameController()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -35,7 +33,6 @@ namespace SeniorDesign
                 new MissileSprite(chopper.Position)
             };
             bulletSystem = new BulletParticleSystem(chopper.Position);
-            currentKeyboardState = Keyboard.GetState();
             base.Initialize();
         }
 
@@ -88,10 +85,16 @@ namespace SeniorDesign
              while the m key is pressed down
             update the bullet particle system
              */
-            while (KeyboardManager.IsPressed(Keys.M))
+            if (KeyboardManager.IsPressed(Keys.M))
             {
-                bulletSystem.Update(gameTime, chopper.Position);
+                bulletSystem.IsFiring = true;
+                
             }
+            else
+            {
+                bulletSystem.IsFiring = false;
+            }
+            bulletSystem.Update(gameTime, chopper.Position);
             #endregion chopper machine gun
 
             base.Update(gameTime);
