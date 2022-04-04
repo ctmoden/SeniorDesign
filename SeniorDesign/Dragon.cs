@@ -67,7 +67,7 @@ namespace SeniorDesign
             directionTimer += gameTime.ElapsedGameTime.TotalSeconds;
             if (!resetTimer)
             {
-                flyTime = HelperMethods.Next(1,3)*HelperMethods.NextDouble();
+                flyTime = HelperMethods.NextDouble() * HelperMethods.Next(1, 3);//
                 resetTimer = true;
             }
             //FIXME make direction timer random;
@@ -92,7 +92,7 @@ namespace SeniorDesign
                     position += HelperMethods.RandomYVelGenerator(-2, 0) * PIXEL_SPEED *(float)gameTime.ElapsedGameTime.TotalSeconds;
                     break;
                 case Direction.Up:
-                    position += HelperMethods.RandomYVelGenerator(1, 2) * PIXEL_SPEED * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    position += HelperMethods.RandomYVelGenerator(1, 3) * PIXEL_SPEED * (float)gameTime.ElapsedGameTime.TotalSeconds;
                     break;
             }
             if(position.Y < 0)
@@ -120,7 +120,7 @@ namespace SeniorDesign
                 animationTimer -= .25;
             }//144(x) by 128(y)
             var sourceRectangle = new Rectangle(animationFrame * 144, animationRow * 128, 144, 128);
-            spriteBatch.Draw(dragonTexture, position, sourceRectangle, Color.White, 0f, new Vector2(72, 64), 1f, SpriteEffects.None,0);
+            spriteBatch.Draw(dragonTexture, position, sourceRectangle, Color.White, 0f, new Vector2(72, 64), .75f, SpriteEffects.None,0);
         }
     }
 }

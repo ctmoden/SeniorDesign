@@ -52,7 +52,7 @@ namespace SeniorDesign
             if(IsFiring)
             {
                 fireTimer += gameTime.ElapsedGameTime.TotalSeconds;
-                if(fireTimer >= 0.1)
+                if(fireTimer >= 0.13)
                 {
                     SpawnBullet(originPos);
                     fireTimer = 0.0;
@@ -60,7 +60,7 @@ namespace SeniorDesign
             }
             else
             {
-                fireTimer = 0.1;
+                fireTimer = 0.13;
             }
 
             for(int i = 0; i < bullets.Length; i++)
