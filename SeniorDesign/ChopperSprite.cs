@@ -9,13 +9,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace SeniorDesign
 {
-    public enum Direction
-    {
-        Right = 0,
-        Left = 1,
-        Up = 2,
-        Down = 3
-    }
+    
     public class ChopperSprite
     {
         private KeyboardState keyboardState;

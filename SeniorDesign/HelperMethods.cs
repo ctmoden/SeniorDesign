@@ -27,11 +27,15 @@ namespace SeniorDesign
         /// <returns></returns>
         public static Vector2 RandomYVelGenerator(int min, int max)
         {
-            //chooses random y velocity of missile
+            //chooses random y velocity of sprite
             int randVel = rand.Next(min, max);
             return new Vector2(0, randVel);
         }
 
         public static int Next(int max) => rand.Next(max);
+
+        public static int Next(int min, int max) => rand.Next(min, max);
+
+        public static double NextDouble() => rand.NextDouble();
     }
 }

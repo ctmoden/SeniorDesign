@@ -14,6 +14,7 @@ namespace SeniorDesign
         //FIXME just using one missile for testing
         private MissileSprite[] missiles;//FIXME swap as missiles hit or miss, keep live missiles at the front 
         private BulletParticleSystem bulletSystem;
+        private Dragon dragon1;
 
         private KeyboardState currentKeyboardState;
         public GameController()
@@ -33,6 +34,7 @@ namespace SeniorDesign
                 new MissileSprite(chopper.Position)
             };
             bulletSystem = new BulletParticleSystem(chopper.Position);
+            dragon1 = new Dragon(3);
             base.Initialize();
         }
 
@@ -41,6 +43,7 @@ namespace SeniorDesign
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             chopper.LoadContent(Content);
             bulletSystem.LoadContent(Content);
+            dragon1.LoadContent(Content);
             foreach (var missile in missiles) missile.LoadContent(Content);
 
             // TODO: use this.Content to load your game content here
@@ -57,6 +60,7 @@ namespace SeniorDesign
             if (KeyboardManager.IsPressed(Keys.Q) || KeyboardManager.IsPressed(Keys.Escape))
                 Exit();
             chopper.Update(gameTime);
+            dragon1.Update(gameTime);
             //update all missiles each update to make sure their start position is set to most recent chopper position
             foreach (var missile in missiles)
             {
@@ -113,6 +117,7 @@ namespace SeniorDesign
                 missile.Draw(gameTime, _spriteBatch);
             }
             bulletSystem.Draw(gameTime, _spriteBatch);
+            dragon1.Draw(gameTime, _spriteBatch);
             _spriteBatch.End();
             // TODO: Add your drawing code here
 

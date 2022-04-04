@@ -37,6 +37,18 @@
 /processorParam:TextureFormat=Color
 /build:Dragon_Files/PNG/144x128/flying_dragon-red.png
 
+#begin Dragon_Files/PNG/144x128/flying_twin_headed_dragon-blue.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Dragon_Files/PNG/144x128/flying_twin_headed_dragon-blue.png
+
 #begin Fire Missile.png
 /importer:TextureImporter
 /processor:TextureProcessor

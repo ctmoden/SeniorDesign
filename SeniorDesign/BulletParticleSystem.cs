@@ -29,7 +29,7 @@ namespace SeniorDesign
         public BulletParticleSystem(Vector2 chopperPos)
         {
             this.chopperPos = chopperPos;
-            bullets = new Particle[100];
+            bullets = new Particle[1000];
             freeIndex = 0;
         }
         /// <summary>
@@ -52,7 +52,7 @@ namespace SeniorDesign
             if(IsFiring)
             {
                 fireTimer += gameTime.ElapsedGameTime.TotalSeconds;
-                if(fireTimer >= 0.25)
+                if(fireTimer >= 0.1)
                 {
                     SpawnBullet(originPos);
                     fireTimer = 0.0;
@@ -60,7 +60,7 @@ namespace SeniorDesign
             }
             else
             {
-                fireTimer = 0.25;
+                fireTimer = 0.1;
             }
 
             for(int i = 0; i < bullets.Length; i++)
@@ -140,6 +140,8 @@ namespace SeniorDesign
          */
         private void SpawnBullet(Vector2 position)
         {
+            position.X += 100;
+            position.Y += 87;
             for(int i = 0; i < bullets.Length; i++)
             {
                 if(!bullets[i].Fired)
