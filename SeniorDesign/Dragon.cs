@@ -78,15 +78,19 @@ namespace SeniorDesign
                 {
                     case Direction.Down:
                         direction = Direction.Up;
+                        position = new Vector2(x_pos, 10);//reconsider this after second timer
+
                         break;
                     case Direction.Up:
                         direction = Direction.Down;
+                        position = new Vector2(x_pos, Constants.GAME_HEIGHT - 10);
+
                         break;
                 }
                 directionTimer -= flyTime;
                 resetTimer = false;
             }
-            switch (direction)
+            switch (direction)//second timer for speed timing
             {
                 case Direction.Down:
                     position += HelperMethods.RandomYVelGenerator(-2, 0) * PIXEL_SPEED *(float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -97,13 +101,13 @@ namespace SeniorDesign
             }
             if(position.Y < 0)
             {
-                position = new Vector2(x_pos, 10);
-                direction = Direction.Down;
+                //position = new Vector2(x_pos, 10);//move to case statement
+                //direction = Direction.Down;
             }
             if(position.Y > Constants.GAME_HEIGHT)
             {
-                position = new Vector2(x_pos, Constants.GAME_HEIGHT - 10);
-                direction = Direction.Up;
+                //position = new Vector2(x_pos, Constants.GAME_HEIGHT - 10);
+                //direction = Direction.Up;
             }            
         }
 
