@@ -15,6 +15,8 @@ namespace SeniorDesign
         private MissileSprite[] missiles;//FIXME swap as missiles hit or miss, keep live missiles at the front 
         private BulletParticleSystem bulletSystem;
         private Dragon dragon1;
+        private Dragon dragon2;
+        private Dragon[] testDragons;
 
         private KeyboardState currentKeyboardState;
         public GameController()
@@ -33,8 +35,13 @@ namespace SeniorDesign
                 new MissileSprite(chopper.Position),
                 new MissileSprite(chopper.Position)
             };
+            testDragons = new Dragon[]
+            {
+                new Dragon(3),
+                new Dragon(3)
+            };
             bulletSystem = new BulletParticleSystem(chopper.Position);
-            dragon1 = new Dragon(3);
+            //dragon1 = new Dragon(3);
             base.Initialize();
         }
 
@@ -43,9 +50,9 @@ namespace SeniorDesign
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             chopper.LoadContent(Content);
             bulletSystem.LoadContent(Content);
-            dragon1.LoadContent(Content);
+            //dragon1.LoadContent(Content);
             foreach (var missile in missiles) missile.LoadContent(Content);
-
+            foreach (var dragon in testDragons) dragon.LoadContent(Content);
             // TODO: use this.Content to load your game content here
         }
         /// <summary>
@@ -60,7 +67,7 @@ namespace SeniorDesign
             if (KeyboardManager.IsPressed(Keys.Q) || KeyboardManager.IsPressed(Keys.Escape))
                 Exit();
             chopper.Update(gameTime);
-            dragon1.Update(gameTime);
+            //dragon1.Update(gameTime);
             //update all missiles each update to make sure their start position is set to most recent chopper position
             foreach (var missile in missiles)
             {
@@ -68,6 +75,7 @@ namespace SeniorDesign
                 missile.Update(chopper.Position);
                 if (missile.Fired) missile.FireControl();
             }
+            foreach (var dragon in testDragons) dragon.Update(gameTime);
             #region Monogame Example
             if (KeyboardManager.HasBeenPressed(Keys.Space))
             {
@@ -117,10 +125,10 @@ namespace SeniorDesign
                 missile.Draw(gameTime, _spriteBatch);
             }
             bulletSystem.Draw(gameTime, _spriteBatch);
-            dragon1.Draw(gameTime, _spriteBatch);
+            //dragon1.Draw(gameTime, _spriteBatch);
+            foreach (var dragon in testDragons) dragon.Draw(gameTime, _spriteBatch);
             _spriteBatch.End();
             // TODO: Add your drawing code here
-
             base.Draw(gameTime);
         }
     }

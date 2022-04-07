@@ -36,6 +36,8 @@ namespace SeniorDesign
 
         private double flyTime;
 
+        private double velocityTimer;
+
         public bool Alive;
 
         private int x_pos;
@@ -44,7 +46,7 @@ namespace SeniorDesign
         public Dragon(int animationRow)
         {
             hitCount = 0;
-            position = new Vector2(700, 250);
+            position = new Vector2(HelperMethods.Next(500, 700), HelperMethods.Next(200,500));
             this.animationRow = animationRow;
             direction = (Direction)(HelperMethods.Next(2, 3+1));
             resetTimer = false;
@@ -70,7 +72,6 @@ namespace SeniorDesign
                 flyTime = HelperMethods.NextDouble() * HelperMethods.Next(1, 3);//
                 resetTimer = true;
             }
-            //FIXME make direction timer random;
             if(directionTimer > flyTime || position.Y > Constants.GAME_HEIGHT
                 || position.Y < 0)
             {
@@ -78,36 +79,46 @@ namespace SeniorDesign
                 {
                     case Direction.Down:
                         direction = Direction.Up;
-                        position = new Vector2(x_pos, 10);//reconsider this after second timer
+                        //position += HelperMethods.RandomYVelGenerator(1, 3) * PIXEL_SPEED * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                        //position = new Vector2(x_pos, 10);//reconsider this after second timer
 
                         break;
                     case Direction.Up:
                         direction = Direction.Down;
-                        position = new Vector2(x_pos, Constants.GAME_HEIGHT - 10);
+                        //position += HelperMethods.RandomYVelGenerator(-2, 0) * PIXEL_SPEED * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                        //position = new Vector2(x_pos, Constants.GAME_HEIGHT - 10);
 
                         break;
                 }
                 directionTimer -= flyTime;
                 resetTimer = false;
             }
-            switch (direction)//second timer for speed timing
+            //change velocity based on a timer, not per frame
+            velocityTimer += gameTime.ElapsedGameTime.TotalSeconds;
+            //FIXME make velocity change at a random time, just sticking with .25-.5 secs for now
+            if(velocityTimer > 0.02)
             {
-                case Direction.Down:
-                    position += HelperMethods.RandomYVelGenerator(-2, 0) * PIXEL_SPEED *(float)gameTime.ElapsedGameTime.TotalSeconds;
-                    break;
-                case Direction.Up:
-                    position += HelperMethods.RandomYVelGenerator(1, 3) * PIXEL_SPEED * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                    break;
+                switch (direction)//second timer for speed timing
+                {
+                    case Direction.Down:
+                        position += HelperMethods.RandomYVelGenerator(-2, 0) * PIXEL_SPEED * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                        break;
+                    case Direction.Up:
+                        position += HelperMethods.RandomYVelGenerator(1, 3) * PIXEL_SPEED * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                        break;
+                }
+                velocityTimer -= 0.02;
             }
+            
             if(position.Y < 0)
             {
                 //position = new Vector2(x_pos, 10);//move to case statement
-                //direction = Direction.Down;
+                direction = Direction.Down;
             }
             if(position.Y > Constants.GAME_HEIGHT)
             {
                 //position = new Vector2(x_pos, Constants.GAME_HEIGHT - 10);
-                //direction = Direction.Up;
+                direction = Direction.Up;
             }            
         }
 
