@@ -55,7 +55,7 @@ namespace SeniorDesign
         }
         public void LoadContent(ContentManager content)
         {
-            dragonTexture = content.Load<Texture2D>(@"Dragon_Files\PNG\144x128\flying_dragon-red");
+            dragonTexture = content.Load<Texture2D>(@"Dragon_Files\PNG\144x128\flying_dragon-red");//FIXME will this cause issues outside my machine?
             //FIXME load fire texture
         }
         public void Update(GameTime gameTime)

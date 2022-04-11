@@ -6,6 +6,9 @@ ButtonStates/SpaceButtonState.cs - Code follows main framework from solution on 
 
 Content/red_laser.png - Created by StarNinjas on OpenGameArt.org, released as "3 lasers" (https://opengameart.org/content/3-lasers) and released under public domain. 
 
+Content/Debugging_Tools/Water32Frames8x4.png - created by Lee Davis on OpenGameArt.org (https://opengameart.org/content/flowing-water) and released under public domain.
+
+Content/Debugging_Tools/ball.png - Created by Dr. Nathan Bean, Kansas State University, under Public Domain
 
 
 
