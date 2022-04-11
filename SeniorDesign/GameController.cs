@@ -131,5 +131,10 @@ namespace SeniorDesign
             // TODO: Add your drawing code here
             base.Draw(gameTime);
         }
+
+        private void CheckCollisions()
+        {
+
+        }
     }
 }

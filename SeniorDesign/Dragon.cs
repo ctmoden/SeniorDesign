@@ -41,7 +41,12 @@ namespace SeniorDesign
         private double velocityTimer;
 
         public bool Alive;
-
+        /// <summary>
+        /// when hit by a missile, subtract 50-60
+        /// when hit by a bullet, subtract 2-3
+        /// </summary>
+        private int hitPoints = 100;
+        public int HitPoints => hitPoints;
         private int x_pos;
 
         private Direction direction;

@@ -16,6 +16,7 @@ namespace SeniorDesign
         private double fireTimer;
         private Color color;
         private bool fired;
+        private int firedBullets;//indices 0->firedBullets is bullets currently in the air
         private const int FIRE_VELOCITY = 3000;
         private Color[] colors = new Color[]
         {
@@ -71,9 +72,7 @@ namespace SeniorDesign
                 if (!bullets[i].Fired) continue;
                 bullets[i].Position += (float)gameTime.ElapsedGameTime.TotalSeconds * bullets[i].Velocity;
                 bullets[i].UpdateBounds();
-
             }
-
         }
         
         /// <summary>
@@ -127,6 +126,7 @@ namespace SeniorDesign
                     bullets[i].Velocity = new Vector2(FIRE_VELOCITY, 0);
                     bullets[i].Fired = true;
                     bullets[i].InitializeBounds(position);
+                    firedBullets++;
                     return;
                 }
                 
