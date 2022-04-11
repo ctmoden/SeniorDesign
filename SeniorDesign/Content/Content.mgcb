@@ -25,6 +25,30 @@
 /processorParam:TextureFormat=Color
 /build:Choppa_Sprite2.png
 
+#begin Debugging_Tools/ball.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Debugging_Tools/ball.png
+
+#begin Debugging_Tools/Water32Frames8x4.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Debugging_Tools/Water32Frames8x4.png
+
 #begin Dragon_Files/PNG/144x128/flying_dragon-red.png
 /importer:TextureImporter
 /processor:TextureProcessor

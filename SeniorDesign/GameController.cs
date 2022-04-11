@@ -38,7 +38,7 @@ namespace SeniorDesign
             testDragons = new Dragon[]
             {
                 new Dragon(3),
-                new Dragon(3)
+                //new Dragon(3)
             };
             bulletSystem = new BulletParticleSystem(chopper.Position);
             //dragon1 = new Dragon(3);

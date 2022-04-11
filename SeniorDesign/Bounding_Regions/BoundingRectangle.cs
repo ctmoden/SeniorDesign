@@ -34,8 +34,13 @@ namespace SeniorDesign.Bounding_Regions
             Width = width;
             Height = height;
         }
-
-        public BoundingRectangle(Vector2 position, float width, float height)
+        /// <summary>
+        /// FIXME had to switch width and height(width, height) -> (height, width)
+        /// </summary>
+        /// <param name="position"></param>
+        /// <param name="height"></param>
+        /// <param name="width"></param>
+        public BoundingRectangle(Vector2 position, float height, float width)
         {
             X = position.X;
             Y = position.Y;
