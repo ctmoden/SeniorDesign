@@ -11,6 +11,7 @@ namespace SeniorDesign
     {
         private Vector2 chopperPos;
         private Texture2D texture;
+        private Texture2D boundTexture;
         private int freeIndex;//index of first bullet ready to fire
         private double fireTimer;
         private Color color;
@@ -39,6 +40,7 @@ namespace SeniorDesign
         public void LoadContent(ContentManager content)
         {
             texture = content.Load<Texture2D>("red_laser");
+            boundTexture = content.Load<Texture2D>(@"Debugging_Tools\Water32Frames8x4");
         }
         /// <summary>
         /// update position of bullets ready to fire to chopper
@@ -68,39 +70,9 @@ namespace SeniorDesign
                 if (!bullets[i].Fired) continue;
                 bullets[i].Position += (float)gameTime.ElapsedGameTime.TotalSeconds * bullets[i].Velocity;
             }
-            /*
-            int tempIndex = freeIndex;
-            //FIXME might want to modify to start at first available bullet...
-            //updating unfired bullets...
-            for(int i = tempIndex; i < bullets.Length;i++)
-            {                
-                bullets[i].StartPosition = originPos;
-                bullets[i].Fired = true;
-                freeIndex++;    
-            }
-            //update in-flight bullets
-            for(int i = 0; i < freeIndex; i++)
-            {
-                FireControl(i);
-            }*/
+            
         }
-        /// <summary>
-        /// fire control for 
-        /// </summary>
-        /// <param name="index"></param>
-        private void FireControl(int index)
-        {
-            if(bullets[index].Position.X < Constants.GAME_WIDTH && bullets[index].Fired)
-            {
-                bullets[index].Position += new Vector2(FIRE_VELOCITY, 0);
-            }
-            if (bullets[index].Position.X >= Constants.GAME_WIDTH && bullets[index].Fired)
-            {
-                bullets[index].Position += new Vector2(0, 0);
-                
-            }
-
-        }
+        
         /// <summary>
         /// 
         /// </summary>

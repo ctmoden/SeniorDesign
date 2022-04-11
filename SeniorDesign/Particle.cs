@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Threading;
 using SeniorDesign.ButtonStates;
+using SeniorDesign.Bounding_Regions;
 
 namespace SeniorDesign
 {
@@ -17,6 +18,8 @@ namespace SeniorDesign
         min/max particles
 
          */
+        private BoundingRectangle bounds;
+        public BoundingRectangle Bounds => bounds;
         public Vector2 Position;
 
         public Vector2 StartPosition;
