@@ -20,6 +20,7 @@ namespace SeniorDesign
          */
         private BoundingRectangle bounds;
         public BoundingRectangle Bounds => bounds;
+   
         public Vector2 Position;
 
         public Vector2 StartPosition;
@@ -44,12 +45,18 @@ namespace SeniorDesign
             this.Velocity = velocity;
             this.StartPosition = startPos;
         }
-
-        public void Update()
+        public void InitializeBounds(Vector2 position)
         {
-
+            bounds = new BoundingRectangle(position.X, position.Y, 10, 15);
         }
-
-        
+        /// <summary>
+        /// Updates bounds as particle is flying through the air
+        /// </summary>
+        /// <param name="position"></param>
+        public void UpdateBounds()
+        {
+            bounds.X = Position.X +75;
+            bounds.Y = Position.Y;
+        }       
     }
 }

@@ -54,6 +54,7 @@ namespace SeniorDesign
             if(IsFiring)
             {
                 fireTimer += gameTime.ElapsedGameTime.TotalSeconds;
+                //when .13 secs have passed, and user is still holding firing key, spawn another bullet
                 if(fireTimer >= 0.13)
                 {
                     SpawnBullet(originPos);
@@ -69,12 +70,14 @@ namespace SeniorDesign
             {
                 if (!bullets[i].Fired) continue;
                 bullets[i].Position += (float)gameTime.ElapsedGameTime.TotalSeconds * bullets[i].Velocity;
+                bullets[i].UpdateBounds();
+
             }
-            
+
         }
         
         /// <summary>
-        /// 
+        /// Draw bullet and bounding region (for debugging)
         /// </summary>
         /// <param name="gameTime"></param>
         /// <param name="spriteBatch"></param>
@@ -85,6 +88,8 @@ namespace SeniorDesign
                 if (!bullets[i].Fired) continue;
                 color = colors[HelperMethods.Next(colors.Length)];
                 spriteBatch.Draw(texture, bullets[i].Position, null, color, 0.0f,Vector2.Zero, .1f, SpriteEffects.None,0.0f);
+                var boundRect = new Rectangle((int)bullets[i].Bounds.X, (int)bullets[i].Bounds.Y, (int)bullets[i].Bounds.Height, (int)bullets[i].Bounds.Width);
+                spriteBatch.Draw(boundTexture, boundRect, Color.White);
             }
             /*
             fireTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -121,8 +126,10 @@ namespace SeniorDesign
                     bullets[i].Position = position;
                     bullets[i].Velocity = new Vector2(FIRE_VELOCITY, 0);
                     bullets[i].Fired = true;
+                    bullets[i].InitializeBounds(position);
                     return;
                 }
+                
             }
         }
     }
