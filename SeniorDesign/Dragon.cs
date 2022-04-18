@@ -82,6 +82,11 @@ namespace SeniorDesign
         {
             bounds.X = position.X-35;
             bounds.Y = position.Y-10;
+            if (!Alive)
+            {
+                bounds.X = 1000;
+                bounds.Y = 1000;
+            }
             if (hitPoints <= 0) Alive = false;
             /*
              for a random period of time,
@@ -158,7 +163,7 @@ namespace SeniorDesign
             var sourceRectangle = new Rectangle(animationFrame * 144, animationRow * 128, 144, 128);
             if(Alive) spriteBatch.Draw(dragonTexture, position, sourceRectangle, Color.White, 0f, new Vector2(72, 64), .75f, SpriteEffects.None,0);
             var debugRect = new Rectangle((int)bounds.X, (int)bounds.Y, (int)bounds.Height, (int)bounds.Width);
-            spriteBatch.Draw(boundingTexture, debugRect, Color.White);
+            if(Alive) spriteBatch.Draw(boundingTexture, debugRect, Color.White);
 
         }
 

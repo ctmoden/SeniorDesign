@@ -38,7 +38,7 @@ namespace SeniorDesign
             testDragons = new Dragon[]
             {
                 new Dragon(3),
-                //new Dragon(3)
+                new Dragon(3)
             };
             bulletSystem = new BulletParticleSystem(chopper.Position);
             //dragon1 = new Dragon(3);
@@ -108,7 +108,7 @@ namespace SeniorDesign
             }
             bulletSystem.Update(gameTime, chopper.Position);
             #endregion chopper machine gun
-            checkCollisions();
+            checkDragonCollisions();
             base.Update(gameTime);
         }
         /// <summary>
@@ -132,13 +132,15 @@ namespace SeniorDesign
             base.Draw(gameTime);
         }
 
-        private void checkCollisions()
+        private void checkDragonCollisions()
         {//FIXME only working for one dragon on screen...
-            int collisionCount = 0;
+            int bulletCollisionCount = 0;
+            int missileCollisionCount = 0;
             foreach (var dragon in testDragons)
             {
-                collisionCount = bulletSystem.CollissionChecker(dragon.Bounds);
-                dragon.DetractHitPoints(collisionCount, MunitionType.Bullet);
+                bulletCollisionCount = bulletSystem.CollissionChecker(dragon.Bounds);
+                dragon.DetractHitPoints(bulletCollisionCount, MunitionType.Bullet);
+                bulletCollisionCount = 0;
             }
             
         }
