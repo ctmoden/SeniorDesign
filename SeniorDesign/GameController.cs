@@ -133,7 +133,7 @@ namespace SeniorDesign
         }
 
         private void checkCollisions()
-        {
+        {//FIXME only working for one dragon on screen...
             int collisionCount = 0;
             foreach (var dragon in testDragons)
             {
