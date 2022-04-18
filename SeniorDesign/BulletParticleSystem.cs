@@ -121,8 +121,9 @@ namespace SeniorDesign
             }
             return false;
         }*/
-        public int CollissionChecker(BoundingRectangle other)
+        public int CollissionChecker(BoundingRectangle other, bool isDragonAlive)
         {
+            //if (!isDragonAlive) return 0;
             int hitCount = 0;
             for (int i = 0; i < firedBullets; i++)
             {

@@ -7,6 +7,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Input;
 using System.Threading;
+using SeniorDesign.Bounding_Regions;
+
 namespace SeniorDesign
 {
     /// <summary>
@@ -39,6 +41,11 @@ namespace SeniorDesign
         /// Texture for missile
         /// </summary>
         private Texture2D texture;
+        /// <summary>
+        /// Texture for bounding region
+        /// </summary>
+        private Texture2D boundTexture;
+
         /// <summary>
         /// direction timer.  Times how long chopper moves in certian direction.
         /// </summary>
@@ -85,6 +92,11 @@ namespace SeniorDesign
         /// </summary>
         private bool spinUp = false;
         /// <summary>
+        /// Bounding region for colissions
+        /// </summary>
+        private BoundingRectangle bounds;
+        public BoundingRectangle Bounds => bounds;
+        /// <summary>
         /// list of positions for all missiles in flight 
         /// </summary>
         /// <summary>
@@ -94,6 +106,7 @@ namespace SeniorDesign
         public MissileSprite(Vector2 chopperPos)
         {
             startPosition = chopperPos;
+            bounds = new BoundingRectangle(position.X, position.Y, 10, 10);
         }
         //TODO what to do about constructor and chopper position? =>update method!
         /// <summary>
@@ -103,6 +116,8 @@ namespace SeniorDesign
         public void LoadContent(ContentManager content)
         {
             texture = content.Load<Texture2D>("Missile");
+            boundTexture = content.Load<Texture2D>(@"Debugging_Tools\Water32Frames8x4");
+
         }
         /// <summary>
         /// TODO add deconstructor for spent missile?
@@ -114,7 +129,8 @@ namespace SeniorDesign
         /// <param name="fired">determines if missile has been fired</param>
         /// <param name="origin">chopper position on screen to fire from</param>
         public void Update(bool fired, Vector2 origin)
-        {            
+        {
+            resetBounds();
             startPosition = origin;
             startPosition.X += 110;
             startPosition.Y += 80;
@@ -124,6 +140,7 @@ namespace SeniorDesign
 
         public void Update(Vector2 origin)
         {
+            resetBounds();
             startPosition = origin;
             startPosition.X += 110;
             startPosition.Y += 80;
@@ -132,9 +149,10 @@ namespace SeniorDesign
         /// <summary>
         /// FIXME put logic of 
         /// </summary>
-        private void setPositions()
+        private void resetBounds()
         {
-
+            bounds.X = position.X + 30;
+            bounds.Y = position.Y+5;
         }
         /// <summary>
         /// Fires missile and moves missile across screen
@@ -177,8 +195,11 @@ namespace SeniorDesign
                 //draw with upadted position and source rectangle
                 //spriteBatch.Draw(texture, Position, sourceRectangle, Color.White);
                 spriteBatch.Draw(texture, position, sourceRectangle, Color.White, 0f, new Vector2(0, 0), .25f, SpriteEffects.None, 0);
+                var boundRect = new Rectangle((int)bounds.X, (int)bounds.Y, (int)bounds.Height, (int)bounds.Width);
+                spriteBatch.Draw(boundTexture, boundRect, Color.White);
+
             }
-            
+
         }
         
     }

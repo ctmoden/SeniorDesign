@@ -82,7 +82,7 @@ namespace SeniorDesign
         {
             bounds.X = position.X-35;
             bounds.Y = position.Y-10;
-            if (!Alive)
+            if (!Alive)//FIXME try getting rid of this since dragon is checked beforehand
             {
                 bounds.X = 1000;
                 bounds.Y = 1000;
