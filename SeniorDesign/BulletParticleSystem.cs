@@ -4,9 +4,10 @@ using Microsoft.Xna.Framework.Input;
 using System.Threading;
 using SeniorDesign.ButtonStates;
 using Microsoft.Xna.Framework.Content;
+using SeniorDesign.Bounding_Regions;
 
 namespace SeniorDesign
-{
+{//partition in horizontal 
     public class BulletParticleSystem 
     {
         private Vector2 chopperPos;
@@ -16,7 +17,7 @@ namespace SeniorDesign
         private double fireTimer;
         private Color color;
         private bool fired;
-        private int firedBullets;//indices 0->firedBullets is bullets currently in the air
+        private int firedBullets = 0;//indices 0->firedBullets is Bullets currently in the air
         private const int FIRE_VELOCITY = 3000;
         private Color[] colors = new Color[]
         {
@@ -24,14 +25,14 @@ namespace SeniorDesign
             Color.OrangeRed,
             Color.Yellow
         };
-        Particle[] bullets;
+        public Particle[] Bullets;
 
         public bool IsFiring { get; set; }
 
         public BulletParticleSystem(Vector2 chopperPos)
         {
             this.chopperPos = chopperPos;
-            bullets = new Particle[1000];
+            Bullets = new Particle[1000];
             freeIndex = 0;
         }
         /// <summary>
@@ -44,8 +45,8 @@ namespace SeniorDesign
             boundTexture = content.Load<Texture2D>(@"Debugging_Tools\Water32Frames8x4");
         }
         /// <summary>
-        /// update position of bullets ready to fire to chopper
-        /// fire bullets
+        /// update position of Bullets ready to fire to chopper
+        /// fire Bullets
         /// TAKE INSPIRATION FROM COIN SPRITE IN OTHER GAME
         /// </summary>
         /// <param name="gameTime"></param>
@@ -67,11 +68,11 @@ namespace SeniorDesign
                 fireTimer = 0.13;
             }
 
-            for(int i = 0; i < bullets.Length; i++)
+            for(int i = 0; i < Bullets.Length; i++)
             {
-                if (!bullets[i].Fired) continue;
-                bullets[i].Position += (float)gameTime.ElapsedGameTime.TotalSeconds * bullets[i].Velocity;
-                bullets[i].UpdateBounds();
+                if (!Bullets[i].Fired) continue;
+                Bullets[i].Position += (float)gameTime.ElapsedGameTime.TotalSeconds * Bullets[i].Velocity;
+                Bullets[i].UpdateBounds();
             }
         }
         
@@ -82,55 +83,42 @@ namespace SeniorDesign
         /// <param name="spriteBatch"></param>
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            for(int i = 0; i < bullets.Length; i++)
+            for(int i = 0; i < Bullets.Length; i++)
             {
-                if (!bullets[i].Fired) continue;
+                if (!Bullets[i].Fired) continue;
                 color = colors[HelperMethods.Next(colors.Length)];
-                spriteBatch.Draw(texture, bullets[i].Position, null, color, 0.0f,Vector2.Zero, .1f, SpriteEffects.None,0.0f);
-                var boundRect = new Rectangle((int)bullets[i].Bounds.X, (int)bullets[i].Bounds.Y, (int)bullets[i].Bounds.Height, (int)bullets[i].Bounds.Width);
+                spriteBatch.Draw(texture, Bullets[i].Position, null, color, 0.0f,Vector2.Zero, .1f, SpriteEffects.None,0.0f);
+                var boundRect = new Rectangle((int)Bullets[i].Bounds.X, (int)Bullets[i].Bounds.Y, (int)Bullets[i].Bounds.Height, (int)Bullets[i].Bounds.Width);
                 spriteBatch.Draw(boundTexture, boundRect, Color.White);
             }
-            /*
-            fireTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
-            if (fireTimer > .25)
-            {
-                color = colors[HelperMethods.Next(colors.Length)];
-                spriteBatch.Draw(texture, bullets[i].Position, color);
-                fireTimer -= .25;
-            }
-            */
         }
-        /*
-         While space bar is being pressed,
-        every .25 seconds in that press: 
-            iteratively update bullet state (not fired => fired)
-            draw active bullets flying down range 
-                update start pos to current choppa pos when first fired
         
-        Questions:
-            where to put "holding m button" logic: controller or particle system?
-            where to put the timers?  In/out of for loops or in controller?
-            do i need two separate timers for update and draw with my current implmentation?
-            better way to do the timing for the update?  I know I have to use a timer for the drawing of the bullets...
-            
-         */
         private void SpawnBullet(Vector2 position)
         {
             position.X += 100;
             position.Y += 87;
-            for(int i = 0; i < bullets.Length; i++)
+            for(int i = 0; i < Bullets.Length; i++)
             {
-                if(!bullets[i].Fired)
+                if(!Bullets[i].Fired)
                 {
-                    bullets[i].Position = position;
-                    bullets[i].Velocity = new Vector2(FIRE_VELOCITY, 0);
-                    bullets[i].Fired = true;
-                    bullets[i].InitializeBounds(position);
+                    Bullets[i].Position = position;
+                    Bullets[i].Velocity = new Vector2(FIRE_VELOCITY, 0);
+                    Bullets[i].Fired = true;
+                    Bullets[i].InitializeBounds(position);
                     firedBullets++;
                     return;
                 }
                 
             }
+        }
+
+        public bool CollissionChecker(BoundingRectangle other)
+        {
+            for(int i = 0; i < firedBullets; i++)
+            {
+                if (Bullets[i].Bounds.CollidesWith(other)) return true;
+            }
+            return false;
         }
     }
 }

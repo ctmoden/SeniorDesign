@@ -52,7 +52,6 @@ namespace SeniorDesign
         /// <summary>
         /// Updates bounds as particle is flying through the air
         /// </summary>
-        /// <param name="position"></param>
         public void UpdateBounds()
         {
             bounds.X = Position.X +75;
