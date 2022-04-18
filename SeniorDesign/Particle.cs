@@ -31,8 +31,9 @@ namespace SeniorDesign
 
         public float Scale;
 
-        
         public bool Fired;
+
+        public bool Alive;
 
         /// <summary>
         /// FIXME change params later

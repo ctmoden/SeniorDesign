@@ -108,7 +108,7 @@ namespace SeniorDesign
             }
             bulletSystem.Update(gameTime, chopper.Position);
             #endregion chopper machine gun
-
+            checkCollisions();
             base.Update(gameTime);
         }
         /// <summary>
@@ -132,9 +132,15 @@ namespace SeniorDesign
             base.Draw(gameTime);
         }
 
-        private void CheckCollisions()
+        private void checkCollisions()
         {
-
+            int collisionCount = 0;
+            foreach (var dragon in testDragons)
+            {
+                collisionCount = bulletSystem.CollissionChecker(dragon.Bounds);
+                dragon.DetractHitPoints(collisionCount, MunitionType.Bullet);
+            }
+            
         }
     }
 }

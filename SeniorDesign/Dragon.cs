@@ -46,7 +46,7 @@ namespace SeniorDesign
         /// when hit by a bullet, subtract 2-3
         /// </summary>
         private int hitPoints = 100;
-        public int HitPoints => hitPoints;
+        public int HitPoints { get { return hitPoints; } set { hitPoints = value; } }
         private int x_pos;
 
         private Direction direction;
@@ -69,6 +69,7 @@ namespace SeniorDesign
             resetTimer = false;
             x_pos = 700;
             bounds = new BoundingRectangle(new Vector2(position.X, position.Y), 60, 20);
+            Alive = true;
 
         }
         public void LoadContent(ContentManager content)
@@ -81,6 +82,7 @@ namespace SeniorDesign
         {
             bounds.X = position.X-35;
             bounds.Y = position.Y-10;
+            if (hitPoints <= 0) Alive = false;
             /*
              for a random period of time,
             move at random velocity either up on down
@@ -154,10 +156,15 @@ namespace SeniorDesign
                 animationTimer -= .25;
             }//144(x) by 128(y)
             var sourceRectangle = new Rectangle(animationFrame * 144, animationRow * 128, 144, 128);
-            spriteBatch.Draw(dragonTexture, position, sourceRectangle, Color.White, 0f, new Vector2(72, 64), .75f, SpriteEffects.None,0);
+            if(Alive) spriteBatch.Draw(dragonTexture, position, sourceRectangle, Color.White, 0f, new Vector2(72, 64), .75f, SpriteEffects.None,0);
             var debugRect = new Rectangle((int)bounds.X, (int)bounds.Y, (int)bounds.Height, (int)bounds.Width);
             spriteBatch.Draw(boundingTexture, debugRect, Color.White);
 
+        }
+
+        public void DetractHitPoints(int hitCount, MunitionType munitionType)
+        {
+            hitPoints -= hitCount * (int)munitionType;
         }
     }
 }

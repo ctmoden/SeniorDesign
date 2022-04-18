@@ -70,7 +70,7 @@ namespace SeniorDesign
 
             for(int i = 0; i < Bullets.Length; i++)
             {
-                if (!Bullets[i].Fired) continue;
+                if (!Bullets[i].Alive) continue;
                 Bullets[i].Position += (float)gameTime.ElapsedGameTime.TotalSeconds * Bullets[i].Velocity;
                 Bullets[i].UpdateBounds();
             }
@@ -85,7 +85,7 @@ namespace SeniorDesign
         {
             for(int i = 0; i < Bullets.Length; i++)
             {
-                if (!Bullets[i].Fired) continue;
+                if (!Bullets[i].Fired || !Bullets[i].Alive) continue;
                 color = colors[HelperMethods.Next(colors.Length)];
                 spriteBatch.Draw(texture, Bullets[i].Position, null, color, 0.0f,Vector2.Zero, .1f, SpriteEffects.None,0.0f);
                 var boundRect = new Rectangle((int)Bullets[i].Bounds.X, (int)Bullets[i].Bounds.Y, (int)Bullets[i].Bounds.Height, (int)Bullets[i].Bounds.Width);
@@ -104,6 +104,7 @@ namespace SeniorDesign
                     Bullets[i].Position = position;
                     Bullets[i].Velocity = new Vector2(FIRE_VELOCITY, 0);
                     Bullets[i].Fired = true;
+                    Bullets[i].Alive = true;
                     Bullets[i].InitializeBounds(position);
                     firedBullets++;
                     return;
@@ -112,13 +113,43 @@ namespace SeniorDesign
             }
         }
 
-        public bool CollissionChecker(BoundingRectangle other)
+        /*public bool CollissionChecker(BoundingRectangle other)
         {
             for(int i = 0; i < firedBullets; i++)
             {
                 if (Bullets[i].Bounds.CollidesWith(other)) return true;
             }
             return false;
+        }*/
+        public int CollissionChecker(BoundingRectangle other)
+        {
+            int hitCount = 0;
+            for (int i = 0; i < firedBullets; i++)
+            {
+                if (Bullets[i].Alive &&  Bullets[i].Bounds.CollidesWith(other))
+                {
+                    Bullets[i].Alive = false;
+                    hitCount++;
+                }
+            }
+            return hitCount;
+        }
+
+        private void bulletCheck()
+        {
+            for (int i = 0; i < firedBullets; i++)
+            {
+                if(Bullets[i].Position.X > Constants.GAME_WIDTH || Bullets[i].Position.X < 0)
+                {
+                    Bullets[i].Alive = false;
+                }
+                if (!Bullets[i].Alive)
+                {
+                    Bullets[i] = Bullets[firedBullets];
+                    firedBullets--;
+                }
+            }
+            
         }
     }
 }
