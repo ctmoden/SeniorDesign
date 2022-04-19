@@ -96,6 +96,8 @@ namespace SeniorDesign
         /// </summary>
         private BoundingRectangle bounds;
         public BoundingRectangle Bounds => bounds;
+
+        public bool IsAlive = false;
         /// <summary>
         /// list of positions for all missiles in flight 
         /// </summary>

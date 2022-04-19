@@ -143,7 +143,7 @@ namespace SeniorDesign
                 dragon.DetractHitPoints(bulletCollisionCount, MunitionType.Bullet);
                 foreach(var missile in missiles)
                 {
-                    missileCollisionCount += 
+                    missileCollisionCount += missile.CollisionChecker(dragon.Bounds);
                 }
                 bulletCollisionCount = 0;
             }
