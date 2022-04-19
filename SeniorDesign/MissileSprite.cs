@@ -106,7 +106,7 @@ namespace SeniorDesign
         public MissileSprite(Vector2 chopperPos)
         {
             startPosition = chopperPos;
-            bounds = new BoundingRectangle(position.X, position.Y, 10, 10);
+            bounds = new BoundingRectangle(position.X, position.Y, 20, 10);
         }
         //TODO what to do about constructor and chopper position? =>update method!
         /// <summary>
@@ -151,8 +151,8 @@ namespace SeniorDesign
         /// </summary>
         private void resetBounds()
         {
-            bounds.X = position.X + 30;
-            bounds.Y = position.Y+5;
+            bounds.X = position.X + 15;
+            bounds.Y = position.Y + 5;
         }
         /// <summary>
         /// Fires missile and moves missile across screen
@@ -195,11 +195,17 @@ namespace SeniorDesign
                 //draw with upadted position and source rectangle
                 //spriteBatch.Draw(texture, Position, sourceRectangle, Color.White);
                 spriteBatch.Draw(texture, position, sourceRectangle, Color.White, 0f, new Vector2(0, 0), .25f, SpriteEffects.None, 0);
-                var boundRect = new Rectangle((int)bounds.X, (int)bounds.Y, (int)bounds.Height, (int)bounds.Width);
+                var boundRect = new Rectangle((int)bounds.X, (int)bounds.Y, (int)bounds.Width, (int)bounds.Height);
                 spriteBatch.Draw(boundTexture, boundRect, Color.White);
 
             }
 
+        }
+
+        public int CollisionChecker(BoundingRectangle other)
+        {
+            int hitCount = 0;
+            return hitCount;
         }
         
     }

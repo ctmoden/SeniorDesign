@@ -141,6 +141,10 @@ namespace SeniorDesign
                 if (!dragon.Alive) continue;
                 bulletCollisionCount = bulletSystem.CollissionChecker(dragon.Bounds, dragon.Alive);
                 dragon.DetractHitPoints(bulletCollisionCount, MunitionType.Bullet);
+                foreach(var missile in missiles)
+                {
+                    missileCollisionCount += 
+                }
                 bulletCollisionCount = 0;
             }
             

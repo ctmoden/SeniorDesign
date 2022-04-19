@@ -57,7 +57,7 @@ namespace SeniorDesign
             {
                 fireTimer += gameTime.ElapsedGameTime.TotalSeconds;
                 //when .13 secs have passed, and user is still holding firing key, spawn another bullet
-                if(fireTimer >= 0.5)//.13 = MAGIC NUMBER
+                if(fireTimer >= 0.13)//.13 = MAGIC NUMBER
                 {
                     SpawnBullet(originPos);
                     fireTimer = 0.0;
@@ -65,7 +65,7 @@ namespace SeniorDesign
             }
             else
             {
-                fireTimer = 0.5;
+                fireTimer = 0.13;
             }
 
             for(int i = 0; i < Bullets.Length; i++)
