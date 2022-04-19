@@ -48,7 +48,7 @@ namespace SeniorDesign
         }
         public void InitializeBounds(Vector2 position)
         {
-            bounds = new BoundingRectangle(position.X, position.Y, 10, 15);
+            bounds = new BoundingRectangle(position.X, position.Y, 10, 40);
         }
         /// <summary>
         /// Updates bounds as particle is flying through the air

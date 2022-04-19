@@ -89,7 +89,7 @@ namespace SeniorDesign
                 color = colors[HelperMethods.Next(colors.Length)];
                 spriteBatch.Draw(texture, Bullets[i].Position, null, color, 0.0f,Vector2.Zero, .1f, SpriteEffects.None,0.0f);
                 var boundRect = new Rectangle((int)Bullets[i].Bounds.X, (int)Bullets[i].Bounds.Y, (int)Bullets[i].Bounds.Height, (int)Bullets[i].Bounds.Width);
-                spriteBatch.Draw(boundTexture, boundRect, Color.White);
+                //spriteBatch.Draw(boundTexture, boundRect, Color.White);
             }
         }
         
@@ -113,14 +113,12 @@ namespace SeniorDesign
             }
         }
 
-        /*public bool CollissionChecker(BoundingRectangle other)
-        {
-            for(int i = 0; i < firedBullets; i++)
-            {
-                if (Bullets[i].Bounds.CollidesWith(other)) return true;
-            }
-            return false;
-        }*/
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="other"></param>
+        /// <param name="isDragonAlive"></param>
+        /// <returns></returns>
         public int CollissionChecker(BoundingRectangle other, bool isDragonAlive)
         {
             //if (!isDragonAlive) return 0;

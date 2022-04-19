@@ -51,7 +51,7 @@ namespace SeniorDesign
         /// private backing variable for Position field
         /// FIXME decide where to set in controller or here
         /// </summary>
-        private Vector2 position = new Vector2(400, 200);
+        private Vector2 position = new Vector2(100, 200);
         /// <summary>
         /// Position of chopper
         /// </summary>
