@@ -57,7 +57,7 @@ namespace SeniorDesign
             {
                 fireTimer += gameTime.ElapsedGameTime.TotalSeconds;
                 //when .13 secs have passed, and user is still holding firing key, spawn another bullet
-                if(fireTimer >= 0.13)
+                if(fireTimer >= 0.5)//.13 = MAGIC NUMBER
                 {
                     SpawnBullet(originPos);
                     fireTimer = 0.0;
@@ -65,7 +65,7 @@ namespace SeniorDesign
             }
             else
             {
-                fireTimer = 0.13;
+                fireTimer = 0.5;
             }
 
             for(int i = 0; i < Bullets.Length; i++)
@@ -74,6 +74,7 @@ namespace SeniorDesign
                 Bullets[i].Position += (float)gameTime.ElapsedGameTime.TotalSeconds * Bullets[i].Velocity;
                 Bullets[i].UpdateBounds();
             }
+            //bulletCheck();
         }
         
         /// <summary>
@@ -88,7 +89,7 @@ namespace SeniorDesign
                 if (!Bullets[i].Fired || !Bullets[i].Alive) continue;
                 color = colors[HelperMethods.Next(colors.Length)];
                 spriteBatch.Draw(texture, Bullets[i].Position, null, color, 0.0f,Vector2.Zero, .1f, SpriteEffects.None,0.0f);
-                var boundRect = new Rectangle((int)Bullets[i].Bounds.X, (int)Bullets[i].Bounds.Y, (int)Bullets[i].Bounds.Height, (int)Bullets[i].Bounds.Width);
+                var boundRect = new Rectangle((int)Bullets[i].Bounds.X, (int)Bullets[i].Bounds.Y, (int)Bullets[i].Bounds.Width, (int)Bullets[i].Bounds.Height);
                 //spriteBatch.Draw(boundTexture, boundRect, Color.White);
             }
         }
