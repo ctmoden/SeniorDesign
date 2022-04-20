@@ -13,6 +13,14 @@ namespace SeniorDesign
     
     public class ChopperSprite
     {
+        /// <summary>
+        /// private backing for hit points
+        /// </summary>
+        private int hitPoints = 100;
+        /// <summary>
+        ///public get set for hit point values
+        /// </summary>
+        public int HitPoints { get { return hitPoints; } set { hitPoints = value; } }
         private KeyboardState keyboardState;
 
         private List<MissileSprite> missiles;
@@ -86,7 +94,7 @@ namespace SeniorDesign
         public ChopperSprite()
         {
             missiles = new List<MissileSprite>();
-            bounds = new BoundingRectangle(position.X, position.Y, 50, 10);
+            bounds = new BoundingRectangle(position.X, position.Y, 150, 30);
             
         }
         public void LoadContent(ContentManager content)
@@ -103,6 +111,8 @@ namespace SeniorDesign
         /// <param name="gameTime"></param>
         public void Update(GameTime gameTime)
         {
+            bounds.X = position.X + 16;
+            bounds.Y = position.Y + 62;
             keyboardState = Keyboard.GetState();
             if (!hit)
             {
@@ -146,6 +156,9 @@ namespace SeniorDesign
             //spriteBatch.Draw(texture, Position, sourceRectangle, Color.White);
             //TODO difference between position and origin?
             spriteBatch.Draw(flyingTexture, position, sourceRectangle, Color.White, 0f, new Vector2(0, 0), .25f, SpriteEffects.None, 0);
+            var boundRect = new Rectangle((int)bounds.X, (int)bounds.Y, (int)bounds.Width, (int)bounds.Height);
+            spriteBatch.Draw(boundTexture, boundRect, Color.White * .2f);
+
         }
     }
 }
