@@ -32,7 +32,7 @@ namespace SeniorDesign
         private static int missileLoad = 3;//FIXME make this public and reset as soon as 
 
         public static int MissileLoad => missileLoad;
-        private const int FIRE_VELOCITY = 20;
+        private const int FIRE_VELOCITY = 1;
         /// <summary>
         /// pixel speed of animation
         /// </summary>

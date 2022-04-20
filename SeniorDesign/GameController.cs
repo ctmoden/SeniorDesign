@@ -146,8 +146,8 @@ namespace SeniorDesign
                 }
                 dragon.DetractHitPoints(bulletCollisionCount, MunitionType.Bullet);
                 dragon.DetractHitPoints(missileCollisionCount, MunitionType.Missile);
-                //missileCollisionCount = 0;
-                //bulletCollisionCount = 0;
+                missileCollisionCount = 0;
+                bulletCollisionCount = 0;
             }
             
         }
