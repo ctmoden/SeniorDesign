@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Input;
+using SeniorDesign.Bounding_Regions;
 
 namespace SeniorDesign
 {
@@ -27,6 +28,10 @@ namespace SeniorDesign
         /// Texture for helicopter firing missile
         /// </summary>
         private Texture2D fireTexture;
+        /// <summary>
+        /// Texture for testing bounding regions
+        /// </summary>
+        private Texture2D boundTexture;
         /// <summary>
         /// direction timer.  Times how long chopper moves in certian direction.
         /// </summary>
@@ -66,6 +71,13 @@ namespace SeniorDesign
         /// Property to detect if missile has hit the chopper
         /// </summary>
         public bool Hit = false;
+
+        /// <summary>
+        /// Bounding region for collision detection
+        /// </summary>
+        private BoundingRectangle bounds;
+        public BoundingRectangle Bounds => bounds;
+
         /// <summary>
         /// length is 256 pixels, rad = 128 pixels
         /// in drawing method, chopper is scaled down by 1/2, so scaled rad = 64
@@ -74,13 +86,16 @@ namespace SeniorDesign
         public ChopperSprite()
         {
             missiles = new List<MissileSprite>();
+            bounds = new BoundingRectangle(position.X, position.Y, 50, 10);
             
         }
         public void LoadContent(ContentManager content)
         {
             //flyingTexture = content.Load<Texture2D>("Fly");//TODO how to switch to missile firing mid animation frame
-            fireTexture = content.Load<Texture2D>("Fire Missile");
+            fireTexture = content.Load<Texture2D>("Fire Missile");//FIXME still need to do this
             flyingTexture = content.Load<Texture2D>("Choppa_Sprite2");
+            boundTexture = content.Load<Texture2D>(@"Debugging_Tools\Water32Frames8x4");
+
         }
         /// <summary>
         /// Updates chopper, most notably direction it is traveling
@@ -97,9 +112,10 @@ namespace SeniorDesign
                 if (keyboardState.IsKeyDown(Keys.Up) || keyboardState.IsKeyDown(Keys.W)) position += new Vector2(0,(float) -3.5);
                 if (keyboardState.IsKeyDown(Keys.Down) || keyboardState.IsKeyDown(Keys.S)) position += new Vector2(0, (float)3.5);
             }
-            if (position.Y < 0) position.Y = Constants.GAME_HEIGHT;
-            if (position.Y > Constants.GAME_HEIGHT) position.Y = 0;
-            if (position.X < 0) position.X = Constants.GAME_WIDTH;
+            //FIXME change to only scroll forward on screen, otherwise chopper stops
+            if (position.Y < 0) position.Y = 0;
+            if (position.Y > Constants.GAME_HEIGHT) position.Y = Constants.GAME_HEIGHT;
+            if (position.X < 0) position.X = 0;
             if (position.X > Constants.GAME_WIDTH) position.X = 0;
         }
 

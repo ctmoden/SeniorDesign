@@ -7,6 +7,9 @@ using SeniorDesign.Bounding_Regions;
 
 namespace SeniorDesign
 {
+    /// <summary>
+    /// FIXME refactor to work for dragon flames
+    /// </summary>
     public struct Particle 
     {
         //what all particles can share:
@@ -55,7 +58,7 @@ namespace SeniorDesign
         /// </summary>
         public void UpdateBounds()
         {
-            bounds.X = Position.X +75;
+            bounds.X = Position.X;
             bounds.Y = Position.Y;
         }       
     }
