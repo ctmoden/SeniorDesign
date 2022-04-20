@@ -204,7 +204,11 @@ namespace SeniorDesign
             }
 
         }
-
+        /// <summary>
+        /// checks for collision with single target
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
         public int CollisionChecker(BoundingRectangle other)
         {
             int hitCount = 0;
