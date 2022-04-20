@@ -106,13 +106,9 @@ namespace SeniorDesign
                 {
                     case Direction.Down:
                         direction = Direction.Up;
-                        //position += HelperMethods.RandomYVelGenerator(1, 3) * PIXEL_SPEED * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                        //position = new Vector2(x_pos, 10);//reconsider this after second timer
                         break;
                     case Direction.Up:
                         direction = Direction.Down;
-                        //position += HelperMethods.RandomYVelGenerator(-2, 0) * PIXEL_SPEED * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                        //position = new Vector2(x_pos, Constants.GAME_HEIGHT - 10);
                         break;
                 }
                 directionTimer -= flyTime;
@@ -126,10 +122,10 @@ namespace SeniorDesign
                 switch (direction)//second timer for speed timing
                 {
                     case Direction.Down:
-                        position += HelperMethods.RandomYVelGenerator(-2, 0) * PIXEL_SPEED * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                        //position += HelperMethods.RandomYVelGenerator(-2, 0) * PIXEL_SPEED * (float)gameTime.ElapsedGameTime.TotalSeconds;
                         break;
                     case Direction.Up:
-                        position += HelperMethods.RandomYVelGenerator(1, 3) * PIXEL_SPEED * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                        //position += HelperMethods.RandomYVelGenerator(1, 3) * PIXEL_SPEED * (float)gameTime.ElapsedGameTime.TotalSeconds;
                         break;
                 }
                 velocityTimer -= 0.02;

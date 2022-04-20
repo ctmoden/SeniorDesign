@@ -32,7 +32,7 @@ namespace SeniorDesign
         private static int missileLoad = 3;//FIXME make this public and reset as soon as 
 
         public static int MissileLoad => missileLoad;
-        private const int FIRE_VELOCITY = 3;
+        private const int FIRE_VELOCITY = 20;
         /// <summary>
         /// pixel speed of animation
         /// </summary>
@@ -207,6 +207,10 @@ namespace SeniorDesign
         public int CollisionChecker(BoundingRectangle other)
         {
             int hitCount = 0;
+            if (bounds.CollidesWith(other))
+            {
+                hitCount++;
+            }
             return hitCount;
         }
         

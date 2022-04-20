@@ -134,7 +134,9 @@ namespace SeniorDesign
             }
             return hitCount;
         }
-
+        /// <summary>
+        /// fixme integrate somewhere
+        /// </summary>
         private void bulletCheck()
         {
             for (int i = 0; i < firedBullets; i++)

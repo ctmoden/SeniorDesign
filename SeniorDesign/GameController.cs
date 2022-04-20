@@ -140,12 +140,14 @@ namespace SeniorDesign
             {
                 if (!dragon.Alive) continue;
                 bulletCollisionCount = bulletSystem.CollissionChecker(dragon.Bounds, dragon.Alive);
-                dragon.DetractHitPoints(bulletCollisionCount, MunitionType.Bullet);
                 foreach(var missile in missiles)
                 {
                     missileCollisionCount += missile.CollisionChecker(dragon.Bounds);
                 }
-                bulletCollisionCount = 0;
+                dragon.DetractHitPoints(bulletCollisionCount, MunitionType.Bullet);
+                dragon.DetractHitPoints(missileCollisionCount, MunitionType.Missile);
+                //missileCollisionCount = 0;
+                //bulletCollisionCount = 0;
             }
             
         }
