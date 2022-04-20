@@ -122,11 +122,7 @@ namespace SeniorDesign
 
         }
         /// <summary>
-        /// TODO add deconstructor for spent missile?
-        /// nned an updated chopper position each update
-        /// when space bar is hit, draw missile starting from chopper
-        /// each subsequent update doesn not reset missile position to chopper
-        /// FIXME might want to add offset params
+        /// Update call for a recently fired missile, is marked as alive
         /// </summary>
         /// <param name="fired">determines if missile has been fired</param>
         /// <param name="origin">chopper position on screen to fire from</param>
@@ -137,9 +133,13 @@ namespace SeniorDesign
             startPosition.X += 110;
             startPosition.Y += 80;
             this.fired = fired;
+            IsAlive = true;
             if(!this.fired) position = startPosition;                            
         }
-
+        /// <summary>
+        /// Update call for missile not just recently fired but is still in the air
+        /// </summary>
+        /// <param name="origin"></param>
         public void Update(Vector2 origin)
         {
             resetBounds();
@@ -171,6 +171,7 @@ namespace SeniorDesign
                 missileLoad--;
                 //reset missile in case of replenishing
                 fired = false;
+                IsAlive = false;
                 position = startPosition;
             }
         }
@@ -181,7 +182,7 @@ namespace SeniorDesign
         /// <param name="spriteBatch"></param>
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            if (fired && missileLoad > 0)
+            if (fired && missileLoad > 0 && IsAlive)
             {
                 //update timer based on elapsed time in game
                 //elapsed time = elapsed time since last update
@@ -210,6 +211,7 @@ namespace SeniorDesign
             if (bounds.CollidesWith(other))
             {
                 hitCount++;
+                IsAlive = false;
             }
             return hitCount;
         }

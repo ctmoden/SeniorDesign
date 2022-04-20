@@ -73,7 +73,7 @@ namespace SeniorDesign
             {
                 
                 missile.Update(chopper.Position);
-                if (missile.Fired) missile.FireControl();
+                if (missile.Fired && missile.IsAlive) missile.FireControl();
             }
             foreach (var dragon in testDragons) dragon.Update(gameTime);
             #region Monogame Example
@@ -131,7 +131,9 @@ namespace SeniorDesign
             // TODO: Add your drawing code here
             base.Draw(gameTime);
         }
-
+        /// <summary>
+        /// Checks whether bullets or missiles have collided with all currently alive dragons
+        /// </summary>
         private void checkDragonCollisions()
         {//FIXME only working for one dragon on screen...
             int bulletCollisionCount = 0;
