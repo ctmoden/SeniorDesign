@@ -18,11 +18,11 @@ namespace SeniorDesign
         private Color color;
         private bool fired;
         private int firedBullets = 0;//indices 0->firedBullets is Bullets currently in the air
-        private const int FIRE_VELOCITY = 3000;
+        private const int FIRE_VELOCITY = 1000;
         private Color[] colors = new Color[]
         {
             Color.Red,
-            Color.OrangeRed,
+            Color.Orange,
             Color.Yellow
         };
         public Particle[] Bullets;
@@ -57,7 +57,7 @@ namespace SeniorDesign
             {
                 fireTimer += gameTime.ElapsedGameTime.TotalSeconds;
                 //when .13 secs have passed, and user is still holding firing key, spawn another bullet
-                if(fireTimer >= 0.13)//.13 = MAGIC NUMBER
+                if(fireTimer >= 0.75)//.13 = MAGIC NUMBER
                 {
                     SpawnBullet(originPos);
                     fireTimer = 0.0;
@@ -65,7 +65,7 @@ namespace SeniorDesign
             }
             else
             {
-                fireTimer = 0.13;
+                fireTimer = 0.75;
             }
 
             for(int i = 0; i < Bullets.Length; i++)
