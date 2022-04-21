@@ -80,6 +80,46 @@ namespace SeniorDesign
                 }
             }
         }
+        /// <summary>
+        /// Checks for collisions with chopper AND bullets(circle back, focus on the chopper first)
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        public static int CollisionChecker(BoundingRectangle other)
+        {
+            int hitCount = 0;
+            for(int i = 0; i < firedFlames; i++)
+            {
+                if(Flames[i].Position.X > Constants.GAME_WIDTH || Flames[i].Position.X < 0)
+                {
+                    Flames[i].Alive = false;
+                    //TO DO check flames here maybe?  Gotta fix that soon... hehe
+                    //Flames[i].Fired = false;
+                    hitCount++;
+                }
+                
+            }
+            return 1;
+        }
+        /// <summary>
+        /// FIXME implement elsewhere
+        /// </summary>
+        private static void flameCheck()
+        {
+            for (int i = 0; i < firedFlames; i++)
+            {
+                if (Flames[i].Position.X > Constants.GAME_WIDTH || Flames[i].Position.X < 0)
+                {
+                    Flames[i].Alive = false;
+                }
+                if (!Flames[i].Alive)
+                {
+                    Flames[i] = Flames[firedFlames];
+                    firedFlames--;
+                }
+            }
+
+        }
         
 
 
