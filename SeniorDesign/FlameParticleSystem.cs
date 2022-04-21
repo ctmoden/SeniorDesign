@@ -5,12 +5,14 @@ using System.Threading;
 using SeniorDesign.ButtonStates;
 using Microsoft.Xna.Framework.Content;
 using SeniorDesign.Bounding_Regions;
+using System.Collections.Generic;
 
 namespace SeniorDesign
 {
     public static class FlameParticleSystem
     {
-        private static Vector2 [] dragonPositions;
+
+        private static List<Vector2> dragonPositions;
         private static Texture2D flameTexture;
         private static Texture2D boundTexture;
         private static byte animationRow = 0;
@@ -36,9 +38,19 @@ namespace SeniorDesign
             //FIXME
             flameTexture = content.Load<Texture2D>(@"Explosion_Files\Flames");
             boundTexture = content.Load<Texture2D>(@"Debugging_Tools\Water32Frames8x4");
+            dragonPositions = new List<Vector2>();
         }
         /// <summary>
-        /// 
+        /// if index is -1,t then add new vector to the list
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="newPos"></param>
+        public static void UpdateDragonPositions(int index, Vector2 newPos)
+        {
+
+        }
+        /// <summary>
+        /// Call from game controller
         /// </summary>
         /// <param name="gameTime"></param>
         /// <param name="originPos">position of randomly selected dragon position</param>
@@ -47,7 +59,7 @@ namespace SeniorDesign
             if (IsFiring)
             {
                 fireTimer += gameTime.ElapsedGameTime.TotalSeconds;
-                if(fireTimer >= 1.0)
+                if(fireTimer >= 2.0)
                 {
                     SpawnFlame(dragonIndex);
                     fireTimer = 0.0;
@@ -83,7 +95,7 @@ namespace SeniorDesign
                 }//128 * 128
                 var sourceRectangle = new Rectangle(animationFrame * 128, animationRow * 128, 128, 128);
                 //FIXME later include angle to shift flame towards target
-                spriteBatch.Draw(flameTexture, Flames[i].Position, sourceRectangle, Color.White, );
+                if(Flames[i].Alive)spriteBatch.Draw(flameTexture, Flames[i].Position, sourceRectangle, Color.White, 0f, new Vector2(64,64),0,SpriteEffects.None,0);
             }
             
 
@@ -94,7 +106,7 @@ namespace SeniorDesign
         /// <param name="index"></param>
         private static void SpawnFlame(int index)
         {
-            //FIXME adjust later
+            //FIXME adjust to accomodate for a list
             dragonPositions[index].X += 50;
             dragonPositions[index].Y += 50;
             for(int i = 0; i < Flames.Length; i++)
