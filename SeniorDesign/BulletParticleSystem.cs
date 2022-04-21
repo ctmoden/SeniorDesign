@@ -103,7 +103,7 @@ namespace SeniorDesign
                 if(!Bullets[i].Fired)
                 {
                     Bullets[i].Position = position;
-                    Bullets[i].Velocity = new Vector2(FIRE_VELOCITY, 0);
+                    Bullets[i].Velocity = new Vector2(FIRE_VELOCITY, 0);//FIXME make it so I don't have to set it everytime
                     Bullets[i].Fired = true;
                     Bullets[i].Alive = true;
                     Bullets[i].InitializeBounds(position);

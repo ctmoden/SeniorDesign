@@ -22,6 +22,7 @@ namespace SeniorDesign
 
          */
         private BoundingRectangle bounds;
+        private const int FIRE_VELOCITY = 10;
         public BoundingRectangle Bounds => bounds;
    
         public Vector2 Position;
