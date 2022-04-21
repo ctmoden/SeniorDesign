@@ -68,7 +68,16 @@ namespace SeniorDesign
             dragonPositions[index].Y += 50;
             for(int i = 0; i < Flames.Length; i++)
             {
-                Flames[i].Position = new Vector2(dragonPositions[i].X, dragonPositions[i].Y);
+                if (!Flames[i].Fired)
+                {
+                    Vector2 newPosition = new Vector2(dragonPositions[i].X, dragonPositions[i].Y);
+                    Flames[i].Position = newPosition;
+                    Flames[i].Fired = true;
+                    Flames[i].Alive = true;
+                    Flames[i].InitializeBounds(newPosition);
+                    firedFlames++;
+                    return;
+                }
             }
         }
         

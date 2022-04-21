@@ -28,6 +28,8 @@ namespace SeniorDesign
 
         private Vector2 position;
 
+        //public Vector2 Position => position;
+
         private const int PIXEL_SPEED = 150;
 
         //FIXME need a public position?
