@@ -13,6 +13,9 @@ namespace SeniorDesign
         private static Vector2 [] dragonPositions;
         private static Texture2D flameTexture;
         private static Texture2D boundTexture;
+        private static byte animationRow = 0;
+        private static byte animationFrame = 0;
+        private static double animationTimer;
         private static double fireTimer;
         private static Color color;
         private static int firedFlames;
@@ -30,7 +33,8 @@ namespace SeniorDesign
 
         public static void LoadContent(ContentManager content)
         {
-            flameTexture = content.Load<Texture2D>(@"Explosion_Files\PNG\Fire\Fire2");
+            //FIXME
+            flameTexture = content.Load<Texture2D>(@"Explosion_Files\Flames");
             boundTexture = content.Load<Texture2D>(@"Debugging_Tools\Water32Frames8x4");
         }
         /// <summary>
@@ -61,6 +65,33 @@ namespace SeniorDesign
             }
         }
 
+        public static void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        {
+            for(int i = 0; i < Flames.Length; i++)
+            {
+                animationTimer += gameTime.TotalGameTime.TotalSeconds;
+                if (animationTimer > 1.0)
+                {
+                    animationFrame++;
+                    if (animationFrame > 2)
+                    {
+                        animationFrame = 0;
+                        animationRow++;
+                        if (animationRow > 2) animationRow = 0;
+                    }
+                    animationTimer -= 1.0;
+                }//128 * 128
+                var sourceRectangle = new Rectangle(animationFrame * 128, animationRow * 128, 128, 128);
+                //FIXME later include angle to shift flame towards target
+                spriteBatch.Draw(flameTexture, Flames[i].Position, sourceRectangle, Color.White, );
+            }
+            
+
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="index"></param>
         private static void SpawnFlame(int index)
         {
             //FIXME adjust later
@@ -102,7 +133,7 @@ namespace SeniorDesign
             return 1;
         }
         /// <summary>
-        /// FIXME implement elsewhere
+        /// FIXME implement SOMEWHERE AND GET IT TF WORKING
         /// </summary>
         private static void flameCheck()
         {

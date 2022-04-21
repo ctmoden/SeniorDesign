@@ -77,7 +77,6 @@ namespace SeniorDesign
         {
             dragonTexture = content.Load<Texture2D>(@"Dragon_Files\PNG\144x128\flying_dragon-red");//FIXME will this cause issues outside my machine?
             boundingTexture = content.Load<Texture2D>(@"Debugging_Tools\Water32Frames8X4");
-            //FIXME load fire texture
         }
         public void Update(GameTime gameTime)
         {
