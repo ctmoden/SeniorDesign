@@ -50,7 +50,10 @@ namespace SeniorDesign
         private int hitPoints = 100;
         public int HitPoints { get { return hitPoints; } set { hitPoints = value; } }
         private int x_pos;
-
+        /// <summary>
+        /// public getter for dragon
+        /// </summary>
+        public Vector2 Position => position;
         private Direction direction;
         /// <summary>
         /// collision bounds of sprite

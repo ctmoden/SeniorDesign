@@ -42,9 +42,13 @@ namespace SeniorDesign
             //FIXME
             flameTexture = content.Load<Texture2D>(@"Explosion_Files\Flames");
             boundTexture = content.Load<Texture2D>(@"Debugging_Tools\Water32Frames8x4");
-            dragonPositions = new List<Vector2>();
+            
         }
-        
+        public static void Initialize()
+        {
+            dragonPositions = new List<Vector2>();
+            IsFiring = true;
+        }
         /// <summary>
         /// Call from game controller
         /// </summary>
@@ -134,11 +138,11 @@ namespace SeniorDesign
         /// FIXME how will dragon update 
         /// </summary>
         /// <param name="newPos"></param>
-        /// <param name="index"></param>
-        public static void UpdateDragonPos(Vector2 newPos, int index)
+        public static void UpdateDragonPos(Vector2 newPos, int targetIndex)
         {
             //dragonPositions[index] = newPos;
-            dragonPositions.Append(newPos);
+            //I can senese issues with this as positions are deleted when dragon dies...
+            dragonPositions[targetIndex] = newPos;
         }
         /// <summary>
         /// adds new dragon position to list of dragon positions
@@ -146,6 +150,7 @@ namespace SeniorDesign
         /// <param name="pos"></param>
         public static void AddNewDragonPos(Vector2 pos)
         {
+            //dragonPositions.Append(pos);
             dragonPositions.Add(pos);
         }
         /// <summary>
@@ -164,10 +169,9 @@ namespace SeniorDesign
                     //TO DO check flames here maybe?  Gotta fix that soon... hehe
                     //Flames[i].Fired = false;
                     hitCount++;
-                }
-                
+                }                
             }
-            return 1;
+            return hitCount;
         }
         /// <summary>
         /// FIXME implement SOMEWHERE AND GET IT TF WORKING
@@ -188,8 +192,5 @@ namespace SeniorDesign
             }
 
         }
-        
-
-
     }
 }

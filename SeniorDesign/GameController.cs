@@ -41,6 +41,9 @@ namespace SeniorDesign
                 new Dragon(3),
                 new Dragon(3)
             };
+            //FIXME initial loding for testing
+            FlameParticleSystem.Initialize();
+            foreach (var dragon in testDragons) FlameParticleSystem.AddNewDragonPos(dragon.Position);
             bulletSystem = new BulletParticleSystem(chopper.Position);
             //dragon1 = new Dragon(3);
             base.Initialize();
@@ -77,7 +80,16 @@ namespace SeniorDesign
                 missile.Update(chopper.Position);
                 if (missile.Fired && missile.IsAlive) missile.FireControl();
             }
-            foreach (var dragon in testDragons) dragon.Update(gameTime);
+            foreach (var dragon in testDragons)
+            {
+                dragon.Update(gameTime);
+                //FIXME finish to test all dragons later, just test with one now
+                //FlameParticleSystem.
+            }
+            #region single dragon flame testing
+            FlameParticleSystem.Update(gameTime, testDragons[0].Position);
+            FlameParticleSystem.UpdateDragonPos(testDragons[0].Position, 0);
+            #endregion 
             #region Monogame Example
             if (KeyboardManager.HasBeenPressed(Keys.Space))
             {
@@ -129,6 +141,7 @@ namespace SeniorDesign
             bulletSystem.Draw(gameTime, _spriteBatch);
             //dragon1.Draw(gameTime, _spriteBatch);
             foreach (var dragon in testDragons) dragon.Draw(gameTime, _spriteBatch);
+            FlameParticleSystem.Draw(gameTime, _spriteBatch);
             _spriteBatch.End();
             // TODO: Add your drawing code here
             base.Draw(gameTime);
