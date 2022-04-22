@@ -44,11 +44,15 @@ namespace SeniorDesign
         /// need start pos and ve
         /// each particle will have it's own start position, velocity, and color
         /// </summary>
-        public void Initialize(Vector2 startPos, Vector2 velocity, Color color)
+        public void Initialize()
         {
-            this.Color = color;
+            /*this.Color = color;
             this.Velocity = velocity;
-            this.StartPosition = startPos;
+            this.StartPosition = startPos;*/
+            //FIXME THIS IS FOR FLAMES ONLY
+            Fired = true;
+            Alive = true;
+            Velocity = new Vector2(FIRE_VELOCITY, 0);
         }
         public void InitializeBounds(Vector2 position)
         {
