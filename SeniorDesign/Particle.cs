@@ -22,7 +22,8 @@ namespace SeniorDesign
 
          */
         private BoundingRectangle bounds;
-        private const int FIRE_VELOCITY = 10;
+        private const int FIRE_VELOCITY_FLAME = 10;
+        private const int FIRE_VELOCITY_BULLET = 3000; 
         public BoundingRectangle Bounds => bounds;
    
         public Vector2 Position;
@@ -40,7 +41,7 @@ namespace SeniorDesign
         public bool Alive;
 
         /// <summary>
-        /// FIXME change params later
+        /// FIXME change params later to initialize bullets
         /// need start pos and ve
         /// each particle will have it's own start position, velocity, and color
         /// </summary>
@@ -52,19 +53,19 @@ namespace SeniorDesign
             //FIXME THIS IS FOR FLAMES ONLY
             Fired = true;
             Alive = true;
-            Velocity = new Vector2(FIRE_VELOCITY, 0);
+            Velocity = new Vector2(FIRE_VELOCITY_FLAME, 0);
         }
-        public void InitializeBounds(Vector2 position)
+        public void InitializeBounds(Vector2 position, int width, int height)
         {
-            bounds = new BoundingRectangle(position.X, position.Y, 40, 10);
+            bounds = new BoundingRectangle(position.X, position.Y, width, height);
         }
         /// <summary>
         /// Updates bounds as particle is flying through the air
         /// </summary>
-        public void UpdateBounds()
+        public void UpdateBounds(int xOffset, int yOffset)
         {
-            bounds.X = Position.X;
-            bounds.Y = Position.Y;
+            bounds.X = Position.X + xOffset;
+            bounds.Y = Position.Y + yOffset;
         }       
     }
 }

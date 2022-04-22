@@ -19,6 +19,7 @@ namespace SeniorDesign
         private static int animationRow = 0;
         private static int animationFrame = 0;
         private static double animationTimer;
+        private static double animationTimer2;
         private static double fireTimer;
         private static Color color;
         private static int firedFlames;
@@ -27,12 +28,6 @@ namespace SeniorDesign
         private static Vector2 targetPos;
         public static Particle[] Flames = new Particle[100];
         public static bool IsFiring;
-        private static BoundingRectangle bounds;
-        /// <summary>
-        /// Standard issue bounding region public getter for collision debugging
-        /// </summary>
-        public static BoundingRectangle Bounds => bounds;
-        
         /// <summary>
         /// Loads from controller just fine
         /// </summary>
@@ -79,7 +74,7 @@ namespace SeniorDesign
             #endregion
 
             fireTimer += gameTime.ElapsedGameTime.TotalSeconds;
-            if(fireTimer > 2.0)
+            if(fireTimer > 5.0)
             {
                 SpawnFlame(dragonPositions.IndexOf(dragonPos));
                 fireTimer = 0.0;
@@ -93,7 +88,7 @@ namespace SeniorDesign
             {
                 if (!Flames[i].Alive) continue;
                 Flames[i].Position -= (float)gameTime.ElapsedGameTime.TotalSeconds * Flames[i].Velocity;
-                Flames[i].UpdateBounds();//FIXME add params to particle class to 
+                Flames[i].UpdateBounds(8, -8);//FIXME add params to particle class to 
             }
         }
 
@@ -124,6 +119,8 @@ namespace SeniorDesign
             }*/
             #endregion
             animationTimer += gameTime.TotalGameTime.TotalSeconds;
+            animationTimer2 += gameTime.TotalGameTime.TotalSeconds;
+            //FIXME figure out a way to immedietly fire then wait a certain time period
             if (animationTimer > 3.0)
             {
                 animationFrame++;
@@ -133,17 +130,19 @@ namespace SeniorDesign
                     animationRow++;
                     if (animationRow > 1) animationRow = 0;
                 }
-                animationTimer -= 3.0;
+                animationTimer -= 1.0;
             }//128 * 128
             var sourceRectangle = new Rectangle(animationFrame * 128, animationRow * 128, 128, 128);
             for (int i = 0; i < firedFlames; i++)
             {
                 if (Flames[i].Alive)
                 {
-                    spriteBatch.Draw(flameTexture, Flames[i].Position, sourceRectangle, Color.White, 0f, new Vector2(64, 64), .25f, SpriteEffects.None, 0);
+                    //FIXME find equation to adjust flame to direction of fire
+                    spriteBatch.Draw(flameTexture, Flames[i].Position, sourceRectangle, Color.White, -1.6f, new Vector2(64, 64), .35f, SpriteEffects.None, 0);
+                    var boundRect = new Rectangle((int)Flames[i].Bounds.X, (int)Flames[i].Bounds.Y, (int)Flames[i].Bounds.Width, (int)Flames[i].Bounds.Height);
+                    spriteBatch.Draw(boundTexture, boundRect, Color.White*.5f);
                 }
             }
-
         }
         /// <summary>
         /// Spawns flame at current position of certain dragon
@@ -153,8 +152,8 @@ namespace SeniorDesign
         {
             //LOL let's see if this bs works
             var tempArray = dragonPositions.ToArray();
-            tempArray[index].X -= 30;
-            tempArray[index].Y -= 12;
+            tempArray[index].X -= 50;
+            //tempArray[index].Y -= 0;//FIXME may want to adjust later
             dragonPositions = tempArray.ToList();
 
             for(int i = 0; i < Flames.Length; i++)
@@ -164,10 +163,8 @@ namespace SeniorDesign
                     //CHECK see if I am grabbing positions right
                     Vector2 newPosition = new Vector2(dragonPositions[index].X, dragonPositions[index].Y);
                     Flames[i].Position = newPosition;
-                    //Flames[i].Fired = true;
-                    //Flames[i].Alive = true;
-                    Flames[i].Initialize();
-                    Flames[i].InitializeBounds(newPosition);
+                    Flames[i].Initialize();//FIXME consolidate initializations/create deinitializations?
+                    Flames[i].InitializeBounds(newPosition, 15, 15);
                     firedFlames++;
                     return;
                 }

@@ -65,14 +65,14 @@ namespace SeniorDesign
             }
             else
             {
-                fireTimer = 0.13;
+                //fireTimer = 0.13;
             }
 
             for(int i = 0; i < Bullets.Length; i++)
             {
                 if (!Bullets[i].Alive) continue;
                 Bullets[i].Position += (float)gameTime.ElapsedGameTime.TotalSeconds * Bullets[i].Velocity;
-                Bullets[i].UpdateBounds();
+                Bullets[i].UpdateBounds(0,0);
             }
             //bulletCheck();
         }
@@ -106,7 +106,7 @@ namespace SeniorDesign
                     Bullets[i].Velocity = new Vector2(FIRE_VELOCITY, 0);//FIXME make it so I don't have to set it everytime
                     Bullets[i].Fired = true;
                     Bullets[i].Alive = true;
-                    Bullets[i].InitializeBounds(position);
+                    Bullets[i].InitializeBounds(position, 40, 10);
                     firedBullets++;
                     return;
                 }                
