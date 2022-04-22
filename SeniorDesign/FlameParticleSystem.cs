@@ -6,6 +6,7 @@ using SeniorDesign.ButtonStates;
 using Microsoft.Xna.Framework.Content;
 using SeniorDesign.Bounding_Regions;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SeniorDesign
 {
@@ -61,6 +62,7 @@ namespace SeniorDesign
                 fireTimer += gameTime.ElapsedGameTime.TotalSeconds;
                 if(fireTimer >= 2.0)
                 {
+                    dragonPositions.
                     SpawnFlame(dragonIndex);
                     fireTimer = 0.0;
                 }
@@ -107,8 +109,12 @@ namespace SeniorDesign
         private static void SpawnFlame(int index)
         {
             //FIXME adjust to accomodate for a list
-            dragonPositions[index].X += 50;
-            dragonPositions[index].Y += 50;
+            //convert to array, modify, convert back to list??
+            var tempArray = dragonPositions.ToArray();
+            tempArray[index].X += 50;
+            tempArray[index].Y += 50;
+            dragonPositions = tempArray.ToList();
+
             for(int i = 0; i < Flames.Length; i++)
             {
                 if (!Flames[i].Fired)
@@ -122,6 +128,33 @@ namespace SeniorDesign
                     return;
                 }
             }
+        }
+        /// <summary>
+        /// deletes certain dragon position
+        /// </summary>
+        /// <param name="index"></param>
+        public static void DeleteDragonPos(int index)
+        {
+
+        }
+        /// <summary>
+        /// updates dragon position at certain index
+        /// FIXME how will dragon update 
+        /// </summary>
+        /// <param name="newPos"></param>
+        /// <param name="index"></param>
+        public static void UpdateDragonPos(Vector2 newPos, int index)
+        {
+            //dragonPositions[index] = newPos;
+            dragonPositions.Append(newPos);
+        }
+        /// <summary>
+        /// adds new dragon position to list of dragon positions
+        /// </summary>
+        /// <param name="pos"></param>
+        public static void AddNewDragonPos(Vector2 pos)
+        {
+            dragonPositions.Add(pos);
         }
         /// <summary>
         /// Checks for collisions with chopper AND bullets(circle back, focus on the chopper first)
