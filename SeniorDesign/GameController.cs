@@ -87,11 +87,9 @@ namespace SeniorDesign
                 //FlameParticleSystem.
             }
             #region single dragon flame testing
-            if (testDragons[0].Alive)
-            {
-                FlameParticleSystem.UpdateDragonPos(testDragons[0].Position, 0);
-                FlameParticleSystem.Update(gameTime, testDragons[0].Position);
-            }
+            FlameParticleSystem.UpdateDragonPos(testDragons[0].Position, 0);
+            FlameParticleSystem.Update(gameTime, testDragons[0].Position, testDragons[0].Alive);
+            
             
             #endregion 
             #region Monogame Example

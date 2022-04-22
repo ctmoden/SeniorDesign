@@ -49,7 +49,7 @@ namespace SeniorDesign
         /// </summary>
         /// <param name="gameTime"></param>
         /// <param name="originPos">position of randomly selected dragon position</param>
-        public static void Update(GameTime gameTime, Vector2 dragonPos)
+        public static void Update(GameTime gameTime, Vector2 dragonPos, bool IsDragonAlive)
         {
             #region firing based on state
             /*if (IsFiring)
@@ -76,7 +76,7 @@ namespace SeniorDesign
             fireTimer += gameTime.ElapsedGameTime.TotalSeconds;
             if(fireTimer > 5.0)
             {
-                SpawnFlame(dragonPositions.IndexOf(dragonPos));
+                if(IsDragonAlive) SpawnFlame(dragonPositions.IndexOf(dragonPos));
                 fireTimer = 0.0;
             }
             else
