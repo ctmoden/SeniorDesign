@@ -122,11 +122,12 @@ namespace SeniorDesign
             {
                 switch (direction)//second timer for speed timing
                 {
+                    //FIXME uncomment positioning after testing
                     case Direction.Down:
-                        position += HelperMethods.RandomYVelGenerator(-2, 0) * PIXEL_SPEED * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                        //position += HelperMethods.RandomYVelGenerator(-2, 0) * PIXEL_SPEED * (float)gameTime.ElapsedGameTime.TotalSeconds;
                         break;
                     case Direction.Up:
-                        position += HelperMethods.RandomYVelGenerator(1, 3) * PIXEL_SPEED * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                        //position += HelperMethods.RandomYVelGenerator(1, 3) * PIXEL_SPEED * (float)gameTime.ElapsedGameTime.TotalSeconds;
                         break;
                 }
                 velocityTimer -= 0.02;
@@ -134,12 +135,10 @@ namespace SeniorDesign
             
             if(position.Y < 0)
             {
-                //position = new Vector2(x_pos, 10);//move to case statement
                 direction = Direction.Down;
             }
             if(position.Y > Constants.GAME_HEIGHT)
             {
-                //position = new Vector2(x_pos, Constants.GAME_HEIGHT - 10);
                 direction = Direction.Up;
             }            
         }

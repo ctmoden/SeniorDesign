@@ -25,7 +25,7 @@ namespace SeniorDesign
         private static int fireVelocity;
         private static int freeIndex;
         private static Vector2 targetPos;
-        public static Particle[] Flames = new Particle[1000];
+        public static Particle[] Flames = new Particle[100];
         public static bool IsFiring;
         private static BoundingRectangle bounds;
         /// <summary>
@@ -33,7 +33,10 @@ namespace SeniorDesign
         /// </summary>
         public static BoundingRectangle Bounds => bounds;
         
-
+        /// <summary>
+        /// Loads from controller just fine
+        /// </summary>
+        /// <param name="content"></param>
         public static void LoadContent(ContentManager content)
         {
             //FIXME
@@ -41,29 +44,20 @@ namespace SeniorDesign
             boundTexture = content.Load<Texture2D>(@"Debugging_Tools\Water32Frames8x4");
             dragonPositions = new List<Vector2>();
         }
-        /// <summary>
-        /// if index is -1,t then add new vector to the list
-        /// </summary>
-        /// <param name="index"></param>
-        /// <param name="newPos"></param>
-        public static void UpdateDragonPositions(int index, Vector2 newPos)
-        {
-
-        }
+        
         /// <summary>
         /// Call from game controller
         /// </summary>
         /// <param name="gameTime"></param>
         /// <param name="originPos">position of randomly selected dragon position</param>
-        public static void Update(GameTime gameTime, int dragonIndex)
+        public static void Update(GameTime gameTime, Vector2 dragonPos)
         {
             if (IsFiring)
             {
                 fireTimer += gameTime.ElapsedGameTime.TotalSeconds;
                 if(fireTimer >= 2.0)
-                {
-                    dragonPositions.
-                    SpawnFlame(dragonIndex);
+                {                   
+                    SpawnFlame(dragonPositions.IndexOf(dragonPos));
                     fireTimer = 0.0;
                 }
             }
@@ -99,17 +93,14 @@ namespace SeniorDesign
                 //FIXME later include angle to shift flame towards target
                 if(Flames[i].Alive)spriteBatch.Draw(flameTexture, Flames[i].Position, sourceRectangle, Color.White, 0f, new Vector2(64,64),0,SpriteEffects.None,0);
             }
-            
-
         }
         /// <summary>
-        /// 
+        /// Spawns flame at current position of certain dragon
         /// </summary>
         /// <param name="index"></param>
         private static void SpawnFlame(int index)
         {
-            //FIXME adjust to accomodate for a list
-            //convert to array, modify, convert back to list??
+            //LOL let's see if this bs works
             var tempArray = dragonPositions.ToArray();
             tempArray[index].X += 50;
             tempArray[index].Y += 50;
@@ -119,7 +110,8 @@ namespace SeniorDesign
             {
                 if (!Flames[i].Fired)
                 {
-                    Vector2 newPosition = new Vector2(dragonPositions[i].X, dragonPositions[i].Y);
+                    //CHECK see if I am grabbing positions right
+                    Vector2 newPosition = new Vector2(dragonPositions[index].X, dragonPositions[index].Y);
                     Flames[i].Position = newPosition;
                     Flames[i].Fired = true;
                     Flames[i].Alive = true;

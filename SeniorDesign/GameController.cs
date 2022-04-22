@@ -17,6 +17,7 @@ namespace SeniorDesign
         private Dragon dragon1;
         private Dragon dragon2;
         private Dragon[] testDragons;
+        
 
         private KeyboardState currentKeyboardState;
         public GameController()
@@ -54,6 +55,7 @@ namespace SeniorDesign
             foreach (var missile in missiles) missile.LoadContent(Content);
             foreach (var dragon in testDragons) dragon.LoadContent(Content);
             // TODO: use this.Content to load your game content here
+            FlameParticleSystem.LoadContent(Content);
         }
         /// <summary>
         /// Updates sprites
