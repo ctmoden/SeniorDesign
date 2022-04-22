@@ -86,7 +86,7 @@ namespace SeniorDesign
             }
             else
             {
-                fireTimer = 2.0;
+                //fireTimer = 2.0;
 
             }
             for (int i = 0; i < Flames.Length; i++)
@@ -140,7 +140,7 @@ namespace SeniorDesign
             {
                 if (Flames[i].Alive)
                 {
-                    spriteBatch.Draw(flameTexture, Flames[i].Position, sourceRectangle, Color.White, 0f, new Vector2(64, 64), .25f, SpriteEffects.FlipHorizontally, 0);
+                    spriteBatch.Draw(flameTexture, Flames[i].Position, sourceRectangle, Color.White, 0f, new Vector2(64, 64), .25f, SpriteEffects.None, 0);
                 }
             }
 
