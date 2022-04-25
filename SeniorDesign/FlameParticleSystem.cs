@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Content;
 using SeniorDesign.Bounding_Regions;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 namespace SeniorDesign
 {
@@ -28,6 +29,7 @@ namespace SeniorDesign
         private static Vector2 targetPos;
         public static Particle[] Flames = new Particle[100];
         public static bool IsFiring;
+        private static Random rand;
         /// <summary>
         /// Loads from controller just fine
         /// </summary>
@@ -76,7 +78,7 @@ namespace SeniorDesign
             fireTimer += gameTime.ElapsedGameTime.TotalSeconds;
             if(fireTimer > 5.0)
             {
-                if(IsDragonAlive) SpawnFlame(dragonPositions.IndexOf(dragonPos));
+                if (IsDragonAlive) SpawnFlame();//SpawnFlame(dragonPositions.IndexOf(dragonPos));
                 fireTimer = 0.0;
             }
             else
@@ -149,11 +151,23 @@ namespace SeniorDesign
             }
         }
         /// <summary>
+        /// updates dragon position at certain index
+        /// FIXME how will dragon update 
+        /// </summary>
+        /// <param name="newPos"></param>
+        public static void UpdateDragonPos(Vector2 newPos, int targetIndex, bool isDragonAlive)
+        {
+            //dragonPositions[index] = newPos;
+            //I can senese issues with this as positions are deleted when dragon dies...
+            if (isDragonAlive) dragonPositions[targetIndex] = newPos;
+        }
+        /// <summary>
         /// Spawns flame at current position of certain dragon
         /// </summary>
         /// <param name="index"></param>
-        private static void SpawnFlame(int index)
+        private static void SpawnFlame()
         {
+            int index = HelperMethods.Next(0, dragonPositions.Count);
             //LOL let's see if this bs works
             var tempArray = dragonPositions.ToArray();
             tempArray[index].X -= 50;
@@ -182,17 +196,7 @@ namespace SeniorDesign
         {
 
         }
-        /// <summary>
-        /// updates dragon position at certain index
-        /// FIXME how will dragon update 
-        /// </summary>
-        /// <param name="newPos"></param>
-        public static void UpdateDragonPos(Vector2 newPos, int targetIndex, bool isDragonAlive)
-        {
-            //dragonPositions[index] = newPos;
-            //I can senese issues with this as positions are deleted when dragon dies...
-            if(isDragonAlive) dragonPositions[targetIndex] = newPos;
-        }
+        
         /// <summary>
         /// adds new dragon position to list of dragon positions
         /// </summary>

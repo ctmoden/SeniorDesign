@@ -90,9 +90,16 @@ namespace SeniorDesign
                 //FIXME finish to test all dragons later, just test with one now
                 //FlameParticleSystem.
             }
-            #region single dragon flame testing
-            FlameParticleSystem.UpdateDragonPos(testDragons[0].Position, 0, testDragons[0].Alive);//FIXME not sure how this will work if dragon is dead
-            FlameParticleSystem.Update(gameTime, testDragons[0].Position, testDragons[0].Alive);
+            #region dragon flame testing
+            for(int i = 0; i < testDragons.Length; i++)
+            {
+                FlameParticleSystem.UpdateDragonPos(testDragons[i].Position, i, testDragons[i].Alive);
+                FlameParticleSystem.Update(gameTime, testDragons[i].Position, testDragons[i].Alive);
+
+            }
+            
+            //FlameParticleSystem.UpdateDragonPos(testDragons[0].Position, 0, testDragons[0].Alive);//FIXME not sure how this will work if dragon is dead
+            //FlameParticleSystem.Update(gameTime, testDragons[0].Position, testDragons[0].Alive);
             
             
             #endregion 
@@ -150,7 +157,6 @@ namespace SeniorDesign
             FlameParticleSystem.Draw(gameTime, _spriteBatch);
             _spriteBatch.DrawString(font, $"Choppa HP: {chopper.HitPoints}", new Vector2(10, 10), Color.Gold, 0f, new Vector2(), .25f, SpriteEffects.None, 0);
             _spriteBatch.End();
-            // TODO: Add your drawing code here
             base.Draw(gameTime);
         }
         /// <summary>
