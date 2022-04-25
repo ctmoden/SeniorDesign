@@ -96,7 +96,10 @@ namespace SeniorDesign
                 FlameParticleSystem.UpdateDragonPos(testDragons[i].Position, i, testDragons[i].Alive);
                 //if dragon is above chopper, negate y component, else keep it pos
                 //FlameParticleSystem.Update(gameTime, testDragons[i].Alive, (chopper.Position.Y/10)-10);
-                FlameParticleSystem.Update(gameTime, testDragons[i].Alive, (testDragons[i].Position.Y > chopper.Position.Y ? ((chopper.Position.Y / 10) - 10) : ((-chopper.Position.Y / 10) - 10)));
+                FlameParticleSystem.Update(gameTime, testDragons[i].Alive, (testDragons[i].Position.Y > chopper.Position.Y ? (chopper.Position.Y / 8) : (-chopper.Position.Y / 8)));
+                //FlameParticleSystem.Update(gameTime, testDragons[i].Alive, (testDragons[i].Position.Y - 10 > chopper.Position.Y ? (-(testDragons[i].Position.Y - chopper.Position.Y)) : (chopper.Position.Y - testDragons[i].Position.Y)));//
+                //this one not close as it is...
+                //FlameParticleSystem.Update(gameTime, testDragons[i].Alive, (testDragons[i].Position.Y - 10 > chopper.Position.Y ? (-(chopper.Position.Y - testDragons[i].Position.Y)) : (chopper.Position.Y - testDragons[i].Position.Y)));//hold on here...
 
             }
             //FlameParticleSystem.UpdateDragonPos(testDragons[0].Position, 0, testDragons[0].Alive);//FIXME not sure how this will work if dragon is dead

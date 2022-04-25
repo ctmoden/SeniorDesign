@@ -22,7 +22,7 @@ namespace SeniorDesign
 
          */
         private BoundingRectangle bounds;
-        private const int FIRE_VELOCITY_FLAME = 50;
+        private const int FIRE_VELOCITY_FLAME = 200;
         private const int FIRE_VELOCITY_BULLET = 3000; 
         public BoundingRectangle Bounds => bounds;
    
