@@ -88,7 +88,11 @@ namespace SeniorDesign
             {
                 if (!Flames[i].Alive) continue;
                 Flames[i].Position -= (float)gameTime.ElapsedGameTime.TotalSeconds * Flames[i].Velocity;
-                Flames[i].UpdateBounds(8, -8);//FIXME add params to particle class to 
+                Flames[i].UpdateBounds(8, -8);
+                if(Flames[i].Position.X < 0)
+                {
+                    Flames[i].Alive = false;
+                }
             }
         }
 
@@ -183,11 +187,11 @@ namespace SeniorDesign
         /// FIXME how will dragon update 
         /// </summary>
         /// <param name="newPos"></param>
-        public static void UpdateDragonPos(Vector2 newPos, int targetIndex)
+        public static void UpdateDragonPos(Vector2 newPos, int targetIndex, bool isDragonAlive)
         {
             //dragonPositions[index] = newPos;
             //I can senese issues with this as positions are deleted when dragon dies...
-            dragonPositions[targetIndex] = newPos;
+            if(isDragonAlive) dragonPositions[targetIndex] = newPos;
         }
         /// <summary>
         /// adds new dragon position to list of dragon positions

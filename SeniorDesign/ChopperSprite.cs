@@ -20,7 +20,7 @@ namespace SeniorDesign
         /// <summary>
         ///public get set for hit point values
         /// </summary>
-        public int HitPoints { get { return hitPoints; } set { hitPoints = value; } }
+        public int HitPoints => hitPoints;
         private KeyboardState keyboardState;
 
         private List<MissileSprite> missiles;
@@ -74,11 +74,13 @@ namespace SeniorDesign
         /// TODO put chopper states into dedicated enum
         /// </summary>
         public bool Firing = false;
-        private bool hit => Hit;
+        private bool hit = false;
         /// <summary>
         /// Property to detect if missile has hit the chopper
         /// </summary>
-        public bool Hit = false;
+        public bool Hit => hit;
+
+        private bool IsAlive = true;
 
         /// <summary>
         /// Bounding region for collision detection
@@ -159,6 +161,31 @@ namespace SeniorDesign
             var boundRect = new Rectangle((int)bounds.X, (int)bounds.Y, (int)bounds.Width, (int)bounds.Height);
             spriteBatch.Draw(boundTexture, boundRect, Color.White * .2f);
 
+        }
+
+        /// <summary>
+        /// checks for collision with single target
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        public int CollisionChecker(BoundingRectangle other)
+        {
+            int hitCount = 0;
+            if (bounds.CollidesWith(other))
+            {
+                hitCount++;
+                IsAlive = false;
+            }
+            return hitCount;
+        }
+        /// <summary>
+        /// detracts hitpoints based on muniton type and number of times hit
+        /// </summary>
+        /// <param name="hitCount"></param>
+        /// <param name="munitionType"></param>
+        public void DetractHitPoints(int hitCount, MunitionType munitionType)
+        {
+            hitPoints -= hitCount * (int)munitionType;
         }
     }
 }

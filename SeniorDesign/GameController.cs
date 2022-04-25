@@ -17,6 +17,7 @@ namespace SeniorDesign
         private Dragon dragon1;
         private Dragon dragon2;
         private Dragon[] testDragons;
+        private SpriteFont font;
         
 
         private KeyboardState currentKeyboardState;
@@ -77,8 +78,8 @@ namespace SeniorDesign
             foreach (var missile in missiles)
             {
                 
-                missile.Update(chopper.Position);
-                if (missile.Fired && missile.IsAlive) missile.FireControl();
+                missile.Update(chopper.Position);//FIXME move to chopper class?
+                if (missile.Fired && missile.IsAlive) missile.FireControl();//FIXME move to missile class?
             }
             foreach (var dragon in testDragons)
             {
@@ -87,7 +88,7 @@ namespace SeniorDesign
                 //FlameParticleSystem.
             }
             #region single dragon flame testing
-            FlameParticleSystem.UpdateDragonPos(testDragons[0].Position, 0);
+            FlameParticleSystem.UpdateDragonPos(testDragons[0].Position, 0, testDragons[0].Alive);//FIXME not sure how this will work if dragon is dead
             FlameParticleSystem.Update(gameTime, testDragons[0].Position, testDragons[0].Alive);
             
             
@@ -147,6 +148,22 @@ namespace SeniorDesign
             _spriteBatch.End();
             // TODO: Add your drawing code here
             base.Draw(gameTime);
+        }
+        /// <summary>
+        /// checks collisions between chopper and dragon flames
+        /// </summary>
+        private void checkChopperCollisions()
+        {
+            int hitCount = 0;
+            foreach(var flame in FlameParticleSystem.Flames)
+            {
+                if (flame.Alive)
+                {
+                    hitCount += chopper.CollisionChecker(flame.Bounds);    
+                }
+            }
+            
+            
         }
         /// <summary>
         /// Checks whether bullets or missiles have collided with all currently alive dragons
