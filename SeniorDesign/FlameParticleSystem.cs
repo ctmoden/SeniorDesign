@@ -142,7 +142,7 @@ namespace SeniorDesign
                 if (Flames[i].Alive)
                 {
                     //FIXME find equation to adjust flame to direction of fire
-                    spriteBatch.Draw(flameTexture, Flames[i].Position, sourceRectangle, Color.White, -1.6f, new Vector2(64, 64), 1f, SpriteEffects.None, 0);
+                    spriteBatch.Draw(flameTexture, Flames[i].Position, sourceRectangle, Color.White, -1.6f, new Vector2(64, 64), .35f, SpriteEffects.None, 0);
                     var boundRect = new Rectangle((int)Flames[i].Bounds.X, (int)Flames[i].Bounds.Y, (int)Flames[i].Bounds.Width, (int)Flames[i].Bounds.Height);
                     spriteBatch.Draw(boundTexture, boundRect, Color.White*.5f);
                 }
