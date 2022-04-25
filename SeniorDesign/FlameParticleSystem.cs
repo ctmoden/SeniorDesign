@@ -212,11 +212,9 @@ namespace SeniorDesign
             int hitCount = 0;
             for(int i = 0; i < firedFlames; i++)
             {
-                if(Flames[i].Position.X > Constants.GAME_WIDTH || Flames[i].Position.X < 0)
+                if(Flames[i].Alive && Flames[i].Bounds.CollidesWith(other))
                 {
-                    Flames[i].Alive = false;
-                    //TO DO check flames here maybe?  Gotta fix that soon... hehe
-                    //Flames[i].Fired = false;
+                    Flames[i].Alive = false;                   
                     hitCount++;
                 }                
             }

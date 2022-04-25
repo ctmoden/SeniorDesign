@@ -55,6 +55,8 @@ namespace SeniorDesign
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             chopper.LoadContent(Content);
             bulletSystem.LoadContent(Content);
+            font = Content.Load<SpriteFont>("bangers");
+
             //dragon1.LoadContent(Content);
             foreach (var missile in missiles) missile.LoadContent(Content);
             foreach (var dragon in testDragons) dragon.LoadContent(Content);
@@ -73,6 +75,7 @@ namespace SeniorDesign
             if (KeyboardManager.IsPressed(Keys.Q) || KeyboardManager.IsPressed(Keys.Escape))
                 Exit();
             chopper.Update(gameTime);
+            checkChopperCollisions();
             //dragon1.Update(gameTime);
             //update all missiles each update to make sure their start position is set to most recent chopper position
             foreach (var missile in missiles)
@@ -145,6 +148,7 @@ namespace SeniorDesign
             //dragon1.Draw(gameTime, _spriteBatch);
             foreach (var dragon in testDragons) dragon.Draw(gameTime, _spriteBatch);
             FlameParticleSystem.Draw(gameTime, _spriteBatch);
+            _spriteBatch.DrawString(font, $"Choppa HP: {chopper.HitPoints}", new Vector2(10, 10), Color.Gold, 0f, new Vector2(), .25f, SpriteEffects.None, 0);
             _spriteBatch.End();
             // TODO: Add your drawing code here
             base.Draw(gameTime);
@@ -155,15 +159,8 @@ namespace SeniorDesign
         private void checkChopperCollisions()
         {
             int hitCount = 0;
-            foreach(var flame in FlameParticleSystem.Flames)
-            {
-                if (flame.Alive)
-                {
-                    hitCount += chopper.CollisionChecker(flame.Bounds);    
-                }
-            }
-            
-            
+            hitCount += FlameParticleSystem.CollisionChecker(chopper.Bounds);
+            chopper.DetractHitPoints(hitCount, MunitionType.Flame);    
         }
         /// <summary>
         /// Checks whether bullets or missiles have collided with all currently alive dragons
