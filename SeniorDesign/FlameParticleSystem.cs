@@ -44,11 +44,12 @@ namespace SeniorDesign
             IsFiring = true;
         }
         /// <summary>
-        /// Call from game controller
+        /// 
         /// </summary>
         /// <param name="gameTime"></param>
-        /// <param name="originPos">position of randomly selected dragon position</param>
-        public static void Update(GameTime gameTime, bool IsDragonAlive)
+        /// <param name="IsDragonAlive"></param>
+        /// <param name="targetPosition"></param>
+        public static void Update(GameTime gameTime, bool IsDragonAlive, float targetPosition)
         {
             #region firing based on state
             /*if (IsFiring)
@@ -75,7 +76,7 @@ namespace SeniorDesign
             fireTimer += gameTime.ElapsedGameTime.TotalSeconds;
             if(fireTimer > 5.0)
             {
-                if (IsDragonAlive) SpawnFlame();//SpawnFlame(dragonPositions.IndexOf(dragonPos));
+                if (IsDragonAlive) SpawnFlame(targetPosition);//SpawnFlame(dragonPositions.IndexOf(dragonPos));
                 fireTimer = 0.0;
             }
             else
@@ -86,6 +87,7 @@ namespace SeniorDesign
             for (int i = 0; i < Flames.Length; i++)
             {
                 if (!Flames[i].Alive) continue;
+                //set flame x/y component to choppers current pos
                 Flames[i].Position -= (float)gameTime.ElapsedGameTime.TotalSeconds * Flames[i].Velocity;
                 Flames[i].UpdateBounds(8, -8);
                 if(Flames[i].Position.X < 0)
@@ -93,6 +95,17 @@ namespace SeniorDesign
                     Flames[i].Alive = false;
                 }
             }
+        }
+        /// <summary>
+        /// updates dragon position at certain index
+        /// FIXME how will dragon update 
+        /// </summary>
+        /// <param name="newPos"></param>
+        public static void UpdateDragonPos(Vector2 newPos, int targetIndex, bool isDragonAlive)
+        {
+            //dragonPositions[index] = newPos;
+            //I can senese issues with this as positions are deleted when dragon dies...
+            if (isDragonAlive) dragonPositions[targetIndex] = newPos;
         }
 
         public static void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -148,22 +161,12 @@ namespace SeniorDesign
                 }
             }
         }
+        
         /// <summary>
-        /// updates dragon position at certain index
-        /// FIXME how will dragon update 
+        /// 
         /// </summary>
-        /// <param name="newPos"></param>
-        public static void UpdateDragonPos(Vector2 newPos, int targetIndex, bool isDragonAlive)
-        {
-            //dragonPositions[index] = newPos;
-            //I can senese issues with this as positions are deleted when dragon dies...
-            if (isDragonAlive) dragonPositions[targetIndex] = newPos;
-        }
-        /// <summary>
-        /// Spawns flame at current position of certain dragon
-        /// </summary>
-        /// <param name="index"></param>
-        private static void SpawnFlame()
+        /// <param name="targetPosition"></param>
+        private static void SpawnFlame(float targetYPosition)
         {
             int index = HelperMethods.Next(0, dragonPositions.Count);
             //LOL let's see if this bs works
@@ -178,8 +181,7 @@ namespace SeniorDesign
                 {
                     //CHECK see if I am grabbing positions right
                     Vector2 newPosition = new Vector2(dragonPositions[index].X, dragonPositions[index].Y);
-                    Flames[i].Position = newPosition;
-                    Flames[i].Initialize();//FIXME consolidate initializations/create deinitializations?
+                    Flames[i].Initialize(targetYPosition, newPosition);
                     Flames[i].InitializeBounds(newPosition, 15, 15);
                     firedFlames++;
                     return;

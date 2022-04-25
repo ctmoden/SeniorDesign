@@ -102,6 +102,7 @@ namespace SeniorDesign
             {
                 if(!Bullets[i].Fired)
                 {
+                    //FIXME gotta redo the particle class
                     Bullets[i].Position = position;
                     Bullets[i].Velocity = new Vector2(FIRE_VELOCITY, 0);//FIXME make it so I don't have to set it everytime
                     Bullets[i].Fired = true;

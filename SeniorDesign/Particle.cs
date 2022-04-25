@@ -41,11 +41,10 @@ namespace SeniorDesign
         public bool Alive;
 
         /// <summary>
-        /// FIXME change params later to initialize bullets
-        /// need start pos and ve
-        /// each particle will have it's own start position, velocity, and color
+        /// 
         /// </summary>
-        public void Initialize()
+        /// <param name="yPosition"></param>
+        public void Initialize(float targetYPosition, Vector2 newPosition)
         {
             /*this.Color = color;
             this.Velocity = velocity;
@@ -53,7 +52,8 @@ namespace SeniorDesign
             //FIXME THIS IS FOR FLAMES ONLY
             Fired = true;
             Alive = true;
-            Velocity = new Vector2(FIRE_VELOCITY_FLAME, 0);
+            Velocity = new Vector2(FIRE_VELOCITY_FLAME, targetYPosition);
+            Position = newPosition;
         }
         public void InitializeBounds(Vector2 position, int width, int height)
         {
