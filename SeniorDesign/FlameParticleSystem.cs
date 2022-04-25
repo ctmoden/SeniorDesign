@@ -1,13 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using System.Threading;
-using SeniorDesign.ButtonStates;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 using SeniorDesign.Bounding_Regions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System;
 
 namespace SeniorDesign
 {
@@ -51,7 +48,7 @@ namespace SeniorDesign
         /// </summary>
         /// <param name="gameTime"></param>
         /// <param name="originPos">position of randomly selected dragon position</param>
-        public static void Update(GameTime gameTime, Vector2 dragonPos, bool IsDragonAlive)
+        public static void Update(GameTime gameTime, bool IsDragonAlive)
         {
             #region firing based on state
             /*if (IsFiring)
@@ -127,16 +124,17 @@ namespace SeniorDesign
             animationTimer += gameTime.TotalGameTime.TotalSeconds;
             animationTimer2 += gameTime.TotalGameTime.TotalSeconds;
             //FIXME figure out a way to immedietly fire then wait a certain time period
-            if (animationTimer > 3.0)
+            if (animationTimer > 1.0)
             {
                 animationFrame++;
                 if (animationFrame > 2)
                 {
                     animationFrame = 0;
-                    animationRow++;
+                    if(animationTimer2 > 0.1)animationRow++;
                     if (animationRow > 1) animationRow = 0;
                 }
                 animationTimer -= 1.0;
+                animationTimer2 -= 0.1;
             }//128 * 128
             var sourceRectangle = new Rectangle(animationFrame * 128, animationRow * 128, 128, 128);
             for (int i = 0; i < firedFlames; i++)
@@ -144,7 +142,7 @@ namespace SeniorDesign
                 if (Flames[i].Alive)
                 {
                     //FIXME find equation to adjust flame to direction of fire
-                    spriteBatch.Draw(flameTexture, Flames[i].Position, sourceRectangle, Color.White, -1.6f, new Vector2(64, 64), .35f, SpriteEffects.None, 0);
+                    spriteBatch.Draw(flameTexture, Flames[i].Position, sourceRectangle, Color.White, -1.6f, new Vector2(64, 64), 1f, SpriteEffects.None, 0);
                     var boundRect = new Rectangle((int)Flames[i].Bounds.X, (int)Flames[i].Bounds.Y, (int)Flames[i].Bounds.Width, (int)Flames[i].Bounds.Height);
                     spriteBatch.Draw(boundTexture, boundRect, Color.White*.5f);
                 }

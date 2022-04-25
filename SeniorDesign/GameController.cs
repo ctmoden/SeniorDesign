@@ -94,14 +94,11 @@ namespace SeniorDesign
             for(int i = 0; i < testDragons.Length; i++)
             {
                 FlameParticleSystem.UpdateDragonPos(testDragons[i].Position, i, testDragons[i].Alive);
-                FlameParticleSystem.Update(gameTime, testDragons[i].Position, testDragons[i].Alive);
+                FlameParticleSystem.Update(gameTime, testDragons[i].Alive);
 
             }
-            
             //FlameParticleSystem.UpdateDragonPos(testDragons[0].Position, 0, testDragons[0].Alive);//FIXME not sure how this will work if dragon is dead
-            //FlameParticleSystem.Update(gameTime, testDragons[0].Position, testDragons[0].Alive);
-            
-            
+            //FlameParticleSystem.Update(gameTime, testDragons[0].Position, testDragons[0].Alive);            
             #endregion 
             #region Monogame Example
             if (KeyboardManager.HasBeenPressed(Keys.Space))
