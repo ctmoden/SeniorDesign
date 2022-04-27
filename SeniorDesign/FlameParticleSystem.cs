@@ -49,7 +49,7 @@ namespace SeniorDesign
         /// <param name="gameTime"></param>
         /// <param name="IsDragonAlive"></param>
         /// <param name="targetPosition"></param>
-        public static void Update(GameTime gameTime, bool IsDragonAlive, float targetPosition)
+        public static void Update(GameTime gameTime, bool IsDragonAlive, Vector2 targetPosition)
         {
             #region firing based on state
             /*if (IsFiring)
@@ -79,20 +79,43 @@ namespace SeniorDesign
                 if (IsDragonAlive) SpawnFlame(targetPosition);//SpawnFlame(dragonPositions.IndexOf(dragonPos));
                 fireTimer = 0.0;
             }
-            else
-            {
-                //fireTimer = 2.0;
-
-            }
+            
             for (int i = 0; i < Flames.Length; i++)
             {
                 if (!Flames[i].Alive) continue;
-                //set flame x/y component to choppers current pos
-                Flames[i].Position -= (float)gameTime.ElapsedGameTime.TotalSeconds * Flames[i].Velocity;
+                //might need to change... idk
+                //Flames[i].UpdateVelocity(targetPosition);
+                Flames[i].Position -= (float)gameTime.ElapsedGameTime.TotalSeconds *Flames[i].Velocity;
                 Flames[i].UpdateBounds(8, -8);
                 if(Flames[i].Position.X < 0)
                 {
                     Flames[i].Alive = false;
+                }
+            }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="targetPosition"></param>
+        private static void SpawnFlame(Vector2 targetPosition)
+        {
+            int index = HelperMethods.Next(0, dragonPositions.Count);
+            //LOL let's see if this bs works
+            var tempArray = dragonPositions.ToArray();
+            tempArray[index].X -= 50;
+            //tempArray[index].Y -= 0;//FIXME may want to adjust later
+            dragonPositions = tempArray.ToList();
+            for (int i = 0; i < Flames.Length; i++)
+            {
+                if (!Flames[i].Fired)
+                {
+                    //CHECK see if I am grabbing positions right
+                    Vector2 newPosition = new Vector2(dragonPositions[index].X, dragonPositions[index].Y);
+                    //FIXME change to vector 
+                    Flames[i].Initialize(targetPosition, newPosition);
+                    Flames[i].InitializeBounds(newPosition, 15, 15);
+                    firedFlames++;
+                    return;
                 }
             }
         }
@@ -162,32 +185,7 @@ namespace SeniorDesign
             }
         }
         
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="targetPosition"></param>
-        private static void SpawnFlame(float targetYPosition)
-        {
-            int index = HelperMethods.Next(0, dragonPositions.Count);
-            //LOL let's see if this bs works
-            var tempArray = dragonPositions.ToArray();
-            tempArray[index].X -= 50;
-            //tempArray[index].Y -= 0;//FIXME may want to adjust later
-            dragonPositions = tempArray.ToList();
-
-            for(int i = 0; i < Flames.Length; i++)
-            {
-                if (!Flames[i].Fired)
-                {
-                    //CHECK see if I am grabbing positions right
-                    Vector2 newPosition = new Vector2(dragonPositions[index].X, dragonPositions[index].Y);
-                    Flames[i].Initialize(targetYPosition, newPosition);
-                    Flames[i].InitializeBounds(newPosition, 15, 15);
-                    firedFlames++;
-                    return;
-                }
-            }
-        }
+        
         /// <summary>
         /// deletes certain dragon position
         /// </summary>

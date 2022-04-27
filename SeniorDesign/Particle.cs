@@ -22,7 +22,7 @@ namespace SeniorDesign
 
          */
         private BoundingRectangle bounds;
-        private const int FIRE_VELOCITY_FLAME = 200;
+        private const int FIRE_VELOCITY_FLAME = 250;
         private const int FIRE_VELOCITY_BULLET = 3000; 
         public BoundingRectangle Bounds => bounds;
    
@@ -43,8 +43,9 @@ namespace SeniorDesign
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="yPosition"></param>
-        public void Initialize(float targetYPosition, Vector2 newPosition)
+        /// <param name="targetPos"></param>
+        /// <param name="newPosition"></param>
+        public void Initialize(Vector2 targetPos, Vector2 newPosition)
         {
             /*this.Color = color;
             this.Velocity = velocity;
@@ -52,8 +53,20 @@ namespace SeniorDesign
             //FIXME THIS IS FOR FLAMES ONLY
             Fired = true;
             Alive = true;
-            Velocity = new Vector2(FIRE_VELOCITY_FLAME, targetYPosition);
+            Velocity = targetPos;
+            Velocity.Normalize();
+            Velocity *= FIRE_VELOCITY_FLAME;
             Position = newPosition;
+        }
+        /// <summary>
+        /// FIXME make code one central method
+        /// </summary>
+        /// <param name="targetPos"></param>
+        public void UpdateVelocity(Vector2 targetPos)
+        {
+            Velocity = targetPos;
+            Velocity.Normalize();
+            Velocity *= FIRE_VELOCITY_FLAME;
         }
         public void InitializeBounds(Vector2 position, int width, int height)
         {

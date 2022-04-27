@@ -40,14 +40,13 @@ namespace SeniorDesign
             };
             testDragons = new Dragon[]
             {
-                new Dragon(3),
-                new Dragon(3)
+                new Dragon(3, new Vector2(600, 100)),
+                new Dragon(3, new Vector2(600,400))
             };
             //FIXME initial loding for testing
             FlameParticleSystem.Initialize();
             foreach (var dragon in testDragons) FlameParticleSystem.AddNewDragonPos(dragon.Position);
             bulletSystem = new BulletParticleSystem(chopper.Position);
-            //dragon1 = new Dragon(3);
             base.Initialize();
         }
 
@@ -95,9 +94,13 @@ namespace SeniorDesign
             for(int i = 0; i < testDragons.Length; i++)
             {
                 //calculate the difference between the vectors, normalize the vector, scale the vector
-                aimVector = testDragons[i].Position - chopper.Position;
+                //feel like this part could be abstracted and the work is done in the particle system...
+                Vector2 tempChopperPos = chopper.Position;
+                //tempChopperPos.Y -= 100;
+                //tempChopperPos.X -= 50;
+                aimVector = testDragons[i].Position - tempChopperPos;                
                 FlameParticleSystem.UpdateDragonPos(testDragons[i].Position, i, testDragons[i].Alive);
-                FlameParticleSystem.Update(gameTime, testDragons[i].Alive, aimVector)
+                FlameParticleSystem.Update(gameTime, testDragons[i].Alive, aimVector);
                 //if dragon is above chopper, negate y component, else keep it pos
                 //FlameParticleSystem.Update(gameTime, testDragons[i].Alive, (chopper.Position.Y/10)-10);
                 //FlameParticleSystem.Update(gameTime, testDragons[i].Alive, (testDragons[i].Position.Y > chopper.Position.Y ? (chopper.Position.Y / 8) : (-chopper.Position.Y / 8)));

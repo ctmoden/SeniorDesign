@@ -65,10 +65,11 @@ namespace SeniorDesign
         /// dragon animation amongst the different types of dragon textures
         /// </summary>
         /// <param name="animationRow"></param>
-        public Dragon(int animationRow)
+        public Dragon(int animationRow, Vector2 position)
         {
             hitCount = 0;
-            position = new Vector2(HelperMethods.Next(500, 700), HelperMethods.Next(200,500));
+            //position = new Vector2(HelperMethods.Next(500, 700), HelperMethods.Next(200,500));
+            this.position = position;
             this.animationRow = animationRow;
             direction = (Direction)(HelperMethods.Next(2, 3+1));
             resetTimer = false;
