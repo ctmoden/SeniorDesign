@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Threading;
 using SeniorDesign.ButtonStates;
+using System.Collections.Generic;
 
 namespace SeniorDesign
 {
@@ -16,7 +17,8 @@ namespace SeniorDesign
         private BulletParticleSystem bulletSystem;
         private Dragon dragon1;
         private Dragon dragon2;
-        private Dragon[] testDragons;
+        //private Dragon[] testDragons;
+        private List<Dragon> testDragons;
         private SpriteFont font;
         private Vector2 aimVector;
         
@@ -38,11 +40,16 @@ namespace SeniorDesign
                 new MissileSprite(chopper.Position),
                 new MissileSprite(chopper.Position)
             };
-            testDragons = new Dragon[]
+            #region dragons with arrays
+            /*testDragons = new Dragon[]
             {
                 new Dragon(3, new Vector2(600, 100)),
                 new Dragon(3, new Vector2(600,400))
-            };
+            };*/
+            #endregion 
+            testDragons = new List<Dragon>();
+            testDragons.Add(new Dragon(3, new Vector2(600, 100)));
+            testDragons.Add(new Dragon(3, new Vector2(600, 400)));
             //FIXME initial loding for testing
             FlameParticleSystem.Initialize();
             foreach (var dragon in testDragons) FlameParticleSystem.AddNewDragonPos(dragon.Position);
