@@ -22,6 +22,8 @@ namespace SeniorDesign
 
         private double directionTimer;
 
+        private double flameTimer;
+
         private int animationRow;//y component
 
         private short animationFrame;//x component
@@ -82,7 +84,18 @@ namespace SeniorDesign
             dragonTexture = content.Load<Texture2D>(@"Dragon_Files\PNG\144x128\flying_dragon-red");//FIXME will this cause issues outside my machine?
             boundingTexture = content.Load<Texture2D>(@"Debugging_Tools\Water32Frames8X4");
         }
-        public void Update(GameTime gameTime)
+
+        private bool spawnFlame(GameTime gameTime)
+        {
+            flameTimer += gameTime.ElapsedGameTime.TotalSeconds;
+            if (flameTimer > 3.0)
+            {
+                return true;
+            }
+            else return false;
+
+        }
+        public void Update(GameTime gameTime, out bool spawnFire)
         {
             bounds.X = position.X-35;
             bounds.Y = position.Y-10;
@@ -99,6 +112,7 @@ namespace SeniorDesign
             NEXT STEP: make it oscillate randomly in x coordinate
              */
             directionTimer += gameTime.ElapsedGameTime.TotalSeconds;
+            spawnFire = spawnFlame(gameTime);
             if (!resetTimer)
             {
                 flyTime = HelperMethods.NextDouble() * HelperMethods.Next(1, 3);//

@@ -84,31 +84,23 @@ namespace SeniorDesign
                 missile.Update(chopper.Position);//FIXME move to chopper class?
                 if (missile.Fired && missile.IsAlive) missile.FireControl();//FIXME move to missile class?
             }
+            bool spawnFlame = false;
             foreach (var dragon in testDragons)
             {
-                dragon.Update(gameTime);
+                dragon.Update(gameTime, out spawnFlame);
+                if (spawnFlame)
+                {
+                    //send targeting and origin pos info to flame system
+                    //calculate aimVector
+                    aimVector = dragon.Position - chopper.Position;
+                    FlameParticleSystem.Update(gameTime, dragon.Alive, aimVector, dragon.Position);
+
+                }
                 //FIXME finish to test all dragons later, just test with one now
                 //FlameParticleSystem.
             }
             #region dragon flame testing
-            for(int i = 0; i < testDragons.Length; i++)
-            {
-                //calculate the difference between the vectors, normalize the vector, scale the vector
-                //feel like this part could be abstracted and the work is done in the particle system...
-                Vector2 tempChopperPos = chopper.Position;
-                //tempChopperPos.Y -= 100;
-                //tempChopperPos.X -= 50;
-                
-                aimVector = testDragons[i].Position - tempChopperPos;
-                if (testDragons[i].Position.Y > tempChopperPos.Y)
-                {
-                    aimVector.Y *= -1;
-                }
-                FlameParticleSystem.UpdateDragonPos(testDragons[i].Position, i, testDragons[i].Alive);
-                FlameParticleSystem.Update(gameTime, testDragons[i].Alive, aimVector);
-                //if dragon is above chopper, negate y component, else keep it pos
-               
-            }
+           
             //FlameParticleSystem.UpdateDragonPos(testDragons[0].Position, 0, testDragons[0].Alive);//FIXME not sure how this will work if dragon is dead
             //FlameParticleSystem.Update(gameTime, testDragons[0].Position, testDragons[0].Alive);            
             #endregion 
