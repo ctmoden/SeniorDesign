@@ -92,10 +92,13 @@ namespace SeniorDesign
                 {
                     //send targeting and origin pos info to flame system
                     //calculate aimVector
-                    aimVector = dragon.Position - chopper.Position;
+                    Vector2 tempChopper = chopper.Position;
+                    //if(dragon.Position.Y > chopper.Position.Y) tempChopper.Y += 100;
+                    aimVector = dragon.Position - tempChopper;
                     //FlameParticleSystem.Update(gameTime, spawnFlame, aimVector, dragon.Position);
 
                 }
+                
                 FlameParticleSystem.Update(gameTime, spawnFlame, aimVector, dragon.Position, dragon.Alive);
 
                 //FIXME finish to test all dragons later, just test with one now
