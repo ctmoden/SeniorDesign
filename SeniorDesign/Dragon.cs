@@ -24,6 +24,8 @@ namespace SeniorDesign
 
         private double flameTimer;
 
+        private double fireRate;
+
         private int animationRow;//y component
 
         private short animationFrame;//x component
@@ -78,6 +80,7 @@ namespace SeniorDesign
             x_pos = 400;
             bounds = new BoundingRectangle(new Vector2(position.X, position.Y), 25, 60);
             Alive = true;
+            setFireRate();
         }
         public void LoadContent(ContentManager content)
         {
@@ -88,13 +91,19 @@ namespace SeniorDesign
         private bool spawnFlame(GameTime gameTime)
         {
             flameTimer += gameTime.ElapsedGameTime.TotalSeconds;
-            if (flameTimer > 3.0)
+            if (flameTimer > fireRate)
             {
+                setFireRate();
                 flameTimer = 0.0;
                 return true;
             }
             else return false;
 
+        }
+        private void setFireRate()
+        {
+            //double between ~.5 and 5 ish
+            fireRate = HelperMethods.Next(1, 7) * HelperMethods.NextDouble();
         }
         public void Update(GameTime gameTime, out bool spawnFire)
         {

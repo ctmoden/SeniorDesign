@@ -37,5 +37,7 @@ namespace SeniorDesign
         public static int Next(int min, int max) => rand.Next(min, max);
 
         public static double NextDouble() => rand.NextDouble();
+
+        
     }
 }

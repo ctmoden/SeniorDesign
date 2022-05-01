@@ -22,7 +22,7 @@ namespace SeniorDesign
 
          */
         private BoundingRectangle bounds;
-        private const int FIRE_VELOCITY_FLAME = 250;
+        private int FIRE_VELOCITY_FLAME;
         private const int FIRE_VELOCITY_BULLET = 3000; 
         public BoundingRectangle Bounds => bounds;
    
@@ -53,6 +53,7 @@ namespace SeniorDesign
             //FIXME THIS IS FOR FLAMES ONLY
             Fired = true;
             Alive = true;
+            FIRE_VELOCITY_FLAME = HelperMethods.Next(250, 450);
             Velocity = targetPos;
             Velocity.Normalize();
             Velocity *= FIRE_VELOCITY_FLAME;
