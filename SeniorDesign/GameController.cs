@@ -167,6 +167,7 @@ namespace SeniorDesign
             bulletSystem.Draw(gameTime, _spriteBatch);
             //dragon1.Draw(gameTime, _spriteBatch);
             foreach (var dragon in testDragons) dragon.Draw(gameTime, _spriteBatch);
+            Vector2 aimTemp = aimVector;
             FlameParticleSystem.Draw(gameTime, _spriteBatch);
             _spriteBatch.DrawString(font, $"Choppa HP: {chopper.HitPoints}", new Vector2(10, 10), Color.Gold, 0f, new Vector2(), .25f, SpriteEffects.None, 0);
             _spriteBatch.End();

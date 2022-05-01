@@ -40,6 +40,8 @@ namespace SeniorDesign
 
         public bool Alive;
 
+        private int hitPoints;
+
         /// <summary>
         /// 
         /// </summary>
@@ -53,7 +55,7 @@ namespace SeniorDesign
             //FIXME THIS IS FOR FLAMES ONLY
             Fired = true;
             Alive = true;
-            FIRE_VELOCITY_FLAME = HelperMethods.Next(250, 400);
+            FIRE_VELOCITY_FLAME = HelperMethods.Next(50, 100);//250,400
             Velocity = targetPos;
             Velocity.Normalize();
             Velocity *= FIRE_VELOCITY_FLAME;

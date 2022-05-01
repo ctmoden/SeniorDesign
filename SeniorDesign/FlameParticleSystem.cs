@@ -24,7 +24,7 @@ namespace SeniorDesign
         private static int fireVelocity;
         private static int freeIndex;
         private static Vector2 targetPos;
-        public static Particle[] Flames = new Particle[100];
+        public static Particle[] Flames = new Particle[1000];
         public static bool IsFiring;
         private static Random rand;
         /// <summary>
@@ -177,7 +177,8 @@ namespace SeniorDesign
                 if (Flames[i].Alive)
                 {
                     //FIXME find equation to adjust flame to direction of fire
-                    spriteBatch.Draw(flameTexture, Flames[i].Position, sourceRectangle, Color.White, -1.6f, new Vector2(64, 64), .35f, SpriteEffects.None, 0);
+                    float rotation = (float)Math.Atan(Flames[i].Velocity.Y / Flames[i].Velocity.X);
+                    spriteBatch.Draw(flameTexture, Flames[i].Position, sourceRectangle, Color.White, rotation, new Vector2(64, 100), .35f, SpriteEffects.None, 0);
                     var boundRect = new Rectangle((int)Flames[i].Bounds.X, (int)Flames[i].Bounds.Y, (int)Flames[i].Bounds.Width, (int)Flames[i].Bounds.Height);
                     spriteBatch.Draw(boundTexture, boundRect, Color.White*.5f);
                 }
