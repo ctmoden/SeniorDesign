@@ -72,7 +72,7 @@ namespace SeniorDesign
         public Dragon(int animationRow, Vector2 position)
         {
             hitCount = 0;
-            //position = new Vector2(HelperMethods.Next(500, 700), HelperMethods.Next(200,500));
+            position = new Vector2(HelperMethods.Next(500, 700), HelperMethods.Next(200,500));
             this.position = position;
             this.animationRow = animationRow;
             direction = (Direction)(HelperMethods.Next(2, 3+1));
@@ -152,10 +152,10 @@ namespace SeniorDesign
                 {
                     //FIXME uncomment positioning after testing
                     case Direction.Down:
-                        //position += HelperMethods.RandomYVelGenerator(-2, 0) * PIXEL_SPEED * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                        position += HelperMethods.RandomYVelGenerator(-2, 0) * PIXEL_SPEED * (float)gameTime.ElapsedGameTime.TotalSeconds;
                         break;
                     case Direction.Up:
-                        //position += HelperMethods.RandomYVelGenerator(1, 3) * PIXEL_SPEED * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                        position += HelperMethods.RandomYVelGenerator(1, 3) * PIXEL_SPEED * (float)gameTime.ElapsedGameTime.TotalSeconds;
                         break;
                 }
                 velocityTimer -= 0.02;

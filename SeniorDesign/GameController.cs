@@ -45,7 +45,7 @@ namespace SeniorDesign
             {
                 new Dragon(3, new Vector2(600, 100)),
                 new Dragon(3, new Vector2(600,400))
-            };ahhh*/
+            };*/
             #endregion 
             testDragons = new List<Dragon>();
             testDragons.Add(new Dragon(3, new Vector2(600, 100)));
