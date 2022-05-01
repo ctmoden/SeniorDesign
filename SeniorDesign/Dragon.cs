@@ -90,6 +90,7 @@ namespace SeniorDesign
             flameTimer += gameTime.ElapsedGameTime.TotalSeconds;
             if (flameTimer > 3.0)
             {
+                flameTimer = 0.0;
                 return true;
             }
             else return false;

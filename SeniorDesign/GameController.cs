@@ -93,17 +93,19 @@ namespace SeniorDesign
                     //send targeting and origin pos info to flame system
                     //calculate aimVector
                     aimVector = dragon.Position - chopper.Position;
-                    FlameParticleSystem.Update(gameTime, dragon.Alive, aimVector, dragon.Position);
+                    //FlameParticleSystem.Update(gameTime, spawnFlame, aimVector, dragon.Position);
 
                 }
+                FlameParticleSystem.Update(gameTime, spawnFlame, aimVector, dragon.Position, dragon.Alive);
+
                 //FIXME finish to test all dragons later, just test with one now
                 //FlameParticleSystem.
             }
             #region dragon flame testing
-           
+
             //FlameParticleSystem.UpdateDragonPos(testDragons[0].Position, 0, testDragons[0].Alive);//FIXME not sure how this will work if dragon is dead
             //FlameParticleSystem.Update(gameTime, testDragons[0].Position, testDragons[0].Alive);            
-            #endregion 
+            #endregion
             #region Monogame Example
             if (KeyboardManager.HasBeenPressed(Keys.Space))
             {
