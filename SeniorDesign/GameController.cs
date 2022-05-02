@@ -21,6 +21,7 @@ namespace SeniorDesign
         private List<Dragon> testDragons;
         private SpriteFont font;
         private Vector2 aimVector;
+        private int killCount = 0;
         
 
         private KeyboardState currentKeyboardState;
@@ -83,8 +84,6 @@ namespace SeniorDesign
                 Exit();
             chopper.Update(gameTime);
             checkChopperCollisions();
-            //dragon1.Update(gameTime);
-            //update all missiles each update to make sure their start position is set to most recent chopper position
             foreach (var missile in missiles)
             {
                 
@@ -97,19 +96,11 @@ namespace SeniorDesign
                 dragon.Update(gameTime, out spawnFlame);
                 if (spawnFlame)
                 {
-                    //send targeting and origin pos info to flame system
-                    //calculate aimVector
                     Vector2 tempChopper = chopper.Position;
-                    //if(dragon.Position.Y > chopper.Position.Y) tempChopper.Y += 100;
                     aimVector = dragon.Position - tempChopper;
-                    //FlameParticleSystem.Update(gameTime, spawnFlame, aimVector, dragon.Position);
-
                 }
                 
-                FlameParticleSystem.Update(gameTime, spawnFlame, aimVector, dragon.Position, dragon.Alive);
-
-                //FIXME finish to test all dragons later, just test with one now
-                //FlameParticleSystem.
+                FlameParticleSystem.Update(gameTime, spawnFlame, aimVector, dragon.Position, dragon.Alive);             
             }
             #region dragon flame testing
 
@@ -170,6 +161,7 @@ namespace SeniorDesign
             Vector2 aimTemp = aimVector;
             FlameParticleSystem.Draw(gameTime, _spriteBatch);
             _spriteBatch.DrawString(font, $"Choppa HP: {chopper.HitPoints}", new Vector2(10, 10), Color.Gold, 0f, new Vector2(), .25f, SpriteEffects.None, 0);
+            _spriteBatch.DrawString(font, $"Kill Count: {Dragon.killCount}", new Vector2(10, 20), Color.Gold, 0f, new Vector2(), .25f, SpriteEffects.None, 0);
             _spriteBatch.End();
             base.Draw(gameTime);
         }

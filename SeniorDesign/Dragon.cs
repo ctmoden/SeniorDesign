@@ -57,6 +57,10 @@ namespace SeniorDesign
         private double velocityTimer;
 
         public bool Alive;
+
+        public static int killCount = 0;
+
+        private bool killCounted = false;
         /// <summary>
         /// when hit by a missile, subtract 50-60
         /// when hit by a bullet, subtract 2-3
@@ -124,13 +128,14 @@ namespace SeniorDesign
             {
                 bounds.X = 1000;
                 bounds.Y = 1000;
-
                 isExploding = true;
+                
             }
             if (hitPoints <= 0)
             {
                 Alive = false;
             }
+            
             /*
              for a random period of time,
             move at random velocity either up on down
@@ -184,7 +189,12 @@ namespace SeniorDesign
             if(position.Y > Constants.GAME_HEIGHT)
             {
                 direction = Direction.Up;
-            }            
+            }
+            if (!Alive && !killCounted)
+            {
+                killCount++;
+                killCounted = true;
+            }
         }
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -207,9 +217,12 @@ namespace SeniorDesign
                 //spriteBatch.Draw(boundingTexture, debugRect, Color.White);
             }
             if (!Alive && !(boomAnimationRow == 2 && boomAnimationFrame == 2)) drawExplosion(gameTime, spriteBatch);
-
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="gameTime"></param>
+        /// <param name="spriteBatch"></param>
         private void drawExplosion(GameTime gameTime, SpriteBatch spriteBatch)
         {
             if (isExploding)
