@@ -18,17 +18,27 @@ namespace SeniorDesign
 
         private Texture2D boundingTexture;
 
+        private Texture2D explosionTexture;
+
+        private bool isExploding;
+
         private double animationTimer;
 
         private double directionTimer;
 
         private double flameTimer;
 
+        private double explosionTimer;
+
         private double fireRate;
 
         private int animationRow;//y component
 
-        private short animationFrame;//x component
+        private int animationFrame;//x component
+
+        private int boomAnimationFrame = 0;
+
+        private int boomAnimationRow = 0;
 
         private Vector2 position;
 
@@ -86,6 +96,7 @@ namespace SeniorDesign
         {
             dragonTexture = content.Load<Texture2D>(@"Dragon_Files\PNG\144x128\flying_dragon-red");//FIXME will this cause issues outside my machine?
             boundingTexture = content.Load<Texture2D>(@"Debugging_Tools\Water32Frames8X4");
+            explosionTexture = content.Load<Texture2D>(@"Explosion_Files\blue_explosion");
         }
 
         private bool spawnFlame(GameTime gameTime)
@@ -113,8 +124,13 @@ namespace SeniorDesign
             {
                 bounds.X = 1000;
                 bounds.Y = 1000;
+
+                isExploding = true;
             }
-            if (hitPoints <= 0) Alive = false;
+            if (hitPoints <= 0)
+            {
+                Alive = false;
+            }
             /*
              for a random period of time,
             move at random velocity either up on down
@@ -190,7 +206,33 @@ namespace SeniorDesign
             {
                 //spriteBatch.Draw(boundingTexture, debugRect, Color.White);
             }
+            if (!Alive && !(boomAnimationRow == 2 && boomAnimationFrame == 2)) drawExplosion(gameTime, spriteBatch);
 
+        }
+
+        private void drawExplosion(GameTime gameTime, SpriteBatch spriteBatch)
+        {
+            if (isExploding)
+            {
+                explosionTimer += gameTime.ElapsedGameTime.TotalSeconds;
+                if (explosionTimer > 0.06)//3x3 spritesheet
+                {
+                    boomAnimationFrame++;
+                    if (boomAnimationFrame > 2)
+                    {
+                        boomAnimationFrame = 0;
+                        boomAnimationRow++;
+                        if (boomAnimationRow > 2) boomAnimationRow = 0;
+                    }
+                    explosionTimer = 0.0;
+                }
+            }
+            if (boomAnimationRow == 2 && boomAnimationFrame == 2) isExploding = false;
+            var sourceRectangle = new Rectangle(boomAnimationFrame * 128, boomAnimationRow * 128, 128, 128);
+            if (isExploding)
+            {
+                spriteBatch.Draw(explosionTexture, new Vector2(position.X, position.Y-10), sourceRectangle, Color.White, 0f, new Vector2(64, 64), 1f, SpriteEffects.None, 0);
+            }
         }
 
         public void DetractHitPoints(int hitCount, MunitionType munitionType)
