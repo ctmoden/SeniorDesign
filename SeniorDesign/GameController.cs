@@ -49,11 +49,13 @@ namespace SeniorDesign
             };*/
             #endregion 
             testDragons = new List<Dragon>();
-            testDragons.Add(new Dragon(3, new Vector2(600, 100)));
-            testDragons.Add(new Dragon(3, new Vector2(600, 400)));
+            /*testDragons.Add(new Dragon(3, new Vector2(600, 100)));
+            testDragons.Add(new Dragon(3, new Vector2(600, 400)));*/
+            testDragons.Add(new Dragon(3));
+            testDragons.Add(new Dragon(3));
             //FIXME initial loding for testing
             FlameParticleSystem.Initialize();
-            foreach (var dragon in testDragons) FlameParticleSystem.AddNewDragonPos(dragon.Position);
+            //foreach (var dragon in testDragons) FlameParticleSystem.AddNewDragonPos(dragon.Position);
             bulletSystem = new BulletParticleSystem(chopper.Position);
             base.Initialize();
         }
@@ -67,10 +69,40 @@ namespace SeniorDesign
 
             //dragon1.LoadContent(Content);
             foreach (var missile in missiles) missile.LoadContent(Content);
-            foreach (var dragon in testDragons) dragon.LoadContent(Content);
+            loadDragonContent();
             // TODO: use this.Content to load your game content here
             FlameParticleSystem.LoadContent(Content);
         }
+        private void loadDragonContent()
+        {
+            foreach (var dragon in testDragons)
+            {
+                if (dragon.Alive) dragon.LoadContent(Content);
+            }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        private void populateDragonList()
+        {
+            int casualtyCount = 0;
+            foreach(var dragon in testDragons)
+            {
+                if (!dragon.Alive) casualtyCount++;
+            }
+            if(casualtyCount == testDragons.Count)
+            {
+                int dragonNum = HelperMethods.Next(1, 4);
+                while(dragonNum > 0)
+                {
+                    testDragons.Add(new Dragon(3));
+                    dragonNum--;
+                }
+            }
+            loadDragonContent();
+        }
+
+       
         /// <summary>
         /// Updates sprites
         /// </summary>
@@ -102,6 +134,7 @@ namespace SeniorDesign
                 
                 FlameParticleSystem.Update(gameTime, spawnFlame, aimVector, dragon.Position, dragon.Alive);             
             }
+            populateDragonList();//FIXME more effeicient way of doing this??
             #region dragon flame testing
 
             //FlameParticleSystem.UpdateDragonPos(testDragons[0].Position, 0, testDragons[0].Alive);//FIXME not sure how this will work if dragon is dead
@@ -157,7 +190,10 @@ namespace SeniorDesign
             }
             bulletSystem.Draw(gameTime, _spriteBatch);
             //dragon1.Draw(gameTime, _spriteBatch);
-            foreach (var dragon in testDragons) dragon.Draw(gameTime, _spriteBatch);
+            foreach (var dragon in testDragons)
+            {
+                dragon.Draw(gameTime, _spriteBatch);
+            }
             Vector2 aimTemp = aimVector;
             FlameParticleSystem.Draw(gameTime, _spriteBatch);
             _spriteBatch.DrawString(font, $"Choppa HP: {chopper.HitPoints}", new Vector2(10, 10), Color.Gold, 0f, new Vector2(), .25f, SpriteEffects.None, 0);

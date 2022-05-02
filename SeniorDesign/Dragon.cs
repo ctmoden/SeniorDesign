@@ -22,6 +22,8 @@ namespace SeniorDesign
 
         private bool isExploding;
 
+        private bool isExploded;
+
         private double animationTimer;
 
         private double directionTimer;
@@ -83,11 +85,11 @@ namespace SeniorDesign
         /// dragon animation amongst the different types of dragon textures
         /// </summary>
         /// <param name="animationRow"></param>
-        public Dragon(int animationRow, Vector2 position)
+        public Dragon(int animationRow)
         {
             hitCount = 0;
-            //position = new Vector2(HelperMethods.Next(500, 700), HelperMethods.Next(200,500));
-            this.position = position;
+            this.position = new Vector2(HelperMethods.Next(500, 700), HelperMethods.Next(100,400));
+            //this.position = position;
             this.animationRow = animationRow;
             direction = (Direction)(HelperMethods.Next(2, 3+1));
             resetTimer = false;
@@ -136,12 +138,6 @@ namespace SeniorDesign
                 Alive = false;
             }
             
-            /*
-             for a random period of time,
-            move at random velocity either up on down
-            imediately switch direction of it starts to go out of bounds (how to pair with direction timer? reset it)
-            NEXT STEP: make it oscillate randomly in x coordinate
-             */
             directionTimer += gameTime.ElapsedGameTime.TotalSeconds;
             spawnFire = spawnFlame(gameTime);
             if (!resetTimer)
@@ -216,7 +212,8 @@ namespace SeniorDesign
             {
                 //spriteBatch.Draw(boundingTexture, debugRect, Color.White);
             }
-            if (!Alive && !(boomAnimationRow == 2 && boomAnimationFrame == 2)) drawExplosion(gameTime, spriteBatch);
+            if (boomAnimationRow == 2 && boomAnimationFrame == 2) isExploded = true;
+            if (!Alive && !(boomAnimationRow == 2 && boomAnimationFrame == 2) && !isExploded) drawExplosion(gameTime, spriteBatch);
         }
         /// <summary>
         /// 
@@ -240,7 +237,11 @@ namespace SeniorDesign
                     explosionTimer = 0.0;
                 }
             }
-            if (boomAnimationRow == 2 && boomAnimationFrame == 2) isExploding = false;
+            if (boomAnimationRow == 2 && boomAnimationFrame == 2)
+            {
+                isExploding = false;
+                isExploded = true;
+            }
             var sourceRectangle = new Rectangle(boomAnimationFrame * 128, boomAnimationRow * 128, 128, 128);
             if (isExploding)
             {
@@ -251,6 +252,10 @@ namespace SeniorDesign
         public void DetractHitPoints(int hitCount, MunitionType munitionType)
         {
             hitPoints -= hitCount * (int)munitionType;
+            if (hitPoints <= 0)
+            {
+                Alive = false;
+            }
         }
     }
 }
