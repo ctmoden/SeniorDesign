@@ -58,10 +58,14 @@ namespace SeniorDesign
         private void initializeDragons()
         {
             testDragons = new List<Dragon>();
-            testDragons.Add(new Dragon(3, true));
-            testDragons.Add(new Dragon(3, true));
-            testDragons.Add(new Dragon(3, true));
-            testDragons.Add(new Dragon(3, false));
+            for(int i = 0; i < 3; i++)
+            {
+                testDragons.Add(new Dragon(3, true));
+            }
+            for(int i = 0; i < 6; i++)
+            {
+                testDragons.Add(new Dragon(3, false));
+            }
         }
         
         /// <summary>
