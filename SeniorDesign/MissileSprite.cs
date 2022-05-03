@@ -29,7 +29,7 @@ namespace SeniorDesign
         /// <summary>
         /// Counts number of missiles supplied to chopper 
         /// </summary>
-        private static int missileLoad = 3;//FIXME make this public and reset as soon as 
+        private static int missileLoad = 10;//FIXME make this public and reset as soon as 
 
         public static int MissileLoad => missileLoad;
         private const int FIRE_VELOCITY = 30;
@@ -216,6 +216,10 @@ namespace SeniorDesign
             {
                 hitCount++;
                 IsAlive = false;
+                bounds.X = -2000;
+                bounds.Y = -2000;
+                position.X = -2000;
+                position.Y = -2000;
             }
             return hitCount;
         }
