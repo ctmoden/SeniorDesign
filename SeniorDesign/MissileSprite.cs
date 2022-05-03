@@ -42,7 +42,7 @@ namespace SeniorDesign
         /// </summary>
         private Texture2D texture;
         /// <summary>
-        /// Texture for bounding region
+        /// Texture for bounding regions
         /// </summary>
         private Texture2D boundTexture;
 
