@@ -87,20 +87,27 @@ namespace SeniorDesign
         private void generateDragons()
         {
             int killCount = 0;
-            foreach (var dragon in testDragons)
+            foreach (var dragon in testDragons)//this is the problem child... double counts
             {
                 if (!dragon.Alive) killCount++;
+                //if next dragon in list is not on screen (start at killcount-1), then generate some dragons
             }
-            if(killCount == Dragon.killCount)
+            if(killCount != 0)
             {
-                //add 1-4 dragons to screen 
-                int dragonNum = HelperMethods.Next(1, 4);
-                int i = Dragon.killCount;
-                while(i < dragonNum && i < testDragons.Count)
+                if (killCount == Dragon.killCount)
                 {
-                    testDragons[i].SetOnScreen(true);
+                    //add 1-4 dragons to screen 
+                    int dragonNum = HelperMethods.Next(1, 4);
+                    int i = Dragon.killCount;
+                    while (i < dragonNum && i < testDragons.Count - 1)
+                    {
+                        testDragons[i].SetOnScreen(true);
+                        i++;
+                    }
                 }
+
             }
+            
         }
         /// <summary>
         /// Updates sprites
@@ -117,7 +124,6 @@ namespace SeniorDesign
             checkChopperCollisions();
             foreach (var missile in missiles)
             {
-                
                 missile.Update(chopper.Position);//FIXME move to chopper class?
                 if (missile.Fired && missile.IsAlive) missile.FireControl();//FIXME move to missile class?
             }
@@ -134,9 +140,6 @@ namespace SeniorDesign
                 FlameParticleSystem.Update(gameTime, spawnFlame, aimVector, dragon.Position, dragon.Alive);             
             }
             #region dragon flame testing
-
-            //FlameParticleSystem.UpdateDragonPos(testDragons[0].Position, 0, testDragons[0].Alive);//FIXME not sure how this will work if dragon is dead
-            //FlameParticleSystem.Update(gameTime, testDragons[0].Position, testDragons[0].Alive);            
             #endregion
             #region Monogame Example
             if (KeyboardManager.HasBeenPressed(Keys.Space))
@@ -162,7 +165,6 @@ namespace SeniorDesign
             if (KeyboardManager.IsPressed(Keys.M))
             {
                 bulletSystem.IsFiring = true;
-                
             }
             else
             {
@@ -170,7 +172,9 @@ namespace SeniorDesign
             }
             bulletSystem.Update(gameTime, chopper.Position);
             #endregion chopper machine gun
+            generateDragons();
             checkDragonCollisions();
+            
             base.Update(gameTime);
         }
         /// <summary>

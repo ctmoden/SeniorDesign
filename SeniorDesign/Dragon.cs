@@ -81,7 +81,6 @@ namespace SeniorDesign
 
         private bool onScreen;
 
-        public bool OnScreen { get { return onScreen; } set { onScreen = value; } }
         /// <summary>
         /// 
         /// </summary>
@@ -159,7 +158,7 @@ namespace SeniorDesign
             }
             if (onScreen) spawnFire = spawnFlame(gameTime);
             else spawnFire = false;
-            directionController(gameTime);
+            if(onScreen) directionController(gameTime);
             if (!Alive && !killCounted)
             {
                 killCount++;
@@ -233,7 +232,7 @@ namespace SeniorDesign
                 animationTimer -= .25;
             }//144(x) by 128(y)
             var sourceRectangle = new Rectangle(animationFrame * 144, animationRow * 128, 144, 128);
-            if(Alive) spriteBatch.Draw(dragonTexture, position, sourceRectangle, Color.White, 0f, new Vector2(72, 64), .75f, SpriteEffects.None,0);
+            if(Alive && onScreen) spriteBatch.Draw(dragonTexture, position, sourceRectangle, Color.White, 0f, new Vector2(72, 64), .75f, SpriteEffects.None,0);
             var debugRect = new Rectangle((int)bounds.X, (int)bounds.Y, (int)bounds.Width, (int)bounds.Height);
             if (Alive)
             {
