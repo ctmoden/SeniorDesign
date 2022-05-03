@@ -50,6 +50,7 @@ namespace SeniorDesign
             
             //FIXME initial loding for testing
             FlameParticleSystem.Initialize();
+            initializeDragons();
             foreach (var dragon in testDragons) FlameParticleSystem.AddNewDragonPos(dragon.Position);
             bulletSystem = new BulletParticleSystem(chopper.Position);
             base.Initialize();
@@ -90,12 +91,14 @@ namespace SeniorDesign
             {
                 if (!dragon.Alive) killCount++;
             }
-            if(killCount == Dragon.killCount && (killCount < testDragons.Count))
+            if(killCount == Dragon.killCount)
             {
+                //add 1-4 dragons to screen 
                 int dragonNum = HelperMethods.Next(1, 4);
-                for(int i = killCount; i < dragonNum; i++)
+                int i = Dragon.killCount;
+                while(i < dragonNum && i < testDragons.Count)
                 {
-                    testDragons[i].OnScreen = true;
+                    testDragons[i].SetOnScreen(true);
                 }
             }
         }
@@ -190,6 +193,9 @@ namespace SeniorDesign
             FlameParticleSystem.Draw(gameTime, _spriteBatch);
             _spriteBatch.DrawString(font, $"Choppa HP: {chopper.HitPoints}", new Vector2(10, 10), Color.Gold, 0f, new Vector2(), .25f, SpriteEffects.None, 0);
             _spriteBatch.DrawString(font, $"Kill Count: {Dragon.killCount}", new Vector2(10, 20), Color.Gold, 0f, new Vector2(), .25f, SpriteEffects.None, 0);
+            //if dragon killcount == testDragons.Count: display win message on screen
+            if(Dragon.killCount == testDragons.Count) _spriteBatch.DrawString(font, $"You won!  All dragons destroyed!", new Vector2(Constants.GAME_WIDTH/2, Constants.GAME_HEIGHT/2), Color.Gold, 0f, new Vector2(), 1f, SpriteEffects.None, 0);
+
             _spriteBatch.End();
             base.Draw(gameTime);
         }

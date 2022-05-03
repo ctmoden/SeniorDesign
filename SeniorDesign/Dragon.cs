@@ -116,6 +116,15 @@ namespace SeniorDesign
             boundingTexture = content.Load<Texture2D>(@"Debugging_Tools\Water32Frames8X4");
             explosionTexture = content.Load<Texture2D>(@"Explosion_Files\blue_explosion");
         }
+        /// <summary>
+        /// Sets the next alive dragon to be on screen 
+        /// </summary>
+        /// <param name="onScreen"></param>
+        public void SetOnScreen(bool onScreen)
+        {
+            this.onScreen = onScreen;
+            setPosition();
+        }
 
         private bool spawnFlame(GameTime gameTime)
         {
@@ -143,14 +152,13 @@ namespace SeniorDesign
                 bounds.X = 1000;
                 bounds.Y = 1000;
                 isExploding = true;
-                
             }
-
             if (hitPoints <= 0)
             {
                 Alive = false;
             }
-            spawnFire = spawnFlame(gameTime);
+            if (onScreen) spawnFire = spawnFlame(gameTime);
+            else spawnFire = false;
             directionController(gameTime);
             if (!Alive && !killCounted)
             {
@@ -158,7 +166,10 @@ namespace SeniorDesign
                 killCounted = true;
             }
         }
-
+        /// <summary>
+        /// Controlls direction of dragon on screen
+        /// </summary>
+        /// <param name="gameTime"></param>
         private void directionController(GameTime gameTime)
         {
             directionTimer += gameTime.ElapsedGameTime.TotalSeconds;
