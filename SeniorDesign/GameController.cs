@@ -47,17 +47,22 @@ namespace SeniorDesign
                 new Dragon(3, new Vector2(600,400))
             };*/
             #endregion 
-            testDragons = new List<Dragon>();
-            testDragons.Add(new Dragon(3, true));
-            testDragons.Add(new Dragon(3, true));
-            testDragons.Add(new Dragon(3, true));
-            testDragons.Add(new Dragon(3, false));
+            
             //FIXME initial loding for testing
             FlameParticleSystem.Initialize();
             foreach (var dragon in testDragons) FlameParticleSystem.AddNewDragonPos(dragon.Position);
             bulletSystem = new BulletParticleSystem(chopper.Position);
             base.Initialize();
         }
+        private void initializeDragons()
+        {
+            testDragons = new List<Dragon>();
+            testDragons.Add(new Dragon(3, true));
+            testDragons.Add(new Dragon(3, true));
+            testDragons.Add(new Dragon(3, true));
+            testDragons.Add(new Dragon(3, false));
+        }
+        
         /// <summary>
         /// 
         /// </summary>
@@ -76,10 +81,23 @@ namespace SeniorDesign
         }
         /// <summary>
         /// When all the dragons on screen die, wait a random amount of time and add 1-3 dragons on screen
+        /// call from update
         /// </summary>
         private void generateDragons()
         {
-
+            int killCount = 0;
+            foreach (var dragon in testDragons)
+            {
+                if (!dragon.Alive) killCount++;
+            }
+            if(killCount == Dragon.killCount && (killCount < testDragons.Count))
+            {
+                int dragonNum = HelperMethods.Next(1, 4);
+                for(int i = killCount; i < dragonNum; i++)
+                {
+                    testDragons[i].OnScreen = true;
+                }
+            }
         }
         /// <summary>
         /// Updates sprites

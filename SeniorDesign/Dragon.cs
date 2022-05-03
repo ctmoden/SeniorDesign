@@ -94,6 +94,7 @@ namespace SeniorDesign
             //this.position = position;
             this.animationRow = animationRow;
             this.onScreen = onScreen;
+            setPosition();
             direction = (Direction)(HelperMethods.Next(2, 3+1));
             resetTimer = false;
             x_pos = 400;
@@ -101,7 +102,9 @@ namespace SeniorDesign
             Alive = true;
             setFireRate();
         }
-
+        /// <summary>
+        /// Sets initial position based on whether dragon is on screen or not
+        /// </summary>
         private void setPosition()
         {
             if (onScreen) position = new Vector2(HelperMethods.Next(500, 700), HelperMethods.Next(200, 500));
@@ -142,25 +145,29 @@ namespace SeniorDesign
                 isExploding = true;
                 
             }
+
             if (hitPoints <= 0)
             {
                 Alive = false;
             }
-            
-            /*
-             for a random period of time,
-            move at random velocity either up on down
-            imediately switch direction of it starts to go out of bounds (how to pair with direction timer? reset it)
-            NEXT STEP: make it oscillate randomly in x coordinate
-             */
-            directionTimer += gameTime.ElapsedGameTime.TotalSeconds;
             spawnFire = spawnFlame(gameTime);
+            directionController(gameTime);
+            if (!Alive && !killCounted)
+            {
+                killCount++;
+                killCounted = true;
+            }
+        }
+
+        private void directionController(GameTime gameTime)
+        {
+            directionTimer += gameTime.ElapsedGameTime.TotalSeconds;
             if (!resetTimer)
             {
                 flyTime = HelperMethods.NextDouble() * HelperMethods.Next(1, 3);//
                 resetTimer = true;
             }
-            if(directionTimer > flyTime || position.Y > Constants.GAME_HEIGHT
+            if (directionTimer > flyTime || position.Y > Constants.GAME_HEIGHT
                 || position.Y < 0)
             {
                 switch (direction)
@@ -178,7 +185,7 @@ namespace SeniorDesign
             //change velocity based on a timer, not per frame
             velocityTimer += gameTime.ElapsedGameTime.TotalSeconds;
             //FIXME make velocity change at a random time, just sticking with .25-.5 secs for now
-            if(velocityTimer > 0.02)
+            if (velocityTimer > 0.02)
             {
                 switch (direction)//second timer for speed timing
                 {
@@ -192,22 +199,16 @@ namespace SeniorDesign
                 }
                 velocityTimer -= 0.02;
             }
-            
-            if(position.Y < 0)
+
+            if (position.Y < 0)
             {
                 direction = Direction.Down;
             }
-            if(position.Y > Constants.GAME_HEIGHT)
+            if (position.Y > Constants.GAME_HEIGHT)
             {
                 direction = Direction.Up;
             }
-            if (!Alive && !killCounted)
-            {
-                killCount++;
-                killCounted = true;
-            }
         }
-
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             animationTimer += gameTime.ElapsedGameTime.TotalSeconds;
