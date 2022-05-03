@@ -97,18 +97,22 @@ namespace SeniorDesign
             {
                 allDead = true;
             }
-            if(allDead && !testDragons[Dragon.killCount].OnScreen)
+            //want to look at the next dragon in the list
+            if(Dragon.killCount < testDragons.Count)
             {
-                //add 1-3 dragons to screen 
-                int dragonNum = HelperMethods.Next(1, 4);
-                int index = Dragon.killCount;
-                while (index < dragonNum + Dragon.killCount && index < testDragons.Count)
+                if (allDead && !testDragons[Dragon.killCount].OnScreen)
                 {
-                    testDragons[index].SetOnScreen(true);
-                    index++;
-
+                    //add 1-3 dragons to screen 
+                    int dragonNum = HelperMethods.Next(1, 4);
+                    int index = Dragon.killCount;
+                    while (index < dragonNum + Dragon.killCount && index < testDragons.Count)
+                    {
+                        testDragons[index].SetOnScreen(true);
+                        index++;
+                    }
                 }
-            }               
+            }
+                          
         }
         /// <summary>
         /// Updates sprites
@@ -200,7 +204,7 @@ namespace SeniorDesign
             _spriteBatch.DrawString(font, $"Choppa HP: {chopper.HitPoints}", new Vector2(10, 10), Color.Gold, 0f, new Vector2(), .25f, SpriteEffects.None, 0);
             _spriteBatch.DrawString(font, $"Kill Count: {Dragon.killCount}", new Vector2(10, 20), Color.Gold, 0f, new Vector2(), .25f, SpriteEffects.None, 0);
             //if dragon killcount == testDragons.Count: display win message on screen
-            if(Dragon.killCount == testDragons.Count) _spriteBatch.DrawString(font, $"You won!  All dragons destroyed!", new Vector2(Constants.GAME_WIDTH/2, Constants.GAME_HEIGHT/2), Color.Gold, 0f, new Vector2(), 1f, SpriteEffects.None, 0);
+            if(Dragon.killCount == testDragons.Count) _spriteBatch.DrawString(font, $"You won!  All dragons destroyed!", new Vector2(100, Constants.GAME_HEIGHT/7), Color.Gold, 0f, new Vector2(), 1f, SpriteEffects.None, 0);
 
             _spriteBatch.End();
             base.Draw(gameTime);
