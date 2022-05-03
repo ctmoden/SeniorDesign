@@ -40,7 +40,7 @@ namespace SeniorDesign
         }
         public static void Initialize()
         {
-            dragonPositions = new List<Vector2>();
+            dragonPositions = new List<Vector2>();//get rid of this junk lol
             IsFiring = true;
         }
         /// <summary>
@@ -196,6 +196,7 @@ namespace SeniorDesign
         }
         
         /// <summary>
+        /// FIXME delete this garbage
         /// adds new dragon position to list of dragon positions
         /// </summary>
         /// <param name="pos"></param>

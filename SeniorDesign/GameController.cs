@@ -23,7 +23,6 @@ namespace SeniorDesign
         private Vector2 aimVector;
         private int killCount = 0;
         
-
         private KeyboardState currentKeyboardState;
         public GameController()
         {
@@ -49,27 +48,38 @@ namespace SeniorDesign
             };*/
             #endregion 
             testDragons = new List<Dragon>();
-            testDragons.Add(new Dragon(3, new Vector2(600, 100)));
-            testDragons.Add(new Dragon(3, new Vector2(600, 400)));
+            testDragons.Add(new Dragon(3, true));
+            testDragons.Add(new Dragon(3, true));
+            testDragons.Add(new Dragon(3, true));
+            testDragons.Add(new Dragon(3, false));
             //FIXME initial loding for testing
             FlameParticleSystem.Initialize();
             foreach (var dragon in testDragons) FlameParticleSystem.AddNewDragonPos(dragon.Position);
             bulletSystem = new BulletParticleSystem(chopper.Position);
             base.Initialize();
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             chopper.LoadContent(Content);
             bulletSystem.LoadContent(Content);
             font = Content.Load<SpriteFont>("bangers");
-
             //dragon1.LoadContent(Content);
             foreach (var missile in missiles) missile.LoadContent(Content);
             foreach (var dragon in testDragons) dragon.LoadContent(Content);
             // TODO: use this.Content to load your game content here
             FlameParticleSystem.LoadContent(Content);
+            
+        }
+        /// <summary>
+        /// When all the dragons on screen die, wait a random amount of time and add 1-3 dragons on screen
+        /// </summary>
+        private void generateDragons()
+        {
+
         }
         /// <summary>
         /// Updates sprites

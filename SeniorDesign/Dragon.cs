@@ -78,23 +78,34 @@ namespace SeniorDesign
         /// </summary>
         private BoundingRectangle bounds;
         public BoundingRectangle Bounds => bounds;
+
+        private bool onScreen;
+
+        public bool OnScreen { get { return onScreen; } set { onScreen = value; } }
         /// <summary>
-        /// Constructor takes in animation row to iterate over certain
-        /// dragon animation amongst the different types of dragon textures
+        /// 
         /// </summary>
         /// <param name="animationRow"></param>
-        public Dragon(int animationRow, Vector2 position)
+        /// <param name="onScreen"></param>
+        public Dragon(int animationRow, bool onScreen)
         {
             hitCount = 0;
-            //position = new Vector2(HelperMethods.Next(500, 700), HelperMethods.Next(200,500));
-            this.position = position;
+            this.position = new Vector2(HelperMethods.Next(500, 700), HelperMethods.Next(200,500));
+            //this.position = position;
             this.animationRow = animationRow;
+            this.onScreen = onScreen;
             direction = (Direction)(HelperMethods.Next(2, 3+1));
             resetTimer = false;
             x_pos = 400;
             bounds = new BoundingRectangle(new Vector2(position.X, position.Y), 25, 60);
             Alive = true;
             setFireRate();
+        }
+
+        private void setPosition()
+        {
+            if (onScreen) position = new Vector2(HelperMethods.Next(500, 700), HelperMethods.Next(200, 500));
+            else if (!onScreen) position = new Vector2(1000, 1000);
         }
         public void LoadContent(ContentManager content)
         {
