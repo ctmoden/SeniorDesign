@@ -86,28 +86,29 @@ namespace SeniorDesign
         /// </summary>
         private void generateDragons()
         {
-            int killCount = 0;
-            foreach (var dragon in testDragons)//this is the problem child... double counts
+            bool allDead = false;
+            int killed = 0;
+            //have to do this since dragons will die out of order
+            for(int i = Dragon.killCount-1; i>=0; i--)
             {
-                if (!dragon.Alive) killCount++;
-                //if next dragon in list is not on screen (start at killcount-1), then generate some dragons
+                if (!testDragons[i].Alive) killed++;
             }
-            if(killCount != 0)
+            if(killed == Dragon.killCount && killed > 0)
             {
-                if (killCount == Dragon.killCount)
+                allDead = true;
+            }
+            if(allDead && !testDragons[Dragon.killCount].OnScreen)
+            {
+                //add 1-3 dragons to screen 
+                int dragonNum = HelperMethods.Next(1, 4);
+                int index = Dragon.killCount;
+                while (index < dragonNum + Dragon.killCount && index < testDragons.Count)
                 {
-                    //add 1-4 dragons to screen 
-                    int dragonNum = HelperMethods.Next(1, 4);
-                    int i = Dragon.killCount;
-                    while (i < dragonNum && i < testDragons.Count - 1)
-                    {
-                        testDragons[i].SetOnScreen(true);
-                        i++;
-                    }
-                }
+                    testDragons[index].SetOnScreen(true);
+                    index++;
 
-            }
-            
+                }
+            }               
         }
         /// <summary>
         /// Updates sprites
@@ -173,6 +174,7 @@ namespace SeniorDesign
             bulletSystem.Update(gameTime, chopper.Position);
             #endregion chopper machine gun
             generateDragons();
+            
             checkDragonCollisions();
             
             base.Update(gameTime);

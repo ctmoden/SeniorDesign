@@ -81,6 +81,8 @@ namespace SeniorDesign
 
         private bool onScreen;
 
+        public bool OnScreen => onScreen;
+
         /// <summary>
         /// 
         /// </summary>
