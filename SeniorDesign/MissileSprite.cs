@@ -32,7 +32,7 @@ namespace SeniorDesign
         private static int missileLoad = 10;//FIXME make this public and reset as soon as 
 
         public static int MissileLoad => missileLoad;
-        private const int FIRE_VELOCITY = 10;//30
+        private const int FIRE_VELOCITY = 5;//30
         /// <summary>
         /// pixel speed of animation
         /// </summary>
@@ -153,7 +153,7 @@ namespace SeniorDesign
         /// </summary>
         private void resetBounds()
         {
-            bounds.X = position.X + 15;
+            bounds.X = position.X + 20;
             bounds.Y = position.Y + 5;
         }
         /// <summary>
@@ -199,7 +199,7 @@ namespace SeniorDesign
                 //spriteBatch.Draw(texture, Position, sourceRectangle, Color.White);
                 spriteBatch.Draw(texture, position, sourceRectangle, Color.White, 0f, new Vector2(0, 0), .32f, SpriteEffects.None, 0);
                 var boundRect = new Rectangle((int)bounds.X, (int)bounds.Y, (int)bounds.Width, (int)bounds.Height);
-                spriteBatch.Draw(boundTexture, boundRect, Color.White);
+                //spriteBatch.Draw(boundTexture, boundRect, Color.White);
 
             }
 
