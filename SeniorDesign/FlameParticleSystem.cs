@@ -14,6 +14,7 @@ namespace SeniorDesign
         private static List<Vector2> dragonPositions;
         private static Texture2D flameTexture;
         private static Texture2D boundTexture;
+        private static Texture2D explosionTexture;
         private static int animationRow = 0;
         private static int animationFrame = 0;
         private static double animationTimer;
@@ -36,6 +37,7 @@ namespace SeniorDesign
             //FIXME
             flameTexture = content.Load<Texture2D>(@"Explosion_Files\Flames");
             boundTexture = content.Load<Texture2D>(@"Debugging_Tools\Water32Frames8x4");
+            //explosionTexture = content.Load<Texture2D>(@"Explosion_Files\Circle_Boom");
             
         }
         public static void Initialize()

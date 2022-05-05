@@ -82,6 +82,8 @@ namespace SeniorDesign
 
         private bool IsAlive = true;
 
+        private bool isHit = false;
+
         /// <summary>
         /// Bounding region for collision detection
         /// </summary>
@@ -167,14 +169,14 @@ namespace SeniorDesign
         /// checks for collision with single target
         /// </summary>
         /// <param name="other"></param>
-        /// <returns></returns>
+        /// <returns>number of times hit in frame</returns>
         public int CollisionChecker(BoundingRectangle other)
         {
             int hitCount = 0;
             if (bounds.CollidesWith(other))
             {
                 hitCount++;
-                IsAlive = false;
+                if(hitPoints <= 0) IsAlive = false;
             }
             return hitCount;
         }
