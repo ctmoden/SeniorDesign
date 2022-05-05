@@ -55,7 +55,7 @@ namespace SeniorDesign
             //FIXME THIS IS FOR FLAMES ONLY
             Fired = true;
             Alive = true;
-            FIRE_VELOCITY_FLAME = HelperMethods.Next(50, 100);//250,400
+            FIRE_VELOCITY_FLAME = HelperMethods.Next(10, 20);//50,100
             Velocity = targetPos;
             Velocity.Normalize();
             Velocity *= FIRE_VELOCITY_FLAME;

@@ -159,7 +159,7 @@ namespace SeniorDesign
             //TODO difference between position and origin?
             spriteBatch.Draw(flyingTexture, position, sourceRectangle, Color.White, 0f, new Vector2(0, 0), .25f, SpriteEffects.None, 0);
             var boundRect = new Rectangle((int)bounds.X, (int)bounds.Y, (int)bounds.Width, (int)bounds.Height);
-            spriteBatch.Draw(boundTexture, boundRect, Color.White * .2f);
+            //spriteBatch.Draw(boundTexture, boundRect, Color.White * .2f);
 
         }
 

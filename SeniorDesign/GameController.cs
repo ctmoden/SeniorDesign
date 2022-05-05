@@ -149,7 +149,8 @@ namespace SeniorDesign
                 dragon.Update(gameTime, out spawnFlame);
                 if (spawnFlame)
                 {
-                    Vector2 tempChopper = chopper.Position + new Vector2(150, 60);//add noise to make less accurate
+                    Vector2 noise = new Vector2(HelperMethods.Next(0, 5), HelperMethods.Next(0, 5));
+                    Vector2 tempChopper = chopper.Position + new Vector2(150, 60) + noise;//add noise to make less accurate
                     aimVector = dragon.Position - tempChopper;
                 }
                 

@@ -180,7 +180,7 @@ namespace SeniorDesign
                     float rotation = (float)Math.Atan(Flames[i].Velocity.Y / Flames[i].Velocity.X) - MathHelper.PiOver2;
                     spriteBatch.Draw(flameTexture, Flames[i].Position, sourceRectangle, Color.White, rotation, new Vector2(64, 100), .35f, SpriteEffects.None, 0);
                     var boundRect = new Rectangle((int)Flames[i].Bounds.X, (int)Flames[i].Bounds.Y, (int)Flames[i].Bounds.Width, (int)Flames[i].Bounds.Height);
-                    spriteBatch.Draw(boundTexture, boundRect, Color.White*.5f);
+                    //spriteBatch.Draw(boundTexture, boundRect, Color.White*.5f);
                 }
             }
         }
