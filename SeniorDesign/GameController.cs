@@ -137,6 +137,10 @@ namespace SeniorDesign
             if (KeyboardManager.IsPressed(Keys.Q) || KeyboardManager.IsPressed(Keys.Escape))
                 Exit();
             chopper.Update(gameTime);
+            if (!chopper.IsAlive)
+            {
+                if (KeyboardManager.IsPressed(Keys.R)) chopper.ResetChopper(true);
+            }
             checkChopperCollisions();
             foreach (var missile in missiles)
             {
@@ -190,10 +194,17 @@ namespace SeniorDesign
             bulletSystem.Update(gameTime, chopper.Position);
             #endregion chopper machine gun
             generateDragons();
-            
             checkDragonCollisions();
-            
             base.Update(gameTime);
+        }
+        private void resetGame()
+        {
+            resetChopper();
+        }
+        private void resetChopper()
+        {
+            chopper.ResetChopper(true);
+            
         }
         /// <summary>
         /// Draws sprites

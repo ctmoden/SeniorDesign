@@ -16,7 +16,8 @@ namespace SeniorDesign
         /// <summary>
         /// private backing for hit points
         /// </summary>
-        private int hitPoints = 100;
+        private const int INITIAL_HP = 100;
+        private int hitPoints;
         /// <summary>
         ///public get set for hit point values
         /// </summary>
@@ -64,7 +65,7 @@ namespace SeniorDesign
         /// private backing variable for Position field
         /// FIXME decide where to set in controller or here
         /// </summary>
-        private Vector2 position = new Vector2(100, 200);
+        private Vector2 position;
         /// <summary>
         /// Position of chopper
         /// </summary>
@@ -108,6 +109,8 @@ namespace SeniorDesign
         {
             missiles = new List<MissileSprite>();
             bounds = new BoundingRectangle(position.X, position.Y, 150, 30);
+            setPosition();
+            hitPoints = INITIAL_HP;
             
         }
         public void LoadContent(ContentManager content)
@@ -119,12 +122,33 @@ namespace SeniorDesign
 
         }
         /// <summary>
+        /// Manually resets the chopper from controller
+        /// </summary>
+        /// <param name="alive"></param>
+        public void ResetChopper(bool alive)
+        {
+            isAlive = alive;
+            setPosition();
+            hitPoints = INITIAL_HP;
+            boomAnimationFrame = 0;
+            boomAnimationRow = 0;
+        }
+        private void setPosition()
+        {
+            position = new Vector2(100, 200);
+        }
+        /// <summary>
         /// Updates chopper, most notably direction it is traveling
         /// </summary>
         /// <param name="gameTime"></param>
         public void Update(GameTime gameTime)
         {
-            if (boomAnimationRow == 2 && boomAnimationFrame == 2) isExploding = false;
+            if (boomAnimationRow == 2 && boomAnimationFrame == 2)
+            {
+                isExploding = false;
+                position.X = -600;
+                position.Y = 200;
+            }
 
             if (!isAlive)
             {
