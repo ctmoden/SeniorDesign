@@ -15,8 +15,6 @@ namespace SeniorDesign
         //FIXME just using one missile for testing
         private MissileSprite[] missiles;//FIXME swap as missiles hit or miss, keep live missiles at the front 
         private BulletParticleSystem bulletSystem;
-        private Dragon dragon1;
-        private Dragon dragon2;
         //private Dragon[] testDragons;
         private List<Dragon> testDragons;
         private SpriteFont font;
@@ -34,6 +32,12 @@ namespace SeniorDesign
         protected override void Initialize()
         {
             chopper = new ChopperSprite();
+            initializeChopperWeapons();
+            initializeDragonsAndFlames();
+            base.Initialize();
+        }
+        private void initializeChopperWeapons()
+        {
             missiles = new MissileSprite[10]//fly away pattern, use a list instead, bool for alive
             {//object pool
                 new MissileSprite(chopper.Position),
@@ -47,22 +51,10 @@ namespace SeniorDesign
                 new MissileSprite(chopper.Position),
                 new MissileSprite(chopper.Position)
             };
-            #region dragons with arrays
-            /*testDragons = new Dragon[]
-            {
-                new Dragon(3, new Vector2(600, 100)),
-                new Dragon(3, new Vector2(600,400))
-            };*/
-            #endregion 
-            
-            //FIXME initial loding for testing
-            FlameParticleSystem.Initialize();
-            initializeDragons();
-            foreach (var dragon in testDragons) FlameParticleSystem.AddNewDragonPos(dragon.Position);
             bulletSystem = new BulletParticleSystem(chopper.Position);
-            base.Initialize();
+
         }
-        private void initializeDragons()
+        private void initializeDragonsAndFlames()
         {
             testDragons = new List<Dragon>();
             for(int i = 0; i < 3; i++)
@@ -73,23 +65,37 @@ namespace SeniorDesign
             {
                 testDragons.Add(new Dragon(3, false));
             }
+            FlameParticleSystem.Initialize();
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
+            loadChopperAndWeaponsContent();
+            font = Content.Load<SpriteFont>("bangers");
+            loadMissileContent();
+            //dragon1.LoadContent(Content);
+            loadDragonAndFlamesContent();              // TODO: use this.Content to load your game content here
+            
+        }
+        private void loadChopperAndWeaponsContent()
+        {
             chopper.LoadContent(Content);
             bulletSystem.LoadContent(Content);
-            font = Content.Load<SpriteFont>("bangers");
-            //dragon1.LoadContent(Content);
             foreach (var missile in missiles) missile.LoadContent(Content);
+
+        }
+        private void loadMissileContent()
+        {
+
+        }
+        private void loadDragonAndFlamesContent()
+        {
             foreach (var dragon in testDragons) dragon.LoadContent(Content);
-            // TODO: use this.Content to load your game content here
             FlameParticleSystem.LoadContent(Content);
-            
         }
         /// <summary>
         /// When all the dragons on screen die, wait a random amount of time and add 1-3 dragons on screen
@@ -139,7 +145,7 @@ namespace SeniorDesign
             chopper.Update(gameTime);
             if (!chopper.IsAlive)
             {
-                if (KeyboardManager.IsPressed(Keys.R)) chopper.ResetChopper(true);
+                if (KeyboardManager.IsPressed(Keys.R)) resetGame();
             }
             checkChopperCollisions();
             foreach (var missile in missiles)
@@ -200,11 +206,21 @@ namespace SeniorDesign
         private void resetGame()
         {
             resetChopper();
+            resetDragons();
+
+        }
+        private void resetDragons()
+        {
+            testDragons.Clear();
+            initializeDragonsAndFlames();
+            loadDragonAndFlamesContent();
         }
         private void resetChopper()
         {
             chopper.ResetChopper(true);
-            
+            initializeChopperWeapons();
+            loadChopperAndWeaponsContent();
+                       
         }
         /// <summary>
         /// Draws sprites
@@ -226,7 +242,8 @@ namespace SeniorDesign
             FlameParticleSystem.Draw(gameTime, _spriteBatch);
             _spriteBatch.DrawString(font, $"Choppa HP: {chopper.HitPoints}", new Vector2(10, 10), Color.Gold, 0f, new Vector2(), .25f, SpriteEffects.None, 0);
             _spriteBatch.DrawString(font, $"Kill Count: {Dragon.killCount}", new Vector2(10, 20), Color.Gold, 0f, new Vector2(), .25f, SpriteEffects.None, 0);
-            if (!chopper.IsAlive) _spriteBatch.DrawString(font, $"You died! :/ Try again!", new Vector2(200, 200), Color.Gold, 0f, new Vector2(), 1f, SpriteEffects.None, 0);
+            _spriteBatch.DrawString(font, $"ElapsedTime: {gameTime.TotalGameTime.TotalSeconds.ToString()}", new Vector2(10, 20), Color.Gold, 0f, new Vector2(), .25f, SpriteEffects.None, 0);
+            if (!chopper.IsAlive) _spriteBatch.DrawString(font, $"You died! :/ Press 'R' to try again!", new Vector2(100, 200), Color.Gold, 0f, new Vector2(), 1f, SpriteEffects.None, 0);
             //if dragon killcount == testDragons.Count: display win message on screen
             if(Dragon.killCount == testDragons.Count) _spriteBatch.DrawString(font, $"You won!  All dragons destroyed!", new Vector2(100, Constants.GAME_HEIGHT/7), Color.Gold, 0f, new Vector2(), 1f, SpriteEffects.None, 0);
 

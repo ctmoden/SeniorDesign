@@ -25,7 +25,7 @@ namespace SeniorDesign
         private static int fireVelocity;
         private static int freeIndex;
         private static Vector2 targetPos;
-        public static Particle[] Flames = new Particle[1000];
+        public static Particle[] Flames;
         public static bool IsFiring;
         private static Random rand;
         /// <summary>
@@ -42,8 +42,9 @@ namespace SeniorDesign
         }
         public static void Initialize()
         {
-            dragonPositions = new List<Vector2>();//get rid of this junk lol
+            //dragonPositions = new List<Vector2>();//get rid of this junk lol
             IsFiring = true;
+            Flames = new Particle[1000];
         }
         /// <summary>
         /// 
