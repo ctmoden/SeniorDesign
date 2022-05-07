@@ -24,6 +24,8 @@ namespace SeniorDesign
         private double gameSeconds;
         private double gamePlayTime;
         private KeyboardState currentKeyboardState;
+        private double currentBestTime;
+        private int currentKillCount;
         public GameController()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -37,6 +39,13 @@ namespace SeniorDesign
             initializeChopperWeapons();
             initializeDragonsAndFlames();
             base.Initialize();
+        }
+        private void readFile()
+        {
+            FileReader.SetFileName("high_score.txt");
+            FileReader.ReadFile(Content);
+            currentBestTime = FileReader.GetBestTime();
+            currentKillCount = FileReader.GetDragonsKilled();
         }
         private void initializeChopperWeapons()
         {
@@ -203,6 +212,17 @@ namespace SeniorDesign
             generateDragons();
             checkDragonCollisions();
             base.Update(gameTime);
+        }
+        /// <summary>
+        /// Reads high score in at start of gamePlay
+        /// </summary>
+        private void readHighScore()
+        {
+
+        }
+        private void writeHighScore()
+        {
+
         }
         private void resetGame()
         {
