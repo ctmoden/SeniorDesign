@@ -26,6 +26,8 @@ namespace SeniorDesign
         private KeyboardState currentKeyboardState;
         private double currentBestTime;
         private int currentKillCount;
+        private bool newBestTimeSet = false;
+        private bool isFileUpdated = false;
         public GameController()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -175,6 +177,16 @@ namespace SeniorDesign
             if (Dragon.killCount == testDragons.Count || !chopper.IsAlive)
             {
                 gamePlayTime = Math.Round(gameSeconds, 2);
+                
+            }
+            if(Dragon.killCount == testDragons.Count && chopper.IsAlive)
+            {
+                if (currentBestTime > gamePlayTime && !isFileUpdated)
+                {
+                    newBestTimeSet = true;
+                    FileReader.WriteHighScoreInfo(Content, gamePlayTime, testDragons.Count);
+                    isFileUpdated = true;
+                }
             }
                 #region dragon flame testing
                 #endregion
@@ -278,7 +290,8 @@ namespace SeniorDesign
             if (!chopper.IsAlive) _spriteBatch.DrawString(font, $"You died! :/ Press 'R' to try again!", new Vector2(100, 200), Color.Gold, 0f, new Vector2(), 1f, SpriteEffects.None, 0);
             //if dragon killcount == testDragons.Count: display win message on screen
             if(Dragon.killCount == testDragons.Count) _spriteBatch.DrawString(font, $"You won, all dragons destroyed! Press 'R' to play again or 'esc'/'Q' to quit", new Vector2(75, Constants.GAME_HEIGHT/7), Color.Gold, 0f, new Vector2(), .5f, SpriteEffects.None, 0);
-
+            if(newBestTimeSet) _spriteBatch.DrawString(font, $"New Record! You destroyed {testDragons.Count} dragons in {gamePlayTime} seconds", new Vector2(75, Constants.GAME_HEIGHT / 5),
+                Color.Gold, 0f, new Vector2(), .5f, SpriteEffects.None, 0);
             _spriteBatch.End();
             base.Draw(gameTime);
         }
