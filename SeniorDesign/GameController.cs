@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using System.Threading;
 using SeniorDesign.ButtonStates;
 using System.Collections.Generic;
+using System;
 
 namespace SeniorDesign
 {
@@ -20,7 +21,8 @@ namespace SeniorDesign
         private SpriteFont font;
         private Vector2 aimVector;
         private int killCount = 0;
-        private double gameWinningTime;
+        private double gameSeconds;
+        private double gamePlayTime;
         private KeyboardState currentKeyboardState;
         public GameController()
         {
@@ -76,7 +78,6 @@ namespace SeniorDesign
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             loadChopperAndWeaponsContent();
             font = Content.Load<SpriteFont>("bangers");
-            loadMissileContent();
             //dragon1.LoadContent(Content);
             loadDragonAndFlamesContent();              // TODO: use this.Content to load your game content here
             
@@ -87,11 +88,7 @@ namespace SeniorDesign
             bulletSystem.LoadContent(Content);
             foreach (var missile in missiles) missile.LoadContent(Content);
 
-        }
-        private void loadMissileContent()
-        {
-
-        }
+        }      
         private void loadDragonAndFlamesContent()
         {
             foreach (var dragon in testDragons) dragon.LoadContent(Content);
@@ -143,7 +140,7 @@ namespace SeniorDesign
             if (KeyboardManager.IsPressed(Keys.Q) || KeyboardManager.IsPressed(Keys.Escape))
                 Exit();
             chopper.Update(gameTime);
-            if (!chopper.IsAlive)
+            if (!(chopper.IsAlive) || Dragon.killCount == testDragons.Count);
             {
                 if (KeyboardManager.IsPressed(Keys.R)) resetGame();
             }
@@ -166,10 +163,14 @@ namespace SeniorDesign
                 
                 FlameParticleSystem.Update(gameTime, spawnFlame, aimVector, dragon.Position, dragon.Alive);             
             }
-            #region dragon flame testing
-            #endregion
-            #region Monogame Example
-            if (KeyboardManager.HasBeenPressed(Keys.Space))
+            if (Dragon.killCount == testDragons.Count || !chopper.IsAlive)
+            {
+                gamePlayTime = Math.Round(gameSeconds, 2);
+            }
+                #region dragon flame testing
+                #endregion
+                #region Monogame Example
+                if (KeyboardManager.HasBeenPressed(Keys.Space))
             {
                 int i = 0;
                 while (!release && i < missiles.Length)
@@ -205,6 +206,8 @@ namespace SeniorDesign
         }
         private void resetGame()
         {
+            gameSeconds = 0.0;
+            gamePlayTime = 0.0;
             resetChopper();
             resetDragons();
 
@@ -230,6 +233,7 @@ namespace SeniorDesign
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
             _spriteBatch.Begin();
+            if(chopper.IsAlive) gameSeconds += gameTime.ElapsedGameTime.TotalSeconds;
             chopper.Draw(gameTime, _spriteBatch);
             foreach (var missile in missiles)
             {
@@ -242,7 +246,15 @@ namespace SeniorDesign
             FlameParticleSystem.Draw(gameTime, _spriteBatch);
             _spriteBatch.DrawString(font, $"Choppa HP: {chopper.HitPoints}", new Vector2(10, 10), Color.Gold, 0f, new Vector2(), .25f, SpriteEffects.None, 0);
             _spriteBatch.DrawString(font, $"Kill Count: {Dragon.killCount}", new Vector2(10, 20), Color.Gold, 0f, new Vector2(), .25f, SpriteEffects.None, 0);
-            _spriteBatch.DrawString(font, $"ElapsedTime: {gameTime.TotalGameTime.TotalSeconds.ToString()}", new Vector2(10, 30), Color.Gold, 0f, new Vector2(), .25f, SpriteEffects.None, 0);
+            switch (chopper.IsAlive)
+            {
+                case true:
+                    _spriteBatch.DrawString(font, $"Elapsed Time: {Math.Round(gameSeconds, 2)}", new Vector2(10, 30), Color.Gold, 0f, new Vector2(), .25f, SpriteEffects.None, 0);
+                    break;
+                case false:
+                    _spriteBatch.DrawString(font, $"Total Time: {Math.Round(gamePlayTime, 2)}", new Vector2(10, 30), Color.Gold, 0f, new Vector2(), .25f, SpriteEffects.None, 0);
+                    break;
+            }
             if (!chopper.IsAlive) _spriteBatch.DrawString(font, $"You died! :/ Press 'R' to try again!", new Vector2(100, 200), Color.Gold, 0f, new Vector2(), 1f, SpriteEffects.None, 0);
             //if dragon killcount == testDragons.Count: display win message on screen
             if(Dragon.killCount == testDragons.Count) _spriteBatch.DrawString(font, $"You won, all dragons destroyed! Press 'R' to play again or 'esc'/'Q' to quit", new Vector2(75, Constants.GAME_HEIGHT/7), Color.Gold, 0f, new Vector2(), .5f, SpriteEffects.None, 0);
