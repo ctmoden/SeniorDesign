@@ -33,7 +33,7 @@ namespace SeniorDesign
         /// </summary>
         private Texture2D flyingTexture;
 
-        private Texture2D explosion;
+        private Texture2D explosionTexture;
         /// <summary>
         /// Texture for testing bounding regions
         /// </summary>
@@ -46,6 +46,8 @@ namespace SeniorDesign
         /// Controls timing of animation
         /// </summary>
         private double animationTimer;
+
+        private double explosionTimer;
         /// <summary>
         /// animation frame in image grid
         /// x component
@@ -85,6 +87,12 @@ namespace SeniorDesign
 
         private bool isHit = false;
 
+        private bool isExploding = false;
+
+        private int boomAnimationFrame = 0;
+
+        private int boomAnimationRow = 0;
+
         /// <summary>
         /// Bounding region for collision detection
         /// </summary>
@@ -107,6 +115,7 @@ namespace SeniorDesign
             //flyingTexture = content.Load<Texture2D>("Fly");//TODO how to switch to missile firing mid animation frame
             flyingTexture = content.Load<Texture2D>("Choppa_Sprite2");
             boundTexture = content.Load<Texture2D>(@"Debugging_Tools\Water32Frames8x4");
+            explosionTexture = content.Load<Texture2D>(@"Explosion_Files\Circle_Boom");
 
         }
         /// <summary>
@@ -115,6 +124,14 @@ namespace SeniorDesign
         /// <param name="gameTime"></param>
         public void Update(GameTime gameTime)
         {
+            if (boomAnimationRow == 2 && boomAnimationFrame == 2) isExploding = false;
+
+            if (!isAlive)
+            {
+                isExploding = true;
+                //position.X = -800;
+                //position.Y = 200;
+            }
             if (hitPoints <= 0)
             {
                 isAlive = false;
@@ -123,7 +140,7 @@ namespace SeniorDesign
             bounds.X = position.X + 16;
             bounds.Y = position.Y + 62;
             keyboardState = Keyboard.GetState();
-            if (!hit)
+            if (isAlive)
             {
                 //TODO add acceleration to chopper as keys are held down
                 if (keyboardState.IsKeyDown(Keys.Left) || keyboardState.IsKeyDown(Keys.A)) position += new Vector2((float)-3.5, 0);
@@ -137,9 +154,36 @@ namespace SeniorDesign
             if (position.X < 0) position.X = 0;
             if (position.X > Constants.GAME_WIDTH) position.X = 0;
         }
+        private void drawExplosion(GameTime gameTime, SpriteBatch spriteBatch)
+        {
+            if (isExploding)
+            {
+                explosionTimer += gameTime.ElapsedGameTime.TotalSeconds;
+                if (explosionTimer > 0.1)//3x3 spritesheet
+                {
+                    boomAnimationFrame++;
+                    if (boomAnimationFrame > 2)
+                    {
+                        boomAnimationFrame = 0;
+                        boomAnimationRow++;
+                        if (boomAnimationRow > 2) boomAnimationRow = 0;
+                    }
+                    explosionTimer = 0.0;
+                }
+            }
+            var sourceRectangle = new Rectangle(boomAnimationFrame * 128, boomAnimationRow * 128, 128, 128);
+            if (isExploding)
+            {
+                spriteBatch.Draw(explosionTexture, new Vector2(position.X+110, position.Y + 60), sourceRectangle, Color.White, 0f, new Vector2(64, 64), 2.5f, SpriteEffects.None, 0);
+            }
 
+
+        }
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
+            
+            if (!isAlive && !(boomAnimationRow == 2 && boomAnimationFrame == 2)) drawExplosion(gameTime, spriteBatch);
+
             //3x2 image
             if (!hit)
             {
@@ -164,9 +208,9 @@ namespace SeniorDesign
             //draw with upadted position and source rectangle
             //spriteBatch.Draw(texture, Position, sourceRectangle, Color.White);
             //TODO difference between position and origin?
-            spriteBatch.Draw(flyingTexture, position, sourceRectangle, Color.White, 0f, new Vector2(0, 0), .25f, SpriteEffects.None, 0);
+            if(isAlive) spriteBatch.Draw(flyingTexture, position, sourceRectangle, Color.White, 0f, new Vector2(0, 0), .25f, SpriteEffects.None, 0);
             var boundRect = new Rectangle((int)bounds.X, (int)bounds.Y, (int)bounds.Width, (int)bounds.Height);
-            //spriteBatch.Draw(boundTexture, boundRect, Color.White * .2f);
+            //if(isAlive) spriteBatch.Draw(boundTexture, boundRect, Color.White * .2f);
 
         }
 
