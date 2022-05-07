@@ -20,7 +20,7 @@ namespace SeniorDesign
         private SpriteFont font;
         private Vector2 aimVector;
         private int killCount = 0;
-        
+        private double gameWinningTime;
         private KeyboardState currentKeyboardState;
         public GameController()
         {
@@ -242,10 +242,10 @@ namespace SeniorDesign
             FlameParticleSystem.Draw(gameTime, _spriteBatch);
             _spriteBatch.DrawString(font, $"Choppa HP: {chopper.HitPoints}", new Vector2(10, 10), Color.Gold, 0f, new Vector2(), .25f, SpriteEffects.None, 0);
             _spriteBatch.DrawString(font, $"Kill Count: {Dragon.killCount}", new Vector2(10, 20), Color.Gold, 0f, new Vector2(), .25f, SpriteEffects.None, 0);
-            _spriteBatch.DrawString(font, $"ElapsedTime: {gameTime.TotalGameTime.TotalSeconds.ToString()}", new Vector2(10, 20), Color.Gold, 0f, new Vector2(), .25f, SpriteEffects.None, 0);
+            _spriteBatch.DrawString(font, $"ElapsedTime: {gameTime.TotalGameTime.TotalSeconds.ToString()}", new Vector2(10, 30), Color.Gold, 0f, new Vector2(), .25f, SpriteEffects.None, 0);
             if (!chopper.IsAlive) _spriteBatch.DrawString(font, $"You died! :/ Press 'R' to try again!", new Vector2(100, 200), Color.Gold, 0f, new Vector2(), 1f, SpriteEffects.None, 0);
             //if dragon killcount == testDragons.Count: display win message on screen
-            if(Dragon.killCount == testDragons.Count) _spriteBatch.DrawString(font, $"You won!  All dragons destroyed!", new Vector2(100, Constants.GAME_HEIGHT/7), Color.Gold, 0f, new Vector2(), 1f, SpriteEffects.None, 0);
+            if(Dragon.killCount == testDragons.Count) _spriteBatch.DrawString(font, $"You won, all dragons destroyed! Press 'R' to play again or 'esc'/'Q' to quit", new Vector2(75, Constants.GAME_HEIGHT/7), Color.Gold, 0f, new Vector2(), .5f, SpriteEffects.None, 0);
 
             _spriteBatch.End();
             base.Draw(gameTime);
