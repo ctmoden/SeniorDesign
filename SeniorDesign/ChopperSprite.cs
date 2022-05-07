@@ -32,10 +32,8 @@ namespace SeniorDesign
         /// Texture for helicopter
         /// </summary>
         private Texture2D flyingTexture;
-        /// <summary>
-        /// Texture for helicopter firing missile
-        /// </summary>
-        private Texture2D fireTexture;
+
+        private Texture2D explosion;
         /// <summary>
         /// Texture for testing bounding regions
         /// </summary>
@@ -80,7 +78,10 @@ namespace SeniorDesign
         /// </summary>
         public bool Hit => hit;
 
-        private bool IsAlive = true;
+        private bool isAlive = true;
+
+        public bool IsAlive => isAlive;
+        
 
         private bool isHit = false;
 
@@ -104,7 +105,6 @@ namespace SeniorDesign
         public void LoadContent(ContentManager content)
         {
             //flyingTexture = content.Load<Texture2D>("Fly");//TODO how to switch to missile firing mid animation frame
-            fireTexture = content.Load<Texture2D>("Fire Missile");//FIXME still need to do this
             flyingTexture = content.Load<Texture2D>("Choppa_Sprite2");
             boundTexture = content.Load<Texture2D>(@"Debugging_Tools\Water32Frames8x4");
 
@@ -115,6 +115,11 @@ namespace SeniorDesign
         /// <param name="gameTime"></param>
         public void Update(GameTime gameTime)
         {
+            if (hitPoints <= 0)
+            {
+                isAlive = false;
+                hitPoints = 0;
+            }
             bounds.X = position.X + 16;
             bounds.Y = position.Y + 62;
             keyboardState = Keyboard.GetState();
@@ -176,7 +181,7 @@ namespace SeniorDesign
             if (bounds.CollidesWith(other))
             {
                 hitCount++;
-                if(hitPoints <= 0) IsAlive = false;
+                
             }
             return hitCount;
         }
@@ -188,6 +193,7 @@ namespace SeniorDesign
         public void DetractHitPoints(int hitCount, MunitionType munitionType)
         {
             hitPoints -= hitCount * (int)munitionType;
+            if (hitPoints < 0) hitPoints = 0;
         }
     }
 }
