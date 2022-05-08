@@ -66,6 +66,7 @@ namespace SeniorDesign
                 new MissileSprite(chopper.Position),
                 new MissileSprite(chopper.Position)
             };
+            MissileSprite.SetMissileLoad(10);
             bulletSystem = new BulletParticleSystem(chopper.Position);
 
         }
@@ -289,11 +290,11 @@ namespace SeniorDesign
                     _spriteBatch.DrawString(font, $"Total Time: {Math.Round(gamePlayTime, 2)}", new Vector2(10, 30), Color.Gold, 0f, new Vector2(), .25f, SpriteEffects.None, 0);
                     break;
             }
-            if (!chopper.IsAlive) _spriteBatch.DrawString(font, $"You died! :/ Press 'R' to try again!", new Vector2(100, 200), Color.Gold, 0f, new Vector2(), 1f, SpriteEffects.None, 0);
+            if (!chopper.IsAlive)  _spriteBatch.DrawString(font, $"You died! :/ Press 'R' to try again!", new Vector2(100, 200), Color.Gold, 0f, new Vector2(), 1f, SpriteEffects.None, 0);
             //if dragon killcount == testDragons.Count: display win message on screen
             if(Dragon.killCount == testDragons.Count) _spriteBatch.DrawString(font, $"You won, all dragons destroyed! Press 'R' to play again or 'esc'/'Q' to quit", new Vector2(75, Constants.GAME_HEIGHT/7), Color.Gold, 0f, new Vector2(), .5f, SpriteEffects.None, 0);
             if(newBestTimeSet) _spriteBatch.DrawString(font, $"New Record! You destroyed {testDragons.Count} dragons in {gamePlayTime} seconds", new Vector2(75, Constants.GAME_HEIGHT / 5),
-                Color.Gold, 0f, new Vector2(), .5f, SpriteEffects.None, 0);
+                Color.Gold, 0f, new Vector2(),          .5f, SpriteEffects.None, 0);
             _spriteBatch.End();
             base.Draw(gameTime);
         }

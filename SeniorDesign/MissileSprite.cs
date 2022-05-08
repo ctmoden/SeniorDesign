@@ -29,10 +29,9 @@ namespace SeniorDesign
         /// <summary>
         /// Counts number of missiles supplied to chopper 
         /// </summary>
-        private static int missileLoad = 10;//FIXME make this public and reset as soon as 
+        private static int missileLoad;//FIXME make this public and reset as soon as 
 
-        public static int MissileLoad => missileLoad;
-        private const int FIRE_VELOCITY = 5;//30
+        private const int FIRE_VELOCITY = 20;//30
         /// <summary>
         /// pixel speed of animation
         /// </summary>
@@ -109,6 +108,10 @@ namespace SeniorDesign
         {
             startPosition = chopperPos;
             bounds = new BoundingRectangle(position.X, position.Y, 20, 10);
+        }
+        public static void SetMissileLoad(int load)
+        {
+            missileLoad = load;
         }
         //TODO what to do about constructor and chopper position? =>update method!
         /// <summary>
