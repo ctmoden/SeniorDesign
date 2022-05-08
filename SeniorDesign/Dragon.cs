@@ -204,11 +204,11 @@ namespace SeniorDesign
                     //FIXME uncomment positioning after testing
                     case Direction.Down:
                         if (!Alive) position += new Vector2(0, 0);
-                        else position += HelperMethods.RandomYVelGenerator(-2, 0) * PIXEL_SPEED * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                        //else position += HelperMethods.RandomYVelGenerator(-2, 0) * PIXEL_SPEED * (float)gameTime.ElapsedGameTime.TotalSeconds;
                         break;
                     case Direction.Up:
                         if (!Alive) position += new Vector2(0, 0);
-                        else position += HelperMethods.RandomYVelGenerator(1, 3) * PIXEL_SPEED * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                        //else position += HelperMethods.RandomYVelGenerator(1, 3) * PIXEL_SPEED * (float)gameTime.ElapsedGameTime.TotalSeconds;
                         break;
                 }
                 velocityTimer -= 0.02;

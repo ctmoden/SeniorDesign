@@ -184,15 +184,7 @@ namespace SeniorDesign
                 gamePlayTime = Math.Round(gameSeconds, 2);
                 
             }
-            if(Dragon.killCount == testDragons.Count && chopper.IsAlive)
-            {
-                if (currentBestTime > gamePlayTime && !isFileUpdated)
-                {
-                    newBestTimeSet = true;
-                    FileReader.WriteHighScoreInfo(Content, gamePlayTime, testDragons.Count);
-                    isFileUpdated = true;
-                }
-            }
+            updateScoreFile();
                 #region dragon flame testing
                 #endregion
                 #region Monogame Example
@@ -230,6 +222,20 @@ namespace SeniorDesign
             checkDragonCollisions();
             base.Update(gameTime);
         }
+
+        private void updateScoreFile()
+        {
+            if (Dragon.killCount == testDragons.Count && chopper.IsAlive)
+            {
+                if (currentBestTime > gamePlayTime && !isFileUpdated)
+                {
+                    newBestTimeSet = true;
+                    FileReader.WriteHighScoreInfo(Content, gamePlayTime, testDragons.Count);
+                    currentBestTime = gamePlayTime;
+                    isFileUpdated = true;
+                }
+            }
+        }
         /// <summary>
         /// Reads high score in at start of gamePlay
         /// </summary>
@@ -240,6 +246,7 @@ namespace SeniorDesign
             gamePlayTime = 0.0;
             isTimeRecorded = false;
             newBestTimeSet = false;
+            isFileUpdated = false;
             resetChopper();
             resetDragons();
 
