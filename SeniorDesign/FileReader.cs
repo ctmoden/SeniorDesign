@@ -14,6 +14,7 @@ namespace SeniorDesign
     {
         private static string data;
         private static string fileName;
+        private static string[] line;
         private static double bestTime;
         private static int dragonsKilled;
         
@@ -43,11 +44,10 @@ namespace SeniorDesign
         /// </summary>
         public static void ReadFile(ContentManager content)
         {
-            double bestTime = 0;
             data = File.ReadAllText(Path.Join(content.RootDirectory, fileName));
-            var line = data.Split(',');
-            bestTime = double.Parse(line[0]);
-            dragonsKilled = int.Parse(line[1]);
+            line = data.Split(',');
+            bestTime = Double.Parse(line[0]);
+            dragonsKilled = Int32.Parse(line[1]);
         }
         /// <summary>
         /// Writes new high score data to the file

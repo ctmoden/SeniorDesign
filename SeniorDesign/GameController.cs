@@ -28,6 +28,7 @@ namespace SeniorDesign
         private int currentKillCount;
         private bool newBestTimeSet = false;
         private bool isFileUpdated = false;
+        private bool isTimeRecorded = false;
         public GameController()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -38,6 +39,7 @@ namespace SeniorDesign
         protected override void Initialize()
         {
             chopper = new ChopperSprite();
+            readFile();
             initializeChopperWeapons();
             initializeDragonsAndFlames();
             base.Initialize();
@@ -174,8 +176,9 @@ namespace SeniorDesign
                 
                 FlameParticleSystem.Update(gameTime, spawnFlame, aimVector, dragon.Position, dragon.Alive);             
             }
-            if (Dragon.killCount == testDragons.Count || !chopper.IsAlive)
+            if ((Dragon.killCount == testDragons.Count || !chopper.IsAlive) && !isTimeRecorded)
             {
+                isTimeRecorded = true;
                 gamePlayTime = Math.Round(gameSeconds, 2);
                 
             }
@@ -281,7 +284,8 @@ namespace SeniorDesign
             switch (chopper.IsAlive)
             {
                 case true:
-                    _spriteBatch.DrawString(font, $"Elapsed Time: {Math.Round(gameSeconds, 2)}", new Vector2(10, 30), Color.Gold, 0f, new Vector2(), .25f, SpriteEffects.None, 0);
+                    if(Dragon.killCount == testDragons.Count) _spriteBatch.DrawString(font, $"Total Time: {Math.Round(gamePlayTime, 2)}", new Vector2(10, 30), Color.Gold, 0f, new Vector2(), .25f, SpriteEffects.None, 0);
+                    else _spriteBatch.DrawString(font, $"Elapsed Time: {Math.Round(gamePlayTime, 2)}", new Vector2(10, 30), Color.Gold, 0f, new Vector2(), .25f, SpriteEffects.None, 0);
                     break;
                 case false:
                     _spriteBatch.DrawString(font, $"Total Time: {Math.Round(gamePlayTime, 2)}", new Vector2(10, 30), Color.Gold, 0f, new Vector2(), .25f, SpriteEffects.None, 0);
