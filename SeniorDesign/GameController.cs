@@ -76,10 +76,10 @@ namespace SeniorDesign
             {
                 testDragons.Add(new Dragon(3, true));
             }
-            for(int i = 0; i < 6; i++)
+            /*for(int i = 0; i < 6; i++)
             {
                 testDragons.Add(new Dragon(3, false));
-            }
+            }*/
             FlameParticleSystem.Initialize();
         }
 
@@ -147,6 +147,7 @@ namespace SeniorDesign
         /// <param name="gameTime"></param>
         protected override void Update(GameTime gameTime)
         {
+            if (chopper.IsAlive) gameSeconds += gameTime.ElapsedGameTime.TotalSeconds;
             currentKeyboardState = KeyboardManager.GetState();
             //FIXME move release var to control of missile sprite?
             bool release = false;//determines if current missile is released yet.
@@ -169,7 +170,7 @@ namespace SeniorDesign
                 dragon.Update(gameTime, out spawnFlame);
                 if (spawnFlame)
                 {
-                    Vector2 noise = new Vector2(HelperMethods.Next(0, 5), HelperMethods.Next(0, 5));
+                    Vector2 noise = new Vector2(HelperMethods.Next(0, 10), HelperMethods.Next(0, 10));
                     Vector2 tempChopper = chopper.Position + new Vector2(150, 60) + noise;//add noise to make less accurate
                     aimVector = dragon.Position - tempChopper;
                 }
@@ -231,18 +232,13 @@ namespace SeniorDesign
         /// <summary>
         /// Reads high score in at start of gamePlay
         /// </summary>
-        private void readHighScore()
-        {
-
-        }
-        private void writeHighScore()
-        {
-
-        }
+        
         private void resetGame()
         {
             gameSeconds = 0.0;
             gamePlayTime = 0.0;
+            isTimeRecorded = false;
+            newBestTimeSet = false;
             resetChopper();
             resetDragons();
 
@@ -252,6 +248,7 @@ namespace SeniorDesign
             testDragons.Clear();
             initializeDragonsAndFlames();
             loadDragonAndFlamesContent();
+            Dragon.killCount = 0;
         }
         private void resetChopper()
         {
@@ -268,7 +265,6 @@ namespace SeniorDesign
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
             _spriteBatch.Begin();
-            if(chopper.IsAlive) gameSeconds += gameTime.ElapsedGameTime.TotalSeconds;
             chopper.Draw(gameTime, _spriteBatch);
             foreach (var missile in missiles)
             {
@@ -281,11 +277,13 @@ namespace SeniorDesign
             FlameParticleSystem.Draw(gameTime, _spriteBatch);
             _spriteBatch.DrawString(font, $"Choppa HP: {chopper.HitPoints}", new Vector2(10, 10), Color.Gold, 0f, new Vector2(), .25f, SpriteEffects.None, 0);
             _spriteBatch.DrawString(font, $"Kill Count: {Dragon.killCount}", new Vector2(10, 20), Color.Gold, 0f, new Vector2(), .25f, SpriteEffects.None, 0);
+            _spriteBatch.DrawString(font, $"Best Time: {currentBestTime}", new Vector2(10, 40), Color.Gold, 0f, new Vector2(), .25f, SpriteEffects.None, 0);
+
             switch (chopper.IsAlive)
             {
                 case true:
                     if(Dragon.killCount == testDragons.Count) _spriteBatch.DrawString(font, $"Total Time: {Math.Round(gamePlayTime, 2)}", new Vector2(10, 30), Color.Gold, 0f, new Vector2(), .25f, SpriteEffects.None, 0);
-                    else _spriteBatch.DrawString(font, $"Elapsed Time: {Math.Round(gamePlayTime, 2)}", new Vector2(10, 30), Color.Gold, 0f, new Vector2(), .25f, SpriteEffects.None, 0);
+                    else _spriteBatch.DrawString(font, $"Elapsed Time: {Math.Round(gameSeconds, 2)}", new Vector2(10, 30), Color.Gold, 0f, new Vector2(), .25f, SpriteEffects.None, 0);
                     break;
                 case false:
                     _spriteBatch.DrawString(font, $"Total Time: {Math.Round(gamePlayTime, 2)}", new Vector2(10, 30), Color.Gold, 0f, new Vector2(), .25f, SpriteEffects.None, 0);
