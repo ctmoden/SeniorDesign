@@ -249,7 +249,6 @@ namespace SeniorDesign
             isFileUpdated = false;
             resetChopper();
             resetDragons();
-
         }
         private void resetDragons()
         {

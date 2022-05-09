@@ -10,7 +10,9 @@ Content/Debugging_Tools/Water32Frames8x4.png - created by Lee Davis on OpenGameA
 
 Content/Debugging_Tools/ball.png - Created by Dr. Nathan Bean, Kansas State University, under Public Domain
 
+Content/DragonFiles - Created by ZaPaper & Jordan Irwin (AntumDeluge); Credits to http://www.buko-studios.com/ Commissioned by PlayCraft: https://www.playcraftapp.com/ released on https://opengameart.org/node/83655 under CC BY 3.0 License 
+- used the flying_dragon-red.png file
 
+Content/Explosion_Files - Created by Craftpix.net on https://craftpix.net/freebies/11-free-pixel-art-explosion-sprites/, used with permission, see https://craftpix.net/file-licenses/ for more licensing information
 
-
-
+Content/Bangers/Bangers-Regular.ttf - Bangers font created by Vernon Adams, released on Google Fonts (https://fonts.google.com/specimen/Bangers) under the Open Font License
