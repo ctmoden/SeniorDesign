@@ -6,7 +6,7 @@ namespace SeniorDesign
 {
     public enum MunitionType
     {
-        Bullet = 50,
+        Bullet = 20,
         Missile = 100,
         Flame = 20
     }

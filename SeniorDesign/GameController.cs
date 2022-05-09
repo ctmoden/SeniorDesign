@@ -77,10 +77,10 @@ namespace SeniorDesign
             {
                 testDragons.Add(new Dragon(3, true));
             }
-            /*for(int i = 0; i < 6; i++)
+            for(int i = 0; i < 6; i++)
             {
                 testDragons.Add(new Dragon(3, false));
-            }*/
+            }
             FlameParticleSystem.Initialize();
         }
 

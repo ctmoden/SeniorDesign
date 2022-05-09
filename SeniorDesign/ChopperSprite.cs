@@ -16,7 +16,7 @@ namespace SeniorDesign
         /// <summary>
         /// private backing for hit points
         /// </summary>
-        private const int INITIAL_HP = 1000;
+        private const int INITIAL_HP = 120;
         private int hitPoints;
         /// <summary>
         ///public get set for hit point values
