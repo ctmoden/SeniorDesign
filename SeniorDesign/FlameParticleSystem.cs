@@ -40,6 +40,9 @@ namespace SeniorDesign
             //explosionTexture = content.Load<Texture2D>(@"Explosion_Files\Circle_Boom");
             
         }
+        /// <summary>
+        /// initializes particle system
+        /// </summary>
         public static void Initialize()
         {
             //dragonPositions = new List<Vector2>();//get rid of this junk lol
@@ -47,7 +50,7 @@ namespace SeniorDesign
             Flames = new Particle[1000];
         }
         /// <summary>
-        /// 
+        /// updates particel system
         /// </summary>
         /// <param name="gameTime"></param>
         /// <param name="spawnFlame"></param>
@@ -99,7 +102,7 @@ namespace SeniorDesign
             }
         }
         /// <summary>
-        /// 
+        /// spawns flame (old)
         /// </summary>
         /// <param name="targetPosition"></param>
         private static void SpawnFlame(Vector2 targetPosition, Vector2 originPosition)
@@ -124,6 +127,7 @@ namespace SeniorDesign
         /// <summary>
         /// updates dragon position at certain index
         /// FIXME how will dragon update 
+        /// DEPRICATED
         /// </summary>
         /// <param name="newPos"></param>
         public static void UpdateDragonPos(Vector2 newPos, int targetIndex, bool isDragonAlive)
@@ -132,7 +136,11 @@ namespace SeniorDesign
             //I can senese issues with this as positions are deleted when dragon dies...
             if (isDragonAlive) dragonPositions[targetIndex] = newPos;
         }
-
+        /// <summary>
+        /// draws active flames in particle system
+        /// </summary>
+        /// <param name="gameTime"></param>
+        /// <param name="spriteBatch"></param>
         public static void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             #region timer drawing
@@ -227,7 +235,7 @@ namespace SeniorDesign
             return hitCount;
         }
         /// <summary>
-        /// FIXME implement SOMEWHERE AND GET IT TF WORKING
+        /// rearranges order of flames in array based on whether it is alive or not
         /// </summary>
         private static void flameCheck()
         {

@@ -58,7 +58,7 @@ namespace SeniorDesign
         /// Would dynamic particel object be stored in the heap??
         /// </summary>
         #endregion
-
+        
         public ParticleSystem(int maxParticles)
         {
             bullet_velocity = new Vector2(3f, 0f);
@@ -70,12 +70,19 @@ namespace SeniorDesign
                 freeParticles.Enqueue(i);//enqueues all particles at first
             }
         }
-
+        /// <summary>
+        /// updates particle position
+        /// </summary>
+        /// <param name="particle"></param>
         protected virtual void UpdateParticle(ref Particle particle)
         {
             particle.Position += bullet_velocity;
         }
-
+        /// <summary>
+        /// initializes particle
+        /// </summary>
+        /// <param name="par"></param>
+        /// <param name="position"></param>
         protected virtual void InitializeParticle(ref Particle par, Vector2 position)
         {
             //par.Initialize()

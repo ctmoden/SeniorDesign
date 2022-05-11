@@ -93,7 +93,10 @@ namespace SeniorDesign
                 //spriteBatch.Draw(boundTexture, boundRect, Color.White);
             }
         }
-        
+        /// <summary>
+        /// Spawns a new bullet for the chopper and marks the bullet in the array as fired
+        /// </summary>
+        /// <param name="position"></param>
         private void SpawnBullet(Vector2 position)
         {
             position.X += 100;
@@ -115,7 +118,7 @@ namespace SeniorDesign
         }
 
         /// <summary>
-        /// 
+        /// checks for collision between bullet and dragon
         /// </summary>
         /// <param name="other"></param>
         /// <param name="isDragonAlive"></param>
@@ -135,7 +138,7 @@ namespace SeniorDesign
             return hitCount;
         }
         /// <summary>
-        /// fixme integrate somewhere
+        /// updates positions of live bullets in struct
         /// </summary>
         private void bulletCheck()
         {

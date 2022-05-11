@@ -31,11 +31,23 @@ namespace SeniorDesign
             int randVel = rand.Next(min, max);
             return new Vector2(0, randVel);
         }
-
+        /// <summary>
+        /// generates random int from 0 to max-1
+        /// </summary>
+        /// <param name="max"></param>
+        /// <returns></returns>
         public static int Next(int max) => rand.Next(max);
-
+        /// <summary>
+        /// generates random int within range of min to max-1
+        /// </summary>
+        /// <param name="min"></param>
+        /// <param name="max"></param>
+        /// <returns></returns>
         public static int Next(int min, int max) => rand.Next(min, max);
-
+        /// <summary>
+        /// generates random double from 0.0 to 1.0
+        /// </summary>
+        /// <returns></returns>
         public static double NextDouble() => rand.NextDouble();
 
         

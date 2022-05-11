@@ -113,6 +113,10 @@ namespace SeniorDesign
             hitPoints = INITIAL_HP;
             
         }
+        /// <summary>
+        /// load content
+        /// </summary>
+        /// <param name="content"></param>
         public void LoadContent(ContentManager content)
         {
             //flyingTexture = content.Load<Texture2D>("Fly");//TODO how to switch to missile firing mid animation frame
@@ -133,6 +137,9 @@ namespace SeniorDesign
             boomAnimationFrame = 0;
             boomAnimationRow = 0;
         }
+        /// <summary>
+        /// set chopper position on start or restart of game
+        /// </summary>
         private void setPosition()
         {
             position = new Vector2(100, 200);
@@ -178,6 +185,11 @@ namespace SeniorDesign
             if (position.X < 0) position.X = 0;
             if (position.X > Constants.GAME_WIDTH) position.X = 0;
         }
+        /// <summary>
+        /// if chopper dies draw explosion
+        /// </summary>
+        /// <param name="gameTime"></param>
+        /// <param name="spriteBatch"></param>
         private void drawExplosion(GameTime gameTime, SpriteBatch spriteBatch)
         {
             if (isExploding)
@@ -203,6 +215,11 @@ namespace SeniorDesign
 
 
         }
+        /// <summary>
+        /// draws chopper
+        /// </summary>
+        /// <param name="gameTime"></param>
+        /// <param name="spriteBatch"></param>
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             

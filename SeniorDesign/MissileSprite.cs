@@ -179,7 +179,7 @@ namespace SeniorDesign
             }
         }
         /// <summary>
-        /// 
+        /// Draws missile on screen if active
         /// </summary>
         /// <param name="gameTime"></param>
         /// <param name="spriteBatch"></param>

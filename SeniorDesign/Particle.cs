@@ -43,7 +43,7 @@ namespace SeniorDesign
         private int hitPoints;
 
         /// <summary>
-        /// 
+        /// initializes individual particle 
         /// </summary>
         /// <param name="targetPos"></param>
         /// <param name="newPosition"></param>
@@ -71,6 +71,12 @@ namespace SeniorDesign
             Velocity.Normalize();
             Velocity *= FIRE_VELOCITY_FLAME;
         }
+        /// <summary>
+        /// initializes collission boundaries for single particle
+        /// </summary>
+        /// <param name="position"></param>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
         public void InitializeBounds(Vector2 position, int width, int height)
         {
             bounds = new BoundingRectangle(position.X, position.Y, width, height);

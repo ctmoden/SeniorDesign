@@ -35,7 +35,9 @@ namespace SeniorDesign
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
         }
-
+        /// <summary>
+        /// iniitializes ALL assets
+        /// </summary>
         protected override void Initialize()
         {
             chopper = new ChopperSprite();
@@ -44,6 +46,9 @@ namespace SeniorDesign
             initializeDragonsAndFlames();
             base.Initialize();
         }
+        /// <summary>
+        /// reads in high score info
+        /// </summary>
         private void readFile()
         {
             FileReader.SetFileName("high_score.txt");
@@ -51,6 +56,10 @@ namespace SeniorDesign
             currentBestTime = FileReader.GetBestTime();
             currentKillCount = FileReader.GetDragonsKilled();
         }
+
+        /// <summary>
+        /// initializes chooper and wepons
+        /// </summary>
         private void initializeChopperWeapons()
         {
             missiles = new MissileSprite[10]//fly away pattern, use a list instead, bool for alive
@@ -70,6 +79,9 @@ namespace SeniorDesign
             bulletSystem = new BulletParticleSystem(chopper.Position);
 
         }
+        /// <summary>
+        /// initializes dragons and flame particle system
+        /// </summary>
         private void initializeDragonsAndFlames()
         {
             testDragons = new List<Dragon>();
@@ -85,7 +97,7 @@ namespace SeniorDesign
         }
 
         /// <summary>
-        /// 
+        /// loads game content
         /// </summary>
         protected override void LoadContent()
         {
@@ -96,6 +108,9 @@ namespace SeniorDesign
             loadDragonAndFlamesContent();              // TODO: use this.Content to load your game content here
             
         }
+        /// <summary>
+        /// load chopper and weapons content
+        /// </summary>
         private void loadChopperAndWeaponsContent()
         {
             chopper.LoadContent(Content);
@@ -103,6 +118,9 @@ namespace SeniorDesign
             foreach (var missile in missiles) missile.LoadContent(Content);
 
         }      
+        /// <summary>
+        /// loads dragon and flames content
+        /// </summary>
         private void loadDragonAndFlamesContent()
         {
             foreach (var dragon in testDragons) dragon.LoadContent(Content);
@@ -184,6 +202,7 @@ namespace SeniorDesign
                 gamePlayTime = Math.Round(gameSeconds, 2);
                 
             }
+            
             updateScoreFile();
                 #region dragon flame testing
                 #endregion
@@ -222,7 +241,9 @@ namespace SeniorDesign
             checkDragonCollisions();
             base.Update(gameTime);
         }
-
+        /// <summary>
+        /// If a new best time is set for the game, write the new best time and dragons killed to the text file
+        /// </summary>
         private void updateScoreFile()
         {
             if (Dragon.killCount == testDragons.Count && chopper.IsAlive)
@@ -237,7 +258,7 @@ namespace SeniorDesign
             }
         }
         /// <summary>
-        /// Reads high score in at start of gamePlay
+        /// restes game upon completion or chopper death
         /// </summary>
         
         private void resetGame()
@@ -250,6 +271,9 @@ namespace SeniorDesign
             resetChopper();
             resetDragons();
         }
+        /// <summary>
+        /// resets dragons upon game restart
+        /// </summary>
         private void resetDragons()
         {
             testDragons.Clear();
@@ -257,6 +281,9 @@ namespace SeniorDesign
             loadDragonAndFlamesContent();
             Dragon.killCount = 0;
         }
+        /// <summary>
+        /// resets chopper upon game restart
+        /// </summary>
         private void resetChopper()
         {
             chopper.ResetChopper(true);

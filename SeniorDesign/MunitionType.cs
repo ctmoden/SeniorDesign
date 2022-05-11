@@ -4,6 +4,9 @@ using System.Text;
 
 namespace SeniorDesign
 {
+    /// <summary>
+    /// holds damage values for each minition type in game
+    /// </summary>
     public enum MunitionType
     {
         Bullet = 20,

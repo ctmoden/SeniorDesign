@@ -4,6 +4,9 @@ using System.Text;
 
 namespace SeniorDesign
 {
+    /// <summary>
+    /// Direction enum for sprite movement
+    /// </summary>
     public enum Direction
     {
         Right = 0,

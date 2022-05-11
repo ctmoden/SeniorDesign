@@ -84,7 +84,7 @@ namespace SeniorDesign
         public bool OnScreen => onScreen;
 
         /// <summary>
-        /// 
+        /// Constructor, initializes properties
         /// </summary>
         /// <param name="animationRow"></param>
         /// <param name="onScreen"></param>
@@ -111,6 +111,10 @@ namespace SeniorDesign
             if (onScreen) position = new Vector2(HelperMethods.Next(500, 700), HelperMethods.Next(200, 500));
             else if (!onScreen) position = new Vector2(1000, 1000);
         }
+        /// <summary>
+        /// loads content
+        /// </summary>
+        /// <param name="content"></param>
         public void LoadContent(ContentManager content)
         {
             dragonTexture = content.Load<Texture2D>(@"Dragon_Files\PNG\144x128\flying_dragon-red");//FIXME will this cause issues outside my machine?
@@ -126,7 +130,11 @@ namespace SeniorDesign
             this.onScreen = onScreen;
             setPosition();
         }
-
+        /// <summary>
+        /// randomly spwns a flame
+        /// </summary>
+        /// <param name="gameTime"></param>
+        /// <returns></returns>
         private bool spawnFlame(GameTime gameTime)
         {
             flameTimer += gameTime.ElapsedGameTime.TotalSeconds;
@@ -139,11 +147,19 @@ namespace SeniorDesign
             else return false;
 
         }
+        /// <summary>
+        /// determines how quickly flames are generated
+        /// </summary>
         private void setFireRate()
         {
             //double between ~.5 and 5 ish
             fireRate = HelperMethods.Next(1, 7) * HelperMethods.NextDouble();
         }
+        /// <summary>
+        /// updates game
+        /// </summary>
+        /// <param name="gameTime"></param>
+        /// <param name="spawnFire"></param>
         public void Update(GameTime gameTime, out bool spawnFire)
         {
             bounds.X = position.X-35;
@@ -223,6 +239,11 @@ namespace SeniorDesign
                 direction = Direction.Up;
             }
         }
+        /// <summary>
+        /// draws dragon
+        /// </summary>
+        /// <param name="gameTime"></param>
+        /// <param name="spriteBatch"></param>
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             animationTimer += gameTime.ElapsedGameTime.TotalSeconds;
@@ -245,7 +266,7 @@ namespace SeniorDesign
             if (!Alive && !(boomAnimationRow == 2 && boomAnimationFrame == 2)) drawExplosion(gameTime, spriteBatch);
         }
         /// <summary>
-        /// 
+        /// draws explosion when dragon dies
         /// </summary>
         /// <param name="gameTime"></param>
         /// <param name="spriteBatch"></param>
@@ -273,7 +294,11 @@ namespace SeniorDesign
                 spriteBatch.Draw(explosionTexture, new Vector2(position.X, position.Y-10), sourceRectangle, Color.White, 0f, new Vector2(64, 64), 1f, SpriteEffects.None, 0);
             }
         }
-
+        /// <summary>
+        /// when a dragon is hit by a missile or bullet, detract the corresponding number of hitpoints
+        /// </summary>
+        /// <param name="hitCount"></param>
+        /// <param name="munitionType"></param>
         public void DetractHitPoints(int hitCount, MunitionType munitionType)
         {
             hitPoints -= hitCount * (int)munitionType;
